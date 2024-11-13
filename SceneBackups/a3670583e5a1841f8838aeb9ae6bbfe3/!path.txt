@@ -1,0 +1,1 @@
+﻿Assets/Samples/2D Animation/10.1.3/Samples/2 Single Skinned Sprite/_Single Skinned Sprite.unity

@@ -1,0 +1,1 @@
+﻿Assets/Samples/2D Animation/10.1.3/Samples/3 Character/_Character.unity
