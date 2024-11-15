@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: mouth
+    m_Hash: 516250775
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: mouth1
+      m_Hash: 757672972
+      m_Sprite: {fileID: 4528070687223392701, guid: 8228f1cb8182445469befec586084f86, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 4528070687223392701, guid: 8228f1cb8182445469befec586084f86, type: 3}
+    - m_Name: mouth2
+      m_Hash: 874544566
+      m_Sprite: {fileID: -9091290059439820328, guid: 8228f1cb8182445469befec586084f86, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -9091290059439820328, guid: 8228f1cb8182445469befec586084f86, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  - m_Name: eye
+    m_Hash: 846759857
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: eye-open
+      m_Hash: 545639850
+      m_Sprite: {fileID: 1324605468505052062, guid: 8228f1cb8182445469befec586084f86, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1324605468505052062, guid: 8228f1cb8182445469befec586084f86, type: 3}
+    - m_Name: eye-close
+      m_Hash: 880630157
+      m_Sprite: {fileID: -3562954436422523620, guid: 8228f1cb8182445469befec586084f86, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3562954436422523620, guid: 8228f1cb8182445469befec586084f86, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  - m_Name: eyebrow
+    m_Hash: 323160137
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: brow1
+      m_Hash: 382588977
+      m_Sprite: {fileID: -2949762598249825337, guid: 8228f1cb8182445469befec586084f86, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2949762598249825337, guid: 8228f1cb8182445469befec586084f86, type: 3}
+    - m_Name: brow2
+      m_Hash: 264538507
+      m_Sprite: {fileID: -1448391756708550619, guid: 8228f1cb8182445469befec586084f86, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1448391756708550619, guid: 8228f1cb8182445469befec586084f86, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 638673062225137788
+  m_Version: 1
