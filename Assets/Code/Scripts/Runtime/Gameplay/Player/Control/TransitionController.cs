@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class TransitionController : MonoBehaviour
 {
+    public Animator animController;
     public float speed = 3f;
     public float gravityForce = 9.8f;
     public float jumpPower;
@@ -12,6 +13,7 @@ public class TransitionController : MonoBehaviour
     private float jumpForce;
 
     private PCInput input;
+    private SpriteRenderer sprite;
     [SerializeField] private float groundRayDistance;
     [SerializeField] private LayerMask groundLayer;
     private bool isGround;
@@ -28,6 +30,7 @@ public class TransitionController : MonoBehaviour
         input = new PCInput();
         input.Player.Enable();
 
+        sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
 
         input.Player.Jump.performed += OnPressJump;
@@ -52,6 +55,8 @@ public class TransitionController : MonoBehaviour
         {
             var velocity = input.Player.Transit.ReadValue<Vector2>() * speed;
             rigid.linearVelocityX = velocity.x;
+            float isLeft = velocity.x < 0 ? 1 : velocity.x > 0 ? -1 : transform.localScale.x;
+            transform.localScale = new Vector3(isLeft, transform.localScale.y, transform.localScale.z);
         }
 
         if (jumpStart && !isOnAir)
