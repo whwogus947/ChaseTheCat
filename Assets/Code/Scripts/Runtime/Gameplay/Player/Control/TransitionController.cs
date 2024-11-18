@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -23,6 +24,9 @@ public class TransitionController : MonoBehaviour
     private Vector2 velocityOnJump;
     private bool jumpStart;
     private Camera mainCam;
+    private float dashTimer = 0.4f;
+    private float timer;
+    private float speedX;
 
     void Start()
     {
@@ -35,10 +39,29 @@ public class TransitionController : MonoBehaviour
 
         input.Player.Jump.performed += OnPressJump;
         input.Player.Jump.canceled += OnStartJump;
+        input.Player.Attack.performed += OnAttack;
+        input.Player.Dash.performed += OnDash;
         isGround = true;
         isOnAir = false;
 
         mainCam = Camera.main;
+    }
+
+    private void OnDash(InputAction.CallbackContext context)
+    {
+        if (timer > 0)
+            return;
+
+        timer = dashTimer;
+
+        animController.Play("main-dash");
+        var velocity = input.Player.Transit.ReadValue<Vector2>() * speed;
+        speedX = velocity.x * 5;
+    }
+
+    private void OnAttack(InputAction.CallbackContext context)
+    {
+        animController.CrossFade("main-attack", 0f);
     }
 
     private void OnDestroy()
@@ -49,6 +72,14 @@ public class TransitionController : MonoBehaviour
 
     void Update()
     {
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            rigid.linearVelocityX = speedX;
+
+            return;
+        }
+
         isOnAir = !IsOnGround();
         isGround = !isOnAir;
         if (!isOnAir)
@@ -57,6 +88,8 @@ public class TransitionController : MonoBehaviour
             rigid.linearVelocityX = velocity.x;
             float isLeft = velocity.x < 0 ? 1 : velocity.x > 0 ? -1 : transform.localScale.x;
             transform.localScale = new Vector3(isLeft, transform.localScale.y, transform.localScale.z);
+            bool isWalk = Mathf.Abs(velocity.x) > 0;
+            animController.SetBool("IsWalking", isWalk);
         }
 
         if (jumpStart && !isOnAir)
@@ -83,6 +116,7 @@ public class TransitionController : MonoBehaviour
     {
         if (isGround)
         {
+            animController.CrossFade("main-jumpcharging", 0.2f);
             jumpForce = 0;
             jumpStart = true;
         }
@@ -97,6 +131,7 @@ public class TransitionController : MonoBehaviour
     {
         if (isGround && jumpStart)
         {
+            animController.SetBool("IsOnGround", false);
             jumpStart = false;
             isOnAir = true;
             isGround = false;
@@ -111,6 +146,7 @@ public class TransitionController : MonoBehaviour
         jumpForce = 0;
         if (IsOnGround())
         {
+            animController.SetBool("IsOnGround", true);
             Debug.Log("On Ground");
             isOnAir = false;
             isGround = true;
@@ -120,6 +156,7 @@ public class TransitionController : MonoBehaviour
             isOnAir = true;
             rigid.linearVelocityX = -velocityOnJump.x;
             Debug.Log("Next To Wall");
+            animController.Play("main-hit");
         }
     }
 
