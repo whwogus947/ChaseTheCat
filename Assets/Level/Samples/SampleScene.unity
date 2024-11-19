@@ -2177,6 +2177,7 @@ MonoBehaviour:
   jumpPower: 400
   powerGage: {fileID: 1193989505}
   gageIncrease: 400
+  runSpeed: 1
   groundRayDistance: 0.04
   groundLayer:
     serializedVersion: 2

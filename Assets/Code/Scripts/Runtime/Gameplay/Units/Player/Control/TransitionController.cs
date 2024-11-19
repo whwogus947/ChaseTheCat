@@ -11,6 +11,7 @@ public class TransitionController : MonoBehaviour
     public float jumpPower;
     public Image powerGage;
     public float gageIncrease = 10;
+    public float runSpeed = 3.5f;
     private float jumpForce;
 
     private PCInput input;
@@ -27,6 +28,7 @@ public class TransitionController : MonoBehaviour
     private float dashTimer = 0.4f;
     private float timer;
     private float speedX;
+    private bool isRun;
 
     void Start()
     {
@@ -41,10 +43,24 @@ public class TransitionController : MonoBehaviour
         input.Player.Jump.canceled += OnStartJump;
         input.Player.Attack.performed += OnAttack;
         input.Player.Dash.performed += OnDash;
+        input.Player.Run.performed += OnRunStart;
+        input.Player.Run.canceled += OnRunEnd;
         isGround = true;
         isOnAir = false;
 
         mainCam = Camera.main;
+    }
+
+    private void OnRunEnd(InputAction.CallbackContext context)
+    {
+        isRun = false;
+        animController.SetBool("IsRun", isRun);
+    }
+
+    private void OnRunStart(InputAction.CallbackContext context)
+    {
+        isRun = true;
+        animController.SetBool("IsRun", isRun);
     }
 
     private void OnDash(InputAction.CallbackContext context)
@@ -85,6 +101,7 @@ public class TransitionController : MonoBehaviour
         if (!isOnAir)
         {
             var velocity = input.Player.Transit.ReadValue<Vector2>() * speed;
+            velocity = isRun ? velocity + runSpeed * velocity : velocity;
             rigid.linearVelocityX = velocity.x;
             float isLeft = velocity.x < 0 ? 1 : velocity.x > 0 ? -1 : transform.localScale.x;
             transform.localScale = new Vector3(isLeft, transform.localScale.y, transform.localScale.z);
