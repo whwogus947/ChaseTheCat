@@ -1,16 +1,27 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Com2usGameDev
 {
+    [RequireComponent(typeof(UIDocument))]
     public class PlayerUnitData : MonoBehaviour, IAbilities
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        public LinearStatSO hpBar;
+        public LinearStatSO epBar;
+
+        private UIDocument document;
+
         void Start()
         {
-        
+            document = GetComponent<UIDocument>();
+            var root = document.rootVisualElement;
+            var epElement = root.Q<ProgressBar>("ep-bar");
+            var hpElement = root.Q<ProgressBar>("hp-bar");
+            hpElement.style.backgroundColor = Color.blue;
+            hpElement.dataSource = hpBar;
+            epElement.dataSource = epBar;
         }
 
-        // Update is called once per frame
         void Update()
         {
         
