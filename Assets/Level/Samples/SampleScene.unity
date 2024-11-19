@@ -2171,6 +2171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc512185c92c357408eabcb55372cff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputController: {fileID: 11400000, guid: bd995eda00b010b49b77db0100769583, type: 2}
   animController: {fileID: 1292787675}
   speed: 2.5
   gravityForce: 9.8
@@ -2287,8 +2288,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b2f82c6d852f514592557ebf836c483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 11400000, guid: bd995eda00b010b49b77db0100769583, type: 2}
   hpBar: {fileID: 11400000, guid: 6e980669ff216f24bba5482b8cf0d787, type: 2}
   epBar: {fileID: 11400000, guid: 35a0d6af696aa8d4fb5bd2a20de75d71, type: 2}
+  hpDeltaBar: {fileID: 11400000, guid: eede89cf928ccbb42b66601da4e20314, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

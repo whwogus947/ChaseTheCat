@@ -12,13 +12,13 @@
 }
 
 .hp-bar .unity-progress-bar__progress {
-    background-color: rgb(255, 126, 0);
+    background-color: rgb(53, 209, 0);
     margin: 0;
     height: 20px;
 }
 
 .background-bar .unity-progress-bar__progress {
-    background-color: rgb(24, 106, 65);
+    background-color: rgb(226, 74, 52);
     margin: 0;
     height: 20px;
 }

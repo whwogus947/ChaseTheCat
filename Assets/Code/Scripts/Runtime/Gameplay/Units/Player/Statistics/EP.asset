@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e4e9c7614976a479cd66bb75d99e3d, type: 3}
   m_Name: EP
   m_EditorClassIdentifier: 
-  value: 50
+  value: 57
   recoveryPerSecond: 0
