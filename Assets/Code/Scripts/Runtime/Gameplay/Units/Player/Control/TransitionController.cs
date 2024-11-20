@@ -32,6 +32,7 @@ namespace Com2usGameDev
         private float timer;
         private float speedX;
         private bool isRun;
+        private bool isCrouched;
 
         void Start()
         {
@@ -56,13 +57,15 @@ namespace Com2usGameDev
         private void OnRunEnd(InputAction.CallbackContext context)
         {
             isRun = false;
-            animController.SetBool("IsRun", isRun);
+            animController.CrossFade("main-idle", 0.2f);
+            // animController.SetBool("IsRun", isRun);
         }
 
         private void OnRunStart(InputAction.CallbackContext context)
         {
             isRun = true;
-            animController.SetBool("IsRun", isRun);
+            animController.CrossFade("main-run", 0.2f);
+            // animController.SetBool("IsRun", isRun);
         }
 
         private void OnDash(InputAction.CallbackContext context)
@@ -102,11 +105,13 @@ namespace Com2usGameDev
             if (!isOnAir)
             {
                 var velocity = input.Player.Transit.ReadValue<Vector2>() * speed;
-                velocity = isRun ? velocity + runSpeed * velocity : velocity;
+                velocity = isRun ? velocity + runSpeed * velocity : isCrouched ? velocity - runSpeed * velocity * 0.5f : velocity;
                 rigid.linearVelocityX = velocity.x;
                 float isLeft = velocity.x < 0 ? 1 : velocity.x > 0 ? -1 : transform.localScale.x;
                 transform.localScale = new Vector3(isLeft, transform.localScale.y, transform.localScale.z);
-                bool isWalk = Mathf.Abs(velocity.x) > 0;
+                bool isWalk = Mathf.Abs(velocity.x) > 0  && input.Player.Run.phase != InputActionPhase.Performed;
+                // if (isWalk)
+                    // animController.Play("main_walk");
                 animController.SetBool("IsWalking", isWalk);
             }
 
@@ -125,15 +130,18 @@ namespace Com2usGameDev
             }
 
             var originPos = transform.position;
-            Vector3Int playerPos = new Vector3Int(Mathf.FloorToInt(originPos.x), Mathf.FloorToInt(originPos.y + 4), 0) / 8;
+            var xSize = 8f / 9 * 16;
+            Vector3 playerPos = new Vector3(Mathf.FloorToInt((originPos.x + xSize / 2) / xSize) * xSize, Mathf.FloorToInt((originPos.y + 4) / 8f) * 8f, 0);
             playerPos.z = -10;
-            mainCam.transform.position = playerPos * 8;
+            mainCam.transform.position = playerPos;
         }
 
         private void OnPressJump(InputAction.CallbackContext context)
         {
             if (isGround)
             {
+                isCrouched = true;
+                animController.speed = 0.75f;
                 animController.CrossFade("main-jumpcharging", 0.2f);
                 jumpForce = 0;
                 jumpStart = true;
@@ -149,6 +157,8 @@ namespace Com2usGameDev
         {
             if (isGround && jumpStart)
             {
+                isCrouched = false;
+                animController.speed = 1;
                 animController.SetBool("IsOnGround", false);
                 jumpStart = false;
                 isOnAir = true;

@@ -622,6 +622,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1296628333}
     m_Modifications:
+    - target: {fileID: -9156867838365188483, guid: e86ddc40b432c644385f6691071d3e63, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -9156867838365188483, guid: e86ddc40b432c644385f6691071d3e63, type: 3}
+      propertyPath: m_SortingOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -9156867838365188483, guid: e86ddc40b432c644385f6691071d3e63, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -366039381
+      objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: e86ddc40b432c644385f6691071d3e63, type: 3}
       propertyPath: m_Name
       value: catnipball
@@ -772,6 +784,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -9091290059439820328, guid: 8228f1cb8182445469befec586084f86, type: 3}
+    - target: {fileID: 888056107424021890, guid: 8228f1cb8182445469befec586084f86, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 888056107424021890, guid: 8228f1cb8182445469befec586084f86, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 798771559
+      objectReference: {fileID: 0}
     - target: {fileID: 2068534610442309067, guid: 8228f1cb8182445469befec586084f86, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6371086
