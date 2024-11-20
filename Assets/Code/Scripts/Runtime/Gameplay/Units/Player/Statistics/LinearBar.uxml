@@ -1,8 +1,12 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Art/UI/USS/LinearBarStyle.uss?fileID=7433441132597879392&amp;guid=7f3c31956974f6a4c95e4f6132463553&amp;type=3#LinearBarStyle" />
     <engine:VisualElement style="flex-grow: 1;">
-        <engine:ProgressBar value="43.5" enabled="true" name="ProgressBar" class="unity-progress-bar__background background-bar unity-progress-bar unity-progress-progress" style="flex-grow: 0; flex-shrink: 1; position: absolute; width: 100%; background-color: rgb(0, 0, 0); top: -1px; left: 0;" />
-        <engine:ProgressBar value="22.1" name="hp-bar" low-value="0" class="hp-bar unity-progress-bar__container unity-progress-bar__background" style="opacity: 1; background-color: rgba(105, 161, 255, 0);">
+        <engine:ProgressBar value="43.5" enabled="true" name="hp-delta" class="unity-progress-bar__background background-bar unity-progress-bar unity-progress-progress" style="flex-grow: 0; flex-shrink: 1; position: absolute; width: 100%; background-color: rgb(0, 0, 0); top: 0; left: -2px;">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="value" binding-mode="ToTarget" />
+            </Bindings>
+        </engine:ProgressBar>
+        <engine:ProgressBar value="22.1" name="hp-bar" low-value="0" class="hp-bar unity-progress-bar__container unity-progress-bar__background" style="opacity: 1; background-color: rgba(0, 0, 0, 0);">
             <Bindings>
                 <engine:DataBinding property="value" data-source-path="value" binding-mode="ToTarget" />
                 <engine:DataBinding property="title" data-source-path="value" binding-mode="ToTarget" />
