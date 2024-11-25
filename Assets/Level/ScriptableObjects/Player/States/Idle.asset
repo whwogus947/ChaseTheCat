@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {fileID: 11400000, guid: eb8b38aeea2da4d45884d407caefebe7, type: 2}
   <AnimationHashName>k__BackingField: main-idle
-  <Value>k__BackingField: 0
+  <Value>k__BackingField: 2
   <EPDeltaConsume>k__BackingField: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Com2usGameDev
 {
@@ -15,14 +16,18 @@ namespace Com2usGameDev
                 { typeof(PlayerStates.Idle), new PlayerStates.Idle(behaviour.idleState.AnimationHashName) },
                 { typeof(PlayerStates.Jump), new PlayerStates.Jump(behaviour.jumpState.AnimationHashName) },
                 { typeof(PlayerStates.JumpCharging), new PlayerStates.JumpCharging(behaviour.jumpChargingState.AnimationHashName) },
+                { typeof(PlayerStates.Dash), new PlayerStates.Dash(behaviour.dashState.AnimationHashName, 0.7f, () => ChangeState(typeof(PlayerStates.Idle))) },
             };
             currentStateType = typeof(PlayerStates.Idle);
         }
 
-        public void OnUpdate()
+        public bool IsMovable()
         {
             OnUpdate(currentStateType);
+            if (!behaviour.direction.isControllable)
+                return false;
             behaviour.OnUpdate();
+            return true;
         }
 
         private void OnUpdate(Type currentType)
@@ -32,21 +37,18 @@ namespace Com2usGameDev
 
             states[currentStateType].OnUpdate(behaviour);
         }
-
-        
-
-        
-
-        
     }
 
     public abstract class AnimState : IState
     {
         private readonly int hash;
+        
+        protected UnityAction exitEvent;
 
-        public AnimState(string animationHash)
+        public AnimState(string animationHash, UnityAction exitEvent = null)
         {
             hash = Animator.StringToHash(animationHash);
+            this.exitEvent = exitEvent;
         }
 
         public abstract void OnEnter(UnitBehaviour unitStat);
@@ -71,8 +73,8 @@ namespace Com2usGameDev
 
             public override void OnEnter(UnitBehaviour unitStat)
             {
-                unitStat.direction.power = unitStat.idleState.Value;
-                PlayAnimation(unitStat);
+                unitStat.SetAnimationBool("IsWalking", false);
+                unitStat.SetAnimationBool("IsOnGround", true);
                 Debug.Log("Start Idle");
             }
 
@@ -86,6 +88,46 @@ namespace Com2usGameDev
             }
         }
 
+        public class Dash : AnimState
+        {
+            private float timer;
+            private float dashTime;
+
+            public Dash(string animationHash, float timer, UnityAction exitEvent = null) : base(animationHash, exitEvent)
+            {
+                dashTime = timer;
+                this.timer = timer;
+            }
+
+            public override void OnEnter(UnitBehaviour unitStat)
+            {
+                unitStat.direction.power = unitStat.dashState.Value * unitStat.direction.X;
+                timer = dashTime;
+                unitStat.direction.isControllable = false;
+                PlayAnimation(unitStat);
+            }
+
+            public override void OnExit(UnitBehaviour unitStat)
+            {
+                unitStat.direction.isControllable = true;
+            }
+
+            public override void OnUpdate(UnitBehaviour unitStat)
+            {
+                if (timer > 0 && !unitStat.direction.isControllable)
+                {
+                    timer -= Time.deltaTime;
+                    unitStat.MoveX(unitStat.direction.power);
+
+                    if (timer <= 0)
+                    {
+                        unitStat.direction.isControllable = true;
+                        exitEvent?.Invoke();
+                    }
+                }
+            }
+        }
+
         public class JumpCharging : AnimState
         {
             public JumpCharging(string animationHash) : base(animationHash)
@@ -94,6 +136,7 @@ namespace Com2usGameDev
 
             public override void OnEnter(UnitBehaviour unitStat)
             {
+                unitStat.direction.power = unitStat.jumpChargingState.Value;
                 PlayAnimation(unitStat);
             }
 
@@ -104,7 +147,7 @@ namespace Com2usGameDev
 
             public override void OnUpdate(UnitBehaviour unitStat)
             {
-                
+                unitStat.direction.power = unitStat.jumpChargingState.Value;
             }
         }
 
@@ -116,8 +159,8 @@ namespace Com2usGameDev
 
             public override void OnEnter(UnitBehaviour unitStat)
             {
-                PlayAnimation(unitStat);
                 unitStat.SetAnimationBool("IsWalking", true);
+                unitStat.SetAnimationBool("IsRunning", false);
                 unitStat.direction.power = unitStat.walkState.Value;
                 Debug.Log("Start Walk");
             }
@@ -143,16 +186,16 @@ namespace Com2usGameDev
 
             public override void OnEnter(UnitBehaviour unitStat)
             {
-                PlayAnimation(unitStat);
                 unitStat.direction.power = unitStat.runState.Value;
                 Debug.Log("Start Run");
-                unitStat.SetAnimationBool("IsWalking", false);
+                unitStat.SetAnimationBool("IsRun", true);
             }
 
             public override void OnExit(UnitBehaviour unitStat)
             {
                 unitStat.direction.power = 0;
                 Debug.Log("End Run");
+                unitStat.SetAnimationBool("IsRun", false);
             }
 
             public override void OnUpdate(UnitBehaviour unitStat)
@@ -171,16 +214,21 @@ namespace Com2usGameDev
             {
                 PlayAnimation(unitStat);
                 unitStat.Jump(unitStat.jumpState.Value);
+                unitStat.direction.power = unitStat.walkState.Value * unitStat.direction.X;
+                unitStat.direction.isControllable = false;
+                unitStat.SetAnimationBool("IsOnGround", false);
             }
 
             public override void OnExit(UnitBehaviour unitStat)
             {
-                
+                unitStat.direction.isControllable = true;
             }
 
             public override void OnUpdate(UnitBehaviour unitStat)
             {
-                
+                if (unitStat.IsCollideWithWall())
+                    unitStat.direction.power = -unitStat.walkState.Value * unitStat.ChildDirection();
+                unitStat.MoveX(unitStat.direction.power);
             }
         }
     }

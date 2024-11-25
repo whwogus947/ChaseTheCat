@@ -4,6 +4,8 @@ namespace Com2usGameDev
 {
     public class TransitionStateMachine : UnitStateMachine
     {
+        public bool isRunning;
+
         protected override void Initialize()
         {
             behaviour = GetComponent<PlayerBehaviour>();
@@ -18,28 +20,17 @@ namespace Com2usGameDev
 
         public void MovementState(float velocityX)
         {
-            bool isMoving = Mathf.Abs(velocityX) > 0;
-            if (IsCurrentStateType(typeof(PlayerStates.JumpCharging)))
+            if (!behaviour.direction.isControllable)
                 return;
 
-            if (isMoving && currentStateType != typeof(PlayerStates.Run))
+            bool isMoving = Mathf.Abs(velocityX) > 0;
+
+            if (isMoving && currentStateType != typeof(PlayerStates.Run) && !isRunning)
                 ChangeState(typeof(PlayerStates.Walk));
-            else if (currentStateType == typeof(PlayerStates.Run))
+            else if (isMoving && currentStateType == typeof(PlayerStates.Run) || (isRunning && isMoving))
                 ChangeState(typeof(PlayerStates.Run));
             else
                 ChangeState(typeof(PlayerStates.Idle));
-        }
-
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-            
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
     }
 }

@@ -249,7 +249,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 1
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &163719052
@@ -317,7 +317,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5, y: 1.5, z: 0}
-  m_LocalScale: {x: 0.96, y: 0.96, z: 0.96}
+  m_LocalScale: {x: 0.94, y: 0.94, z: 0.94}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 769466018}
@@ -337,6 +337,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {fileID: 11400000, guid: eb8b38aeea2da4d45884d407caefebe7, type: 2}
   inputController: {fileID: 11400000, guid: bd995eda00b010b49b77db0100769583, type: 2}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &163719055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,6 +374,7 @@ MonoBehaviour:
   walkState: {fileID: 11400000, guid: 45d7df794188c9b4cb22191956d4ad0a, type: 2}
   runState: {fileID: 11400000, guid: ebae1dcd9d39566439388174921fe9c8, type: 2}
   jumpState: {fileID: 11400000, guid: 75a0846c1b611c04bb0dc5d50a44699a, type: 2}
+  dashState: {fileID: 11400000, guid: 017cf8ac84f6a214180557efc12fb3d6, type: 2}
   jumpChargingState: {fileID: 11400000, guid: 395384b18c08aa342a65af215ce3d60c, type: 2}
 --- !u!114 &163719057
 MonoBehaviour:
@@ -384,6 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed216820cdb54b4ca11c8bace582b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRunning: 0
 --- !u!1001 &226402746
 PrefabInstance:
   m_ObjectHideFlags: 0

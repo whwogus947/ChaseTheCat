@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e70382b52ce9784b888914cb503564f, type: 3}
   m_Name: Player Direction
   m_EditorClassIdentifier: 
+  isControllable: 0
+  power: -2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64

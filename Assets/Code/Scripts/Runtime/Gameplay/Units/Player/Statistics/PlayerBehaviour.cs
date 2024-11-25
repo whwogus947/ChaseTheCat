@@ -7,6 +7,7 @@ namespace Com2usGameDev
         public override void Jump(float power)
         {
             rb.AddForceY(power, ForceMode2D.Force);
+            rb.linearVelocityX = direction.X * direction.power;
         }
 
         public override void MoveX(float power)
