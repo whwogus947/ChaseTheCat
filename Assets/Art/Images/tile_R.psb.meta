@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 467c6b594d3a3d848a189f012997cf38
+guid: e4bf80d6f6a540e46b81c27c050b375f
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -83,7 +83,7 @@ ScriptedImporter:
       y: 0
       width: 0
       height: 0
-    spriteID: 947bdb6e62fcaf746a1ebc9fd8817e64
+    spriteID: 624567623de41e84bba79a79341d87cb
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -95,7 +95,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
-  - name: Layer 1
+  - name: Layer 8 copy 3
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -105,9 +105,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 200
+      width: 180
       height: 200
-    spriteID: 4fa98fc1245866c4a9e96dd851554a5f
+    spriteID: e3f28546dfa6a414caf1856199b4ae2f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -156,23 +156,23 @@ ScriptedImporter:
   resliceFromLayer: 0
   pSDLayerImportSetting: []
   psdLayers:
-  - name: Layer 1
-    spriteName: Layer 1
+  - name: Layer 8 copy 3
+    spriteName: Layer 8 copy 3
     isGroup: 0
     parentIndex: -1
-    spriteID: 4fa98fc1245866c4a9e96dd851554a5f
-    layerID: 8
+    spriteID: e3f28546dfa6a414caf1856199b4ae2f
+    layerID: 2
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
   - name: Background
-    spriteName: Background
+    spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: 186709381c9859440b0f2620a7153654
+    spriteID: 4493cab51ac49694780cf256be38b463
     layerID: 1
-    mosaicPosition: {x: 4, y: 212}
+    mosaicPosition: {x: 0, y: 0}
     flatten: 0
     isImported: 0
     isVisible: 0

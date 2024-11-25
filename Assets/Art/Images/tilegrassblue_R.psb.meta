@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bc12518adda54524cafdeedfe741572e
+guid: b15fca0bf84cb6d4c8aec2acfbbf609e
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -83,7 +83,7 @@ ScriptedImporter:
       y: 0
       width: 0
       height: 0
-    spriteID: aefda79dd09c4cc4dbcbbadb8fb946f2
+    spriteID: 8bebc06090317db4cbc6e2e7ee3993f9
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -95,7 +95,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
-  - name: Brightness/Contrast 1
+  - name: Levels 1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -105,9 +105,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 498
-      height: 384
-    spriteID: f3422c2d01ff67341b5e7859e3848fb8
+      width: 207
+      height: 97
+    spriteID: 332775ea5d6dee344b7b47d7d2accd1b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -116,7 +116,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
-    spritePosition: {x: 2, y: 37}
+    spritePosition: {x: 0, y: 0}
   spriteImportData: []
   rigSpriteImportData: []
   sharedRigSpriteImportData: []
@@ -156,12 +156,12 @@ ScriptedImporter:
   resliceFromLayer: 0
   pSDLayerImportSetting: []
   psdLayers:
-  - name: Brightness/Contrast 1
-    spriteName: Brightness/Contrast 1
+  - name: Levels 1
+    spriteName: Levels 1
     isGroup: 0
     parentIndex: -1
-    spriteID: f3422c2d01ff67341b5e7859e3848fb8
-    layerID: 4
+    spriteID: 332775ea5d6dee344b7b47d7d2accd1b
+    layerID: 5
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
@@ -170,7 +170,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: cfbeea42dd73a894d9f0685fcdb7a389
+    spriteID: 2160cb01b2d4d604cabe4ae3ad473aef
     layerID: 1
     mosaicPosition: {x: 0, y: 0}
     flatten: 0

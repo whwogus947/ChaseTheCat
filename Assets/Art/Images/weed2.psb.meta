@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 467c6b594d3a3d848a189f012997cf38
+guid: 2013ed997733ba740989cfd947b2457c
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -83,7 +83,7 @@ ScriptedImporter:
       y: 0
       width: 0
       height: 0
-    spriteID: 947bdb6e62fcaf746a1ebc9fd8817e64
+    spriteID: 0aef9c7a30a5f1249953c898b9b97623
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -105,9 +105,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 200
-      height: 200
-    spriteID: 4fa98fc1245866c4a9e96dd851554a5f
+      width: 188
+      height: 220
+    spriteID: 43c86f5eff96a2d41a1c6b7068b7003f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -116,7 +116,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
-    spritePosition: {x: 0, y: 0}
+    spritePosition: {x: 4, y: 4}
   spriteImportData: []
   rigSpriteImportData: []
   sharedRigSpriteImportData: []
@@ -160,19 +160,19 @@ ScriptedImporter:
     spriteName: Layer 1
     isGroup: 0
     parentIndex: -1
-    spriteID: 4fa98fc1245866c4a9e96dd851554a5f
-    layerID: 8
+    spriteID: 43c86f5eff96a2d41a1c6b7068b7003f
+    layerID: 4
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
   - name: Background
-    spriteName: Background
+    spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: 186709381c9859440b0f2620a7153654
+    spriteID: 70969555f076475489b6f2f2999323d9
     layerID: 1
-    mosaicPosition: {x: 4, y: 212}
+    mosaicPosition: {x: 0, y: 0}
     flatten: 0
     isImported: 0
     isVisible: 0
