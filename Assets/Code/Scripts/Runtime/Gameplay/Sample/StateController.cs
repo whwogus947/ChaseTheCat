@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Com2usGameDev.Dev
 {
-    public class StateController
+    public class StateController : IStateAddible
     {
         public UnitBehaviour unitBehaviour;
 
@@ -19,7 +19,15 @@ namespace Com2usGameDev.Dev
             }
         }
 
-        public StateMachine GetMachine(State nodeState)
+        public void Initiate()
+        {
+            NodeTransition transition = new();
+            StateNode.Builder<Nodes.Walk>.CreateType(State.Action).WithTransition(transition).Build(this);
+        }
+
+        public void AddState(IState state) => GetMachine(state.NodeState).Add(state);
+
+        private StateMachine GetMachine(State nodeState)
         {
             var index = (int)nodeState;
             return machines[index];

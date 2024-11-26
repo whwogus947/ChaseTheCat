@@ -23,4 +23,9 @@ namespace Com2usGameDev.Dev
     {
         bool Evaluate();
     }
+
+    public interface IStateAddible
+    {
+        void AddState(IState state);
+    }
 }

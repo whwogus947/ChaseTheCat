@@ -14,10 +14,11 @@ namespace Com2usGameDev.Dev
         {
             states = new();
             this.behaviour = behaviour;
+        }
 
-            NodeTransition transition = new();
-
-            StateNode test = StateNode.Builder<Nodes.Walk>.Create(State.Action).WithTransition(transition).Build();
+        public void Add(IState state)
+        {
+            states[state.GetType()] = state;
         }
 
         public void Update()
@@ -34,6 +35,7 @@ namespace Com2usGameDev.Dev
             if (states[currentState].HasSatisfiedState(out IState state))
             {
                 ChangeState(state.GetType());
+                return;
             }
         }
 

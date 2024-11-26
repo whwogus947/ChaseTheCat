@@ -66,7 +66,7 @@ namespace Com2usGameDev.Dev
         {
             private T node;
 
-            public static Builder<T> Create(State state)
+            public static Builder<T> CreateType(State state)
             {
                 var builder = new Builder<T>
                 {
@@ -88,6 +88,11 @@ namespace Com2usGameDev.Dev
             }
 
             public T Build() => node;
+
+            public void Build(IStateAddible addible)
+            {
+                addible.AddState(node);
+            }
         }
     }
 
