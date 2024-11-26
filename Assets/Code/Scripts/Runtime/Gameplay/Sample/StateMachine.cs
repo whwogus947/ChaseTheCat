@@ -8,12 +8,16 @@ namespace Com2usGameDev.Dev
     {
         private Type currentState;
         private readonly Dictionary<Type, IState> states;
-        private UnitBehaviour behaviour;
+        private readonly UnitBehaviour behaviour;
         
         public StateMachine(UnitBehaviour behaviour)
         {
             states = new();
             this.behaviour = behaviour;
+
+            NodeTransition transition = new();
+
+            StateNode test = StateNode.Builder<Nodes.Walk>.Create(State.Action).WithTransition(transition).Build();
         }
 
         public void Update()
@@ -21,21 +25,31 @@ namespace Com2usGameDev.Dev
             if (states.Count == 0)
                 return;
 
+            CheckNextTransition();
+            UpdateCurrentState();
+        }
+
+        private void CheckNextTransition()
+        {
+            if (states[currentState].HasSatisfiedState(out IState state))
+            {
+                ChangeState(state.GetType());
+            }
+        }
+
+        private void UpdateCurrentState()
+        {
             states[currentState].OnUpdate(behaviour);
         }
 
-        public bool TryChangeState(Type target)
+        private void ChangeState(Type target)
         {
             if (target == currentState)
-                return false;
+                return;
 
-            if (states[currentState].IsMovable(states[target]))
-            {
-                states[currentState].OnExit(behaviour);
-                currentState = target;
-                states[currentState].OnEnter(behaviour);
-            }
-            return false;
+            states[currentState].OnExit(behaviour);
+            currentState = target;
+            states[currentState].OnEnter(behaviour);
         }
     }
 }

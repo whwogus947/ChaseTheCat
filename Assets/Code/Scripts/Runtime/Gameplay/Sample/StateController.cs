@@ -6,7 +6,8 @@ namespace Com2usGameDev.Dev
     public class StateController
     {
         public UnitBehaviour unitBehaviour;
-        public StateMachine[] machines;
+
+        private readonly StateMachine[] machines;
         
         public StateController()
         {

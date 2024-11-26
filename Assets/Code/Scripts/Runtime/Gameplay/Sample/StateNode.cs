@@ -47,6 +47,20 @@ namespace Com2usGameDev.Dev
             return false;
         }
 
+        public bool HasSatisfiedState(out IState state)
+        {
+            state = IState.Empty;
+            foreach (var transition in transitions)
+            {
+                if (transition.Condition.Evaluate())
+                {
+                    state = transition.To;
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         public class Builder<T> where T : StateNode, new()
         {
@@ -64,6 +78,7 @@ namespace Com2usGameDev.Dev
 
             public Builder<T> WithTransition(ITransition transition)
             {
+                node.AddTransition(transition);
                 return this;
             }
 
@@ -73,6 +88,27 @@ namespace Com2usGameDev.Dev
             }
 
             public T Build() => node;
+        }
+    }
+
+    public class Nodes
+    {
+        public class Walk : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
         }
     }
 }
