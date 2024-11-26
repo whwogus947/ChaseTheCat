@@ -34,6 +34,9 @@ namespace Com2usGameDev
             direction.Vector2 = IsOnGround() ? inputController.Input.Player.Transit.ReadValue<Vector2>() : direction.Vector2;
             if (stateMachine.IsMovable())
                 transitionMachine.MovementState(direction.X);
+
+            stateMachine.OnUpdate();
+            transitionMachine.OnUpdate();
         }
 
         private bool IsOnGround()
@@ -65,13 +68,13 @@ namespace Com2usGameDev
 
         private void OnRunEnd(InputAction.CallbackContext context)
         {
-            transitionMachine.isRunning = false;
+            transitionMachine.IsTransmittable = false;
             transitionMachine.ChangeState(typeof(PlayerStates.Idle));
         }
 
         private void OnRunStart(InputAction.CallbackContext context)
         {
-            transitionMachine.isRunning = true;
+            transitionMachine.IsTransmittable = true;
             if (direction.isControllable)
                 transitionMachine.ChangeState(typeof(PlayerStates.Run));
         }
@@ -86,17 +89,22 @@ namespace Com2usGameDev
 
         private void OnAttack(InputAction.CallbackContext context)
         {
-            // ChangeState(typeof(PlayerStates.Jump));
+            transitionMachine.ChangeState(typeof(PlayerStates.Idle));
+            stateMachine.ChangeState(typeof(PlayerStates.NormalAttack));
         }
 
         private void OnStartJump(InputAction.CallbackContext context)
         {
+            if (!IsOnGround())
+                return;
             transitionMachine.ChangeState(typeof(PlayerStates.Idle));
             stateMachine.ChangeState(typeof(PlayerStates.Jump));
         }
 
         private void OnPressJump(InputAction.CallbackContext context)
         {
+            if (!IsOnGround())
+                return;
             stateMachine.ChangeState(typeof(PlayerStates.JumpCharging));
         }
     }

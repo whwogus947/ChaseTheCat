@@ -10,6 +10,7 @@ namespace Com2usGameDev
 
         public bool TryUse(float amount)
         {
+            amount *= Time.deltaTime;
             if (value <= amount)
             {
                 value = 0;

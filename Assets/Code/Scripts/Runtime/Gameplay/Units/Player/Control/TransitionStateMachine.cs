@@ -4,8 +4,6 @@ namespace Com2usGameDev
 {
     public class TransitionStateMachine : UnitStateMachine
     {
-        public bool isRunning;
-
         protected override void Initialize()
         {
             behaviour = GetComponent<PlayerBehaviour>();
@@ -18,6 +16,11 @@ namespace Com2usGameDev
             currentStateType = typeof(PlayerStates.Idle);
         }
 
+        public override void OnUpdate()
+        {
+            states[currentStateType].OnUpdate(behaviour);
+        }
+
         public void MovementState(float velocityX)
         {
             if (!behaviour.direction.isControllable)
@@ -25,9 +28,9 @@ namespace Com2usGameDev
 
             bool isMoving = Mathf.Abs(velocityX) > 0;
 
-            if (isMoving && currentStateType != typeof(PlayerStates.Run) && !isRunning)
+            if (isMoving && currentStateType != typeof(PlayerStates.Run) && !IsTransmittable)
                 ChangeState(typeof(PlayerStates.Walk));
-            else if (isMoving && currentStateType == typeof(PlayerStates.Run) || (isRunning && isMoving))
+            else if (isMoving && currentStateType == typeof(PlayerStates.Run) || (IsTransmittable && isMoving))
                 ChangeState(typeof(PlayerStates.Run));
             else
                 ChangeState(typeof(PlayerStates.Idle));

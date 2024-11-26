@@ -7,5 +7,6 @@ namespace Com2usGameDev
         void OnEnter(UnitBehaviour unitStat);
         void OnUpdate(UnitBehaviour unitStat);
         void OnExit(UnitBehaviour unitStat);
+        bool HasEnoughEP(UnitBehaviour unitStat);
     }
 }

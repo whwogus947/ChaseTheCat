@@ -9,5 +9,6 @@ namespace Com2usGameDev
         [field: SerializeField] public string AnimationHashName { get; private set; }
         [field: SerializeField] public float Value { get; private set; }
         [field: SerializeField] public float EPDeltaConsume { get; private set; }
+        [field: SerializeField] public AnimationClip Clip { get; private set; }
     }
 }
