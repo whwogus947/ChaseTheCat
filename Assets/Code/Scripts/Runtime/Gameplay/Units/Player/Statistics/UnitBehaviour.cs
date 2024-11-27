@@ -6,6 +6,7 @@ namespace Com2usGameDev
     {
         public ClampedVector2dSO direction;
         public UnitStatistics stat;
+        public LinearStatSO epDeltaBar;
 
         [Header("Unit States")]
         public UnitStatInformationSO idleState;
@@ -14,6 +15,7 @@ namespace Com2usGameDev
         public UnitStatInformationSO jumpState;
         public UnitStatInformationSO dashState;
         public UnitStatInformationSO jumpChargingState;
+        public UnitStatInformationSO normalAttackState;
 
         protected Rigidbody2D rb;
         protected Animator animator;

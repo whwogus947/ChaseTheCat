@@ -16,14 +16,14 @@ namespace Com2usGameDev
                 { typeof(PlayerStates.Idle), new PlayerStates.Idle(behaviour.idleState.AnimationHashName) },
                 { typeof(PlayerStates.Jump), new PlayerStates.Jump(behaviour.jumpState.AnimationHashName) },
                 { typeof(PlayerStates.JumpCharging), new PlayerStates.JumpCharging(behaviour.jumpChargingState.AnimationHashName) },
-                { typeof(PlayerStates.Dash), new PlayerStates.Dash(behaviour.dashState.AnimationHashName, 0.7f, () => ChangeState(typeof(PlayerStates.Idle))) },
+                { typeof(PlayerStates.Dash), new PlayerStates.Dash(behaviour.dashState.AnimationHashName, behaviour.dashState.Clip.length, () => ChangeState(typeof(PlayerStates.Idle))) },
+                { typeof(PlayerStates.NormalAttack), new PlayerStates.NormalAttack(behaviour.normalAttackState.AnimationHashName, behaviour.normalAttackState.Clip.length, () => ChangeState(typeof(PlayerStates.Idle))) },
             };
             currentStateType = typeof(PlayerStates.Idle);
         }
 
         public bool IsMovable()
         {
-            OnUpdate(currentStateType);
             if (!behaviour.direction.isControllable)
                 return false;
             behaviour.OnUpdate();
@@ -36,6 +36,12 @@ namespace Com2usGameDev
                 ChangeState(currentType);
 
             states[currentStateType].OnUpdate(behaviour);
+        }
+
+        public override void OnUpdate()
+        {
+            states[currentStateType].OnUpdate(behaviour);
+            // OnUpdate(currentStateType);
         }
     }
 
@@ -51,6 +57,7 @@ namespace Com2usGameDev
             this.exitEvent = exitEvent;
         }
 
+        public abstract bool HasEnoughEP(UnitBehaviour unitStat);
         public abstract void OnEnter(UnitBehaviour unitStat);
 
         public abstract void OnExit(UnitBehaviour unitStat);
@@ -71,9 +78,13 @@ namespace Com2usGameDev
             {
             }
 
+            public override bool HasEnoughEP(UnitBehaviour unitStat)
+            {
+                return true;
+            }
+
             public override void OnEnter(UnitBehaviour unitStat)
             {
-                unitStat.SetAnimationBool("IsWalking", false);
                 unitStat.SetAnimationBool("IsOnGround", true);
                 Debug.Log("Start Idle");
             }
@@ -88,15 +99,61 @@ namespace Com2usGameDev
             }
         }
 
+        public class NormalAttack : AnimState
+        {
+            private float timer;
+            private readonly float attackTime;
+
+            public NormalAttack(string animationHash, float timer, UnityAction exitEvent = null) : base(animationHash, exitEvent)
+            {
+                attackTime = timer;
+                this.timer = timer;
+            }
+
+            public override void OnEnter(UnitBehaviour unitStat)
+            {
+                PlayAnimation(unitStat);
+                timer = attackTime;
+            }
+
+            public override void OnExit(UnitBehaviour unitStat)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unitStat)
+            {
+                if (timer > 0)
+                {
+                    timer -= Time.deltaTime;
+
+                    if (timer <= 0)
+                    {
+                        exitEvent?.Invoke();
+                    }
+                }
+            }
+
+            public override bool HasEnoughEP(UnitBehaviour unitStat)
+            {
+                return true;
+            }
+        }
+
         public class Dash : AnimState
         {
             private float timer;
-            private float dashTime;
+            private readonly float dashTime;
 
             public Dash(string animationHash, float timer, UnityAction exitEvent = null) : base(animationHash, exitEvent)
             {
                 dashTime = timer;
                 this.timer = timer;
+            }
+
+            public override bool HasEnoughEP(UnitBehaviour unitStat)
+            {
+                return true;
             }
 
             public override void OnEnter(UnitBehaviour unitStat)
@@ -134,6 +191,11 @@ namespace Com2usGameDev
             {
             }
 
+            public override bool HasEnoughEP(UnitBehaviour unitStat)
+            {
+                return true;
+            }
+
             public override void OnEnter(UnitBehaviour unitStat)
             {
                 unitStat.direction.power = unitStat.jumpChargingState.Value;
@@ -157,10 +219,15 @@ namespace Com2usGameDev
             {
             }
 
+            public override bool HasEnoughEP(UnitBehaviour unitStat)
+            {
+                return true;
+            }
+
             public override void OnEnter(UnitBehaviour unitStat)
             {
                 unitStat.SetAnimationBool("IsWalking", true);
-                unitStat.SetAnimationBool("IsRunning", false);
+                unitStat.SetAnimationBool("IsRun", false);
                 unitStat.direction.power = unitStat.walkState.Value;
                 Debug.Log("Start Walk");
             }
@@ -174,7 +241,7 @@ namespace Com2usGameDev
 
             public override void OnUpdate(UnitBehaviour unitStat)
             {
-                // unitStat.MoveX(unitStat.walkState.Value * unitStat.walkState.direction.X);
+                
             }
         }
 
@@ -182,6 +249,16 @@ namespace Com2usGameDev
         {
             public Run(string animationHash) : base(animationHash)
             {
+            }
+
+            public override bool HasEnoughEP(UnitBehaviour unitStat)
+            {
+                if (unitStat.epDeltaBar.value > unitStat.runState.EPDeltaConsume * Time.deltaTime)
+                {
+                    unitStat.epDeltaBar.value -= unitStat.runState.EPDeltaConsume * Time.deltaTime;
+                    return true;
+                }
+                return false;
             }
 
             public override void OnEnter(UnitBehaviour unitStat)
@@ -195,12 +272,13 @@ namespace Com2usGameDev
             {
                 unitStat.direction.power = 0;
                 Debug.Log("End Run");
+                unitStat.SetAnimationBool("IsWalking", false);
                 unitStat.SetAnimationBool("IsRun", false);
             }
 
             public override void OnUpdate(UnitBehaviour unitStat)
             {
-                
+                unitStat.epDeltaBar.TryUse(unitStat.runState.EPDeltaConsume);
             }
         }
 
@@ -208,6 +286,11 @@ namespace Com2usGameDev
         {
             public Jump(string animationHash) : base(animationHash)
             {
+            }
+
+            public override bool HasEnoughEP(UnitBehaviour unitStat)
+            {
+                return true;
             }
 
             public override void OnEnter(UnitBehaviour unitStat)
