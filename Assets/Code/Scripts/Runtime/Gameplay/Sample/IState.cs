@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Com2usGameDev.Dev
 {
     public interface IState
@@ -12,7 +10,7 @@ namespace Com2usGameDev.Dev
         bool IsMovable(IState target);
         bool HasSatisfiedState(out IState state);
     }
-
+    
     public interface ITransition
     {
         IState To { get; }

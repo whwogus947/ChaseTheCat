@@ -5,11 +5,9 @@ namespace Com2usGameDev.Dev
 {
     public class StateController : IStateAddible
     {
-        public UnitBehaviour unitBehaviour;
-
         private readonly StateMachine[] machines;
         
-        public StateController()
+        public StateController(UnitBehaviour unitBehaviour)
         {
             int length = Enum.GetValues(typeof(State)).Length;
             machines = new StateMachine[length];
@@ -18,13 +16,7 @@ namespace Com2usGameDev.Dev
                 machines[i] = new(unitBehaviour);
             }
         }
-
-        public void Initiate()
-        {
-            NodeTransition transition = new();
-            StateNode.Builder<Nodes.Walk>.CreateType(State.Action).WithTransition(transition).Build(this);
-        }
-
+        
         public void AddState(IState state) => GetMachine(state.NodeState).Add(state);
 
         private StateMachine GetMachine(State nodeState)

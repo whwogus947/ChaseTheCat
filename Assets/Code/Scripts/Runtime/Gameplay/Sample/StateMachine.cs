@@ -14,6 +14,7 @@ namespace Com2usGameDev.Dev
         {
             states = new();
             this.behaviour = behaviour;
+            currentState = typeof(Nodes.Idle);
         }
 
         public void Add(IState state)
@@ -32,8 +33,10 @@ namespace Com2usGameDev.Dev
 
         private void CheckNextTransition()
         {
+            Debug.Log("check");
             if (states[currentState].HasSatisfiedState(out IState state))
             {
+                Debug.Log(state.GetType());
                 ChangeState(state.GetType());
                 return;
             }
