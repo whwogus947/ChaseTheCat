@@ -31,13 +31,17 @@ namespace Com2usGameDev.Dev
             UpdateCurrentState();
         }
 
+        public bool IsState(Type state)
+        {
+            return currentState == state;
+        }
+
         private void CheckNextTransition()
         {
-            Debug.Log("check");
             if (states[currentState].HasSatisfiedState(out IState state))
             {
-                Debug.Log(state.GetType());
                 ChangeState(state.GetType());
+                Debug.Log(currentState);
                 return;
             }
         }

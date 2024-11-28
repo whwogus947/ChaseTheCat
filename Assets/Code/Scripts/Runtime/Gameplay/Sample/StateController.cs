@@ -19,6 +19,11 @@ namespace Com2usGameDev.Dev
         
         public void AddState(IState state) => GetMachine(state.NodeState).Add(state);
 
+        public bool IsState(State nodeState, Type state)
+        {
+            return GetMachine(nodeState).IsState(state);
+        }
+
         private StateMachine GetMachine(State nodeState)
         {
             var index = (int)nodeState;

@@ -38,16 +38,6 @@ namespace Com2usGameDev.Dev
             transitions.Add(transition);
         }
 
-        public bool IsMovable(IState target)
-        {
-            foreach (var transition in transitions)
-            {
-                if (transition.To == target && transition.Condition.Evaluate())
-                    return true;
-            }
-            return false;
-        }
-
         public bool HasSatisfiedState(out IState state)
         {
             state = IState.Empty;
@@ -81,7 +71,7 @@ namespace Com2usGameDev.Dev
                 return builder;
             }
 
-            public static Creator<T> With(T state)
+            public static Creator<T> Using(T state)
             {
                 var builder = new Creator<T>
                 {
@@ -114,14 +104,35 @@ namespace Com2usGameDev.Dev
 
     public class Nodes
     {
-        public class Idle : StateNode
+        public class Empty : StateNode
         {
             public override void OnEnter(UnitBehaviour unit)
             {
                 unit.SetAnimation("IsWalking", false);
                 unit.SetAnimation("IsRunning", false);
+                unit.SetAnimation("IsOnGround", false);
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+
+            }
+        }
+
+        public class Idle : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                unit.controllable.Value = true;
+                unit.SetAnimation("IsWalking", false);
+                unit.SetAnimation("IsRunning", false);
                 unit.SetTransitionPower(0);
-                unit.VelocityX();
+                unit.TranslateX();
             }
 
             public override void OnExit(UnitBehaviour unit)
@@ -151,7 +162,7 @@ namespace Com2usGameDev.Dev
 
             public override void OnUpdate(UnitBehaviour unit)
             {
-                unit.VelocityX();
+                unit.TranslateX();
             }
         }
 
@@ -171,7 +182,7 @@ namespace Com2usGameDev.Dev
 
             public override void OnUpdate(UnitBehaviour unit)
             {
-                unit.VelocityX();
+                unit.TranslateX();
             }
         }
 
@@ -179,17 +190,19 @@ namespace Com2usGameDev.Dev
         {
             public override void OnEnter(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                unit.PlayAnimation(AnimationHash, 0.2f);
+                unit.SetAnimation("IsOnGround", true);
             }
 
             public override void OnExit(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                
             }
 
             public override void OnUpdate(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                unit.SetTransitionPower(unit.jumpCharging);
+                unit.TranslateX();
             }
         }
 
@@ -197,17 +210,21 @@ namespace Com2usGameDev.Dev
         {
             public override void OnEnter(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                unit.Jump();
+                unit.SetAnimation("IsOnGround", false);
+                unit.CaptureDirection(unit.jumpX);
+                unit.controllable.Value = false;
             }
 
             public override void OnExit(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                unit.controllable.Value = true;
+                unit.SetAnimation("IsOnGround", true);
             }
 
             public override void OnUpdate(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                unit.TranslateFixedX();
             }
         }
 
@@ -215,17 +232,19 @@ namespace Com2usGameDev.Dev
         {
             public override void OnEnter(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                unit.PlayAnimation(AnimationHash, 0.2f);
+                unit.SetTransitionPower(unit.dash);
+                unit.CaptureDirection();
             }
 
             public override void OnExit(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                
             }
 
             public override void OnUpdate(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                unit.TranslateFixedX();
             }
         }
 

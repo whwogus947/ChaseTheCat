@@ -7,7 +7,6 @@ namespace Com2usGameDev.Dev
         void OnEnter(UnitBehaviour unit);
         void OnUpdate(UnitBehaviour unit);
         void OnExit(UnitBehaviour unit);
-        bool IsMovable(IState target);
         bool HasSatisfiedState(out IState state);
     }
     
