@@ -108,9 +108,9 @@ namespace Com2usGameDev.Dev
         {
             public override void OnEnter(UnitBehaviour unit)
             {
-                unit.SetAnimation("IsWalking", false);
-                unit.SetAnimation("IsRunning", false);
-                unit.SetAnimation("IsOnGround", false);
+                // unit.SetAnimation("IsWalking", false);
+                // unit.SetAnimation("IsRunning", false);
+                // unit.SetAnimation("IsOnGround", false);
             }
 
             public override void OnExit(UnitBehaviour unit)
@@ -131,6 +131,7 @@ namespace Com2usGameDev.Dev
                 unit.controllable.Value = true;
                 unit.SetAnimation("IsWalking", false);
                 unit.SetAnimation("IsRunning", false);
+                unit.SetAnimation("IsOnGround", true);
                 unit.SetTransitionPower(0);
                 unit.TranslateX();
             }
@@ -152,6 +153,7 @@ namespace Com2usGameDev.Dev
             {
                 unit.SetAnimation("IsWalking", true);
                 unit.SetAnimation("IsRunning", false);
+                unit.SetAnimation("IsOnGround", true);
                 unit.SetTransitionPower(unit.walk);
             }
 
@@ -172,6 +174,7 @@ namespace Com2usGameDev.Dev
             {
                 unit.SetAnimation("IsWalking", false);
                 unit.SetAnimation("IsRunning", true);
+                unit.SetAnimation("IsOnGround", true);
                 unit.SetTransitionPower(unit.run);
             }
 
@@ -190,13 +193,14 @@ namespace Com2usGameDev.Dev
         {
             public override void OnEnter(UnitBehaviour unit)
             {
+                Debug.Log("CHARGING!");
                 unit.PlayAnimation(AnimationHash, 0.2f);
                 unit.SetAnimation("IsOnGround", true);
             }
 
             public override void OnExit(UnitBehaviour unit)
             {
-                
+                unit.SetAnimation("IsOnGround", false);
             }
 
             public override void OnUpdate(UnitBehaviour unit)
@@ -206,10 +210,30 @@ namespace Com2usGameDev.Dev
             }
         }
 
+        public class OnAir : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                Debug.Log("OnAir!");
+                unit.SetAnimation("IsOnGround", false);
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                
+            }
+        }
+
         public class Jump : StateNode
         {
             public override void OnEnter(UnitBehaviour unit)
             {
+                Debug.Log("JUMP");
                 unit.Jump();
                 unit.SetAnimation("IsOnGround", false);
                 unit.CaptureDirection(unit.jumpX);
@@ -252,17 +276,18 @@ namespace Com2usGameDev.Dev
         {
             public override void OnEnter(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                unit.PlayAnimation(AnimationHash, 0.2f);
+                Debug.Log("ATTACK");
             }
 
             public override void OnExit(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                Debug.Log("exit");
             }
 
             public override void OnUpdate(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                
             }
         }
 

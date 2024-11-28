@@ -14,7 +14,7 @@ namespace Com2usGameDev.Dev
         {
             states = new();
             this.behaviour = behaviour;
-            currentState = typeof(Nodes.Idle);
+            currentState = typeof(Nodes.Empty);
         }
 
         public void Add(IState state)
@@ -41,7 +41,7 @@ namespace Com2usGameDev.Dev
             if (states[currentState].HasSatisfiedState(out IState state))
             {
                 ChangeState(state.GetType());
-                Debug.Log(currentState);
+                // Debug.Log(currentState);
                 return;
             }
         }

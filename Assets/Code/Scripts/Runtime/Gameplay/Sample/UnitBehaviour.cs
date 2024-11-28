@@ -36,6 +36,10 @@ namespace Com2usGameDev.Dev
         void Update()
         {
             GroundCheck();
+            if (IsCollideWithWall())
+            {
+                OppositeDirection();
+            }
         }
 
         public void SetTransitionPower(float power) => transitionPower = power;
@@ -78,13 +82,26 @@ namespace Com2usGameDev.Dev
 
         private void GroundCheck()
         {
-            var rayHit = Physics2D.BoxCast(transform.position, Vector2.one * 0.96f, 0, Vector2.down, 20f, groundLayer.value);
+            var rayHit = Physics2D.BoxCast(transform.position, Vector2.one * 0.92f, 0, Vector2.down, 20f, groundLayer.value);
             float distance = float.MaxValue;
             if (rayHit.collider != null)
             {
                 distance = rayHit.distance;
             }
-            groundChecker.Value = distance < 0.05f;
+            controllable.Value = groundChecker.Value = distance < 0.05f;
+        }
+
+        private bool IsCollideWithWall()
+        {
+            if (groundChecker.Value)
+                return false;
+            var rayHit = Physics2D.BoxCast((Vector2)transform.position + TransformToInt() * 0.55f * Vector2.right, new Vector2(0.1f, 0.9f), 0, Vector2.zero, 0, groundLayer.value);
+            float distance = float.MaxValue;
+            if (rayHit.collider != null)
+            {
+                distance = rayHit.distance;
+            }
+            return distance < 0.025f;
         }
 
         private int GetDirection()
@@ -95,6 +112,12 @@ namespace Com2usGameDev.Dev
                 unitImage.localScale = new(unitImage.localScale.x * -1, 1, 1);
             }
             return directionValue;
+        }
+
+        private void OppositeDirection()
+        {
+            unitImage.localScale = new(unitImage.localScale.x * -1, 1, 1);
+            capturedDirection *= -1;
         }
 
         private int TransformToInt()
