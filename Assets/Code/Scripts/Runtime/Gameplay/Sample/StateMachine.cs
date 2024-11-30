@@ -14,6 +14,7 @@ namespace Com2usGameDev.Dev
         {
             states = new();
             this.behaviour = behaviour;
+            currentState = typeof(Nodes.Empty);
         }
 
         public void Add(IState state)
@@ -30,11 +31,17 @@ namespace Com2usGameDev.Dev
             UpdateCurrentState();
         }
 
+        public bool IsState(Type state)
+        {
+            return currentState == state;
+        }
+
         private void CheckNextTransition()
         {
             if (states[currentState].HasSatisfiedState(out IState state))
             {
                 ChangeState(state.GetType());
+                // Debug.Log(currentState);
                 return;
             }
         }

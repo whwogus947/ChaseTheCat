@@ -12,8 +12,9 @@ namespace Com2usGameDev.Dev
 
     public abstract class StateNode : IState
     {
-        public State NodeState {get; private set;}
-        
+        public State NodeState { get; private set; }
+        public int AnimationHash { get; private set; }
+
         private readonly List<ITransition> transitions;
 
         public StateNode()
@@ -37,16 +38,6 @@ namespace Com2usGameDev.Dev
             transitions.Add(transition);
         }
 
-        public bool IsMovable(IState target)
-        {
-            foreach (var transition in transitions)
-            {
-                if (transition.To == target && transition.Condition.Evaluate())
-                    return true;
-            }
-            return false;
-        }
-
         public bool HasSatisfiedState(out IState state)
         {
             state = IState.Empty;
@@ -61,14 +52,18 @@ namespace Com2usGameDev.Dev
             return false;
         }
 
+        public void Accomplish(IStateAddible addible)
+        {
+            addible.AddState(this);
+        }
 
-        public class Builder<T> where T : StateNode, new()
+        public class Creator<T> where T : StateNode, new()
         {
             private T node;
 
-            public static Builder<T> CreateType(State state)
+            public static Creator<T> CreateType(State state)
             {
-                var builder = new Builder<T>
+                var builder = new Creator<T>
                 {
                     node = new()
                 };
@@ -76,29 +71,227 @@ namespace Com2usGameDev.Dev
                 return builder;
             }
 
-            public Builder<T> WithTransition(ITransition transition)
+            public static Creator<T> Using(T state)
+            {
+                var builder = new Creator<T>
+                {
+                    node = state
+                };
+                return builder;
+            }
+
+            public Creator<T> WithTransition(ITransition transition)
             {
                 node.AddTransition(transition);
                 return this;
             }
 
-            public Builder<T> WithAnimation(string animName)
+            public Creator<T> WithAnimation(string animName)
             {
+                node.AnimationHash = Animator.StringToHash(animName);
                 return this;
             }
 
-            public T Build() => node;
+            public T InProgress() => node;
 
-            public void Build(IStateAddible addible)
+            public T Accomplish(IStateAddible addible)
             {
                 addible.AddState(node);
+                return node;
             }
         }
     }
 
     public class Nodes
     {
+        public class Empty : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                // unit.SetAnimation("IsWalking", false);
+                // unit.SetAnimation("IsRunning", false);
+                // unit.SetAnimation("IsOnGround", false);
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+
+            }
+        }
+
+        public class Idle : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                unit.controllable.Value = true;
+                unit.SetAnimation("IsWalking", false);
+                unit.SetAnimation("IsRunning", false);
+                unit.SetAnimation("IsOnGround", true);
+                unit.SetTransitionPower(0);
+                unit.TranslateX();
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+
+            }
+        }
+
         public class Walk : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                unit.SetAnimation("IsWalking", true);
+                unit.SetAnimation("IsRunning", false);
+                unit.SetAnimation("IsOnGround", true);
+                unit.SetTransitionPower(unit.walk);
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                unit.TranslateX();
+            }
+        }
+
+        public class Run : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                unit.SetAnimation("IsWalking", false);
+                unit.SetAnimation("IsRunning", true);
+                unit.SetAnimation("IsOnGround", true);
+                unit.SetTransitionPower(unit.run);
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                unit.TranslateX();
+            }
+        }
+
+        public class JumpCharging : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                Debug.Log("CHARGING!");
+                unit.PlayAnimation(AnimationHash, 0.2f);
+                unit.SetAnimation("IsOnGround", true);
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                unit.SetAnimation("IsOnGround", false);
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                unit.SetTransitionPower(unit.jumpCharging);
+                unit.TranslateX();
+            }
+        }
+
+        public class OnAir : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                Debug.Log("OnAir!");
+                unit.SetAnimation("IsOnGround", false);
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                
+            }
+        }
+
+        public class Jump : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                Debug.Log("JUMP");
+                unit.Jump();
+                unit.SetAnimation("IsOnGround", false);
+                unit.CaptureDirection(unit.jumpX);
+                unit.controllable.Value = false;
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                unit.controllable.Value = true;
+                unit.SetAnimation("IsOnGround", true);
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                unit.TranslateFixedX();
+            }
+        }
+
+        public class Dash : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                unit.PlayAnimation(AnimationHash, 0.2f);
+                unit.SetTransitionPower(unit.dash);
+                unit.CaptureDirection();
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                unit.TranslateFixedX();
+            }
+        }
+
+        public class AttackNormal : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                unit.PlayAnimation(AnimationHash, 0.2f);
+                Debug.Log("ATTACK");
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                Debug.Log("exit");
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                
+            }
+        }
+
+        public class AttackRanged : StateNode
         {
             public override void OnEnter(UnitBehaviour unit)
             {
