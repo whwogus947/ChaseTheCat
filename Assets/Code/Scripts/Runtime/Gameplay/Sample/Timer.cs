@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Cysharp.Threading.Tasks;
 
 namespace Com2usGameDev
@@ -16,12 +17,14 @@ namespace Com2usGameDev
 
         private async UniTaskVoid SetTimer<T>(float seconds)
         {
-            var task = UniTask.Delay(TimeSpan.FromSeconds(seconds))
-                .ContinueWith(() => true);
-
             timerTasks[typeof(T)] = false;
-            await task;
+            await UniTask.WaitForSeconds(seconds);
             timerTasks[typeof(T)] = true;
+        }
+
+        public void ResetTimer<T>()
+        {
+            timerTasks[typeof(T)] = false;
         }
 
         public bool HasTimerExpired<T>()

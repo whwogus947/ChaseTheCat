@@ -5,17 +5,20 @@ namespace Com2usGameDev
     public class PlayerVisionController : MonoBehaviour
     {
         private Camera mainCam;
+        private float ySize;
+        private float xSize ;
         
         void Start()
         {
             mainCam = Camera.main;
+            ySize = mainCam.orthographicSize * 2f;
+            xSize = ySize / 9 * 16f;
         }
 
         void Update()
         {
             var originPos = transform.position;
-            var xSize = 8f / 9 * 16;
-            Vector3 playerPos = new(Mathf.FloorToInt((originPos.x + xSize / 2) / xSize) * xSize, Mathf.FloorToInt((originPos.y + 4) / 8f) * 8f, 0)
+            Vector3 playerPos = new(Mathf.FloorToInt(originPos.x / xSize + 0.5f) * xSize, Mathf.FloorToInt(originPos.y / ySize + 0.5f) * ySize, 0)
             {
                 z = -10
             };

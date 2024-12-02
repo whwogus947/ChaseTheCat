@@ -15,6 +15,7 @@ namespace Com2usGameDev.Dev
 
         private PCInput input;
         private readonly Timer timer = new();
+        private bool isDashPressed;
 
         private void Awake()
         {
@@ -51,7 +52,18 @@ namespace Com2usGameDev.Dev
 
         private void OnPressDash(InputAction.CallbackContext context)
         {
+            isDashPressed = true;
             timer.StartTimer<Nodes.Dash>(0.7f);
+        }
+
+        private bool IsDashPressed()
+        {
+            if (isDashPressed && !timer.HasTimerExpired<Nodes.Dash>())
+            {
+                isDashPressed = false;
+                return true;
+            }
+            return false;
         }
 
         public void BindInputToController(StateController controller)
@@ -72,9 +84,9 @@ namespace Com2usGameDev.Dev
             NodeTransition toEmptyMovement = new(emptyMovement, new(() => !controllable.Value));
             NodeTransition toWalk = new(walk, new(() => !IsVelocityZero() && input.Player.Run.phase == InputActionPhase.Waiting));
             NodeTransition toRun = new(run, new(() => !IsVelocityZero() && input.Player.Run.phase == InputActionPhase.Performed));
-            NodeTransition toDash = new(dash, new(() => !IsVelocityZero() && input.Player.Dash.phase == InputActionPhase.Performed));
-            NodeTransition emptymovementToIdle = new(idle, new(() => controllable.Value));
-            NodeTransition dashToIdle = new(idle, new(() => timer.HasTimerExpired<Nodes.Dash>()));
+            NodeTransition toDash = new(dash, new(() => !IsVelocityZero() && IsDashPressed() && input.Player.Dash.phase == InputActionPhase.Performed));
+            NodeTransition emptymovementToIdle = new(idle, new(() => controllable.Value && groundChecker.Value));
+            NodeTransition dashToIdle = new(idle, new(() => timer.HasTimerExpired<Nodes.Dash>() && groundChecker.Value));
 
             NodeTransition toJumpCharging = new(jumpCharging, new(() => input.Player.Jump.phase == InputActionPhase.Performed && groundChecker.Value && !timer.HasTimerExpired<Nodes.JumpCharging>()));
             NodeTransition toJump = new(jump, new(() => input.Player.Jump.phase == InputActionPhase.Waiting));

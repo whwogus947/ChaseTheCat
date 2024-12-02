@@ -47,6 +47,9 @@ TagManager:
   - name: Arm
     uniqueID: 798771559
     locked: 0
+  - name: VFX
+    uniqueID: 2270320955
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1
