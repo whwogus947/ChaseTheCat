@@ -159,7 +159,8 @@ namespace Com2usGameDev.Dev
 
             public override void OnExit(UnitBehaviour unit)
             {
-                
+                unit.SetAnimation("IsWalking", false);
+                unit.SetAnimation("IsRunning", false);
             }
 
             public override void OnUpdate(UnitBehaviour unit)
@@ -180,7 +181,8 @@ namespace Com2usGameDev.Dev
 
             public override void OnExit(UnitBehaviour unit)
             {
-                
+                unit.SetAnimation("IsWalking", false);
+                unit.SetAnimation("IsRunning", false);
             }
 
             public override void OnUpdate(UnitBehaviour unit)
@@ -259,6 +261,7 @@ namespace Com2usGameDev.Dev
                 unit.PlayAnimation(AnimationHash, 0.2f);
                 unit.SetTransitionPower(unit.dash);
                 unit.CaptureDirection();
+                unit.UseVFX();
             }
 
             public override void OnExit(UnitBehaviour unit)
@@ -277,12 +280,11 @@ namespace Com2usGameDev.Dev
             public override void OnEnter(UnitBehaviour unit)
             {
                 unit.PlayAnimation(AnimationHash, 0.2f);
-                Debug.Log("ATTACK");
             }
 
             public override void OnExit(UnitBehaviour unit)
             {
-                Debug.Log("exit");
+                
             }
 
             public override void OnUpdate(UnitBehaviour unit)

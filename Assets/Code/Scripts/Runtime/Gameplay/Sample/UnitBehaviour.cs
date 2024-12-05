@@ -15,12 +15,18 @@ namespace Com2usGameDev.Dev
         public float jumpX;
         public float dash;
         public float jumpCharging;
+        public VFXPool pool;
 
         private Animator ani;
         private Rigidbody2D rb;
         private int UnitDirection => GetDirection();
         private float transitionPower;
         private int capturedDirection;
+        private int CharacterDirection
+        {
+            get => TransformToInt();
+            set => IntToTransform(value);
+        }
 
         private void Awake()
         {
@@ -38,8 +44,15 @@ namespace Com2usGameDev.Dev
             GroundCheck();
             if (IsCollideWithWall())
             {
-                OppositeDirection();
+                ToOppositeDirection();
             }
+        }
+
+        public void UseVFX()
+        {
+            var poolObj = pool.GetPooledObject();
+            bool isFlip = TransformToInt() == 1 ? true : false;
+            poolObj.GetComponent<SpriteRenderer>().flipX = isFlip;
         }
 
         public void SetTransitionPower(float power) => transitionPower = power;
@@ -95,7 +108,7 @@ namespace Com2usGameDev.Dev
         {
             if (groundChecker.Value)
                 return false;
-            var rayHit = Physics2D.BoxCast((Vector2)transform.position + TransformToInt() * 0.55f * Vector2.right, new Vector2(0.1f, 0.9f), 0, Vector2.zero, 0, groundLayer.value);
+            var rayHit = Physics2D.BoxCast((Vector2)transform.position + CharacterDirection * 0.55f * Vector2.right, new Vector2(0.1f, 0.9f), 0, Vector2.zero, 0, groundLayer.value);
             float distance = float.MaxValue;
             if (rayHit.collider != null)
             {
@@ -106,23 +119,34 @@ namespace Com2usGameDev.Dev
 
         private int GetDirection()
         {
-            int directionValue = (int)direction.value;
-            if ((directionValue == TransformToInt() * -1) && controllable.Value)
+            var velocity = direction.value;
+            int velocityDirection = velocity > 0 ? 1 : velocity < 0 ? -1 : 0;
+            if (IsOppositeDirection(velocityDirection) && controllable.Value)
             {
-                unitImage.localScale = new(unitImage.localScale.x * -1, 1, 1);
+                CharacterDirection = velocityDirection;
             }
-            return directionValue;
+            return velocityDirection;
         }
 
-        private void OppositeDirection()
+        private void ToOppositeDirection()
         {
             unitImage.localScale = new(unitImage.localScale.x * -1, 1, 1);
             capturedDirection *= -1;
         }
 
+        private bool IsOppositeDirection(int direction)
+        {
+            return direction == CharacterDirection * -1;
+        }
+
         private int TransformToInt()
         {
             return unitImage.localScale.x > 0 ? -1 : 1;
+        }
+
+        private void IntToTransform(int value)
+        {
+            unitImage.localScale = new(Mathf.Abs(unitImage.localScale.x) * value * -1, 1, 1);
         }
     }
 }
