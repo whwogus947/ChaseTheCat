@@ -13,69 +13,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Library:
-  - m_Name: eye
-    m_Hash: 846759857
-    m_CategoryList: []
-    m_OverrideEntries:
-    - m_Name: eye1
-      m_Hash: 1070076970
-      m_Sprite: {fileID: 1324605468505052062, guid: 8228f1cb8182445469befec586084f86, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: 1324605468505052062, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: eye2
-      m_Hash: 650200464
-      m_Sprite: {fileID: -3562954436422523620, guid: 8228f1cb8182445469befec586084f86, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -3562954436422523620, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: npc1-eye
-      m_Hash: 23820361
-      m_Sprite: {fileID: -3533054317583512169, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -3533054317583512169, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-    m_FromMain: 0
-    m_EntryOverrideCount: 3
-  - m_Name: brow
-    m_Hash: 186306397
-    m_CategoryList: []
-    m_OverrideEntries:
-    - m_Name: brow1
-      m_Hash: 382588977
-      m_Sprite: {fileID: -2949762598249825337, guid: 8228f1cb8182445469befec586084f86, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -2949762598249825337, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: brow2
-      m_Hash: 264538507
-      m_Sprite: {fileID: -1448391756708550619, guid: 8228f1cb8182445469befec586084f86, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -1448391756708550619, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: npc1-eyebrow
-      m_Hash: 726851800
-      m_Sprite: {fileID: -1506364158462707973, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -1506364158462707973, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-    m_FromMain: 0
-    m_EntryOverrideCount: 3
-  - m_Name: mouth
-    m_Hash: 516250775
-    m_CategoryList: []
-    m_OverrideEntries:
-    - m_Name: mouth1
-      m_Hash: 757672972
-      m_Sprite: {fileID: 4528070687223392701, guid: 8228f1cb8182445469befec586084f86, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: 4528070687223392701, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: mouth2
-      m_Hash: 874544566
-      m_Sprite: {fileID: -9091290059439820328, guid: 8228f1cb8182445469befec586084f86, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -9091290059439820328, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: npc1-mouth
-      m_Hash: 799157180
-      m_Sprite: {fileID: -9095751297815014136, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -9095751297815014136, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-    m_FromMain: 0
-    m_EntryOverrideCount: 3
   - m_Name: rightam
     m_Hash: 16626640
     m_CategoryList: []
@@ -85,13 +22,8 @@ MonoBehaviour:
       m_Sprite: {fileID: 3506455616277031272, guid: 8228f1cb8182445469befec586084f86, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 3506455616277031272, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: npc1-rightarm
-      m_Hash: 758669739
-      m_Sprite: {fileID: 9197555762698736867, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: 9197555762698736867, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 2
+    m_EntryOverrideCount: 1
   - m_Name: eyebrow-2
     m_Hash: 105166509
     m_CategoryList: []
@@ -145,13 +77,8 @@ MonoBehaviour:
       m_Sprite: {fileID: -7870093293997643200, guid: 8228f1cb8182445469befec586084f86, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -7870093293997643200, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: npc1-body
-      m_Hash: 675111523
-      m_Sprite: {fileID: 889530300123214061, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: 889530300123214061, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 2
+    m_EntryOverrideCount: 1
   - m_Name: rightleg
     m_Hash: 117845322
     m_CategoryList: []
@@ -161,13 +88,8 @@ MonoBehaviour:
       m_Sprite: {fileID: -7232339274166481032, guid: 8228f1cb8182445469befec586084f86, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -7232339274166481032, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: npc1-leftleg
-      m_Hash: 166487020
-      m_Sprite: {fileID: -3498779838096458072, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -3498779838096458072, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 2
+    m_EntryOverrideCount: 1
   - m_Name: leftleg
     m_Hash: 838699901
     m_CategoryList: []
@@ -177,13 +99,8 @@ MonoBehaviour:
       m_Sprite: {fileID: 5894209314908808113, guid: 8228f1cb8182445469befec586084f86, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 5894209314908808113, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: npc1-rightleg
-      m_Hash: 11968368
-      m_Sprite: {fileID: 3558811048184635871, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: 3558811048184635871, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 2
+    m_EntryOverrideCount: 1
   - m_Name: leftarm
     m_Hash: 477328806
     m_CategoryList: []
@@ -193,13 +110,8 @@ MonoBehaviour:
       m_Sprite: {fileID: 6161733279393081768, guid: 8228f1cb8182445469befec586084f86, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 6161733279393081768, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: npc-leftarm
-      m_Hash: 435087732
-      m_Sprite: {fileID: 7137921522652649322, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: 7137921522652649322, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 2
+    m_EntryOverrideCount: 1
   - m_Name: eye-close
     m_Hash: 880630157
     m_CategoryList: []
@@ -231,13 +143,8 @@ MonoBehaviour:
       m_Sprite: {fileID: 4099782207055171943, guid: 8228f1cb8182445469befec586084f86, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 4099782207055171943, guid: 8228f1cb8182445469befec586084f86, type: 3}
-    - m_Name: npc1-head
-      m_Hash: 342269773
-      m_Sprite: {fileID: -4888530312836848444, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -4888530312836848444, guid: 472fcda577786b14e86572b5c50cd192, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 2
+    m_EntryOverrideCount: 1
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 638687913384201509
+  m_ModificationHash: 638687863752424418
   m_Version: 1
