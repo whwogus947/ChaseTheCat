@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Light
   - 
   - 
   - 
@@ -49,6 +49,9 @@ TagManager:
     locked: 0
   - name: VFX
     uniqueID: 2270320955
+    locked: 0
+  - name: Lights
+    uniqueID: 1365345339
     locked: 0
   m_RenderingLayers:
   - Default

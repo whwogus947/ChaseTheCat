@@ -15,5 +15,10 @@ namespace Com2usGameDev
         {
 
         }
+
+        public void SelectSlot()
+        {
+            
+        }
     }
 }
