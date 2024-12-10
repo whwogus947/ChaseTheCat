@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using Eflatun.SceneReference;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,42 +10,29 @@ namespace Com2usGameDev
     {
         public VisualTreeAsset buttonAsset;
 
-        public SceneReference testScene;
-
         private UnityAction<StageData> onSelectStage;
-        private UIDocument document;
-        private VisualElement root;
         private VisualElement backBoard;
-        private Vector2 intervalDistance = new(200, 100);
-        private Vector2 Center => new(root.resolvedStyle.width / 2f, root.resolvedStyle.height / 2f);
+        private VisualElement lineBoard;
+        private Vector2 Center => new(canvasCenter.x / 2f, canvasCenter.y / 2f);
+        private Vector2 canvasCenter = new(1920, 1080);
+        private (float x, float y) buttonOffset = (30, 30);
 
-        void Start()
+        private void Awake()
         {
-            // await UniTask.WaitForSeconds(0.2f);
             onSelectStage = delegate { };
-
-            Debug.Log(backBoard);
-            Debug.Log(backBoard.resolvedStyle);
-            Debug.Log(backBoard.contentRect.width);
-            Debug.Log(backBoard.layout.width);
-            Debug.Log(backBoard.style.backgroundSize.value.x);
-            Debug.Log(backBoard.worldBound.width);
-            Debug.Log(backBoard.worldBound.size.x);
-            Debug.Log(backBoard.worldBound.x);
-            var center = new Vector2(root.resolvedStyle.width / 2f, root.resolvedStyle.height / 2f);
-
-            var test = new StageData();
-            test.scene = testScene;
-            test.location = (1, 5);
-
-            SpawnStageButton(test, center);
         }
 
-        private void OnEnable() {
-            document = GetComponent<UIDocument>();
+        void OnEnable()
+        {
+            var document = GetComponent<UIDocument>();
+            var root = document.rootVisualElement;
+            root.style.width = canvasCenter.x;
+            root.style.height = canvasCenter.y;
+            backBoard = root.Q<VisualElement>("back-board");
+            lineBoard = root.Q<VisualElement>("line-renderer");
 
-            root = document.rootVisualElement;
-            backBoard = root.Query<VisualElement>("back-board");
+            var exit = root.Q<Button>("exit");
+            exit.RegisterCallback<ClickEvent>((evt) => gameObject.SetActive(false));
         }
 
         public void AddOnClickButton(UnityAction<StageData> stageSelectEvt)
@@ -54,22 +40,35 @@ namespace Com2usGameDev
             onSelectStage += stageSelectEvt;
         }
 
-        private void SpawnStageButton(StageData data, Vector2 center)
+        public void DrawAllStages(StageData root)
+        {
+            DrawStageButton(root);
+        }
+
+        private void DrawStageButton(StageData data)
         {
             var clone = buttonAsset.Instantiate();
-            clone.style.left = center.x + data.location.room * intervalDistance.x;
-            clone.style.top = center.y * 2 - data.location.level * intervalDistance.y;
-            // Debug.Log(clone.style.left);
-            // Debug.Log(clone.style.top);
+            var x = Center.x + data.Position.x;
+            var y = Center.y * 2 - data.Position.y;
+            clone.style.left = x;
+            clone.style.top = y;
 
             var buttonClone = clone.Q<Button>("select-stage");
             buttonClone.RegisterCallback<ClickEvent>((evt) =>
             {
-                onSelectStage(data); 
+                onSelectStage(data);
                 evt.StopPropagation();
             });
+            clone.style.position = Position.Absolute;
 
             backBoard.Add(clone);
+
+            for (int i = 0; i < data.ChildCount; i++)
+            {
+                var child = data.GetChild(i);
+                DrawStageButton(child);
+                lineBoard.DrawLine((x + buttonOffset.x, y + buttonOffset.y), (Center.x + child.Position.x + buttonOffset.x, Center.y * 2 - child.Position.y + buttonOffset.y));
+            }
         }
     }
 }

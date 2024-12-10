@@ -9,13 +9,26 @@ namespace Com2usGameDev
         private MapViewer viewer;
         private MapCreator creator;
 
-        void Start()
+        private void Awake()
         {
             viewer = GetComponentInChildren<MapViewer>(true);
             creator = GetComponentInChildren<MapCreator>(true);
+        }
 
+        void Start()
+        {
             OnSelectStage();
         }
+
+        public void OpenUI()
+        {
+            viewer.gameObject.SetActive(true);
+
+            var rootStage = creator.GetRootStage();
+            viewer.DrawAllStages(rootStage);
+        }
+
+        public void CloseUI() => viewer.gameObject.SetActive(false);
 
         private void OnSelectStage()
         {
@@ -24,7 +37,7 @@ namespace Com2usGameDev
 
         private void LoadScene(StageData data)
         {
-            LoadSceneUniTask(data.scene.Name).Forget();
+            LoadSceneUniTask(data.SceneName).Forget();
         }
 
         private async UniTaskVoid LoadSceneUniTask(string sceneName)
