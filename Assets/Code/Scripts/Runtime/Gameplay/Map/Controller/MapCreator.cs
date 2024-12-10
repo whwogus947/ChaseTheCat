@@ -43,10 +43,9 @@ namespace Com2usGameDev
                 return;
 
             float intervalX = 200 + (60 * (levelCount - parentNode.Location.level));
-
             float offsetX = parentNode.Position.x + -intervalX * (childCount - 1) * 0.5f;
             float y = parentNode.Position.y + 100;
-            Debug.Log(parentNode.Position);
+            
             for (int i = 0; i < childCount; i++)
             {
                 var child = parentNode.GetChild(i);
