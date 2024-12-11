@@ -16,12 +16,7 @@ namespace Com2usGameDev
         private Vector2 Center => new(canvasCenter.x / 2f, canvasCenter.y / 2f);
         private Vector2 canvasCenter = new(1920, 1080);
         private (float x, float y) buttonOffset = (30, 30);
-
-        private void Awake()
-        {
-            onSelectStage = delegate { };
-        }
-
+        
         void OnEnable()
         {
             var document = GetComponent<UIDocument>();
@@ -37,6 +32,7 @@ namespace Com2usGameDev
 
         public void AddOnClickButton(UnityAction<StageData> stageSelectEvt)
         {
+            onSelectStage = delegate { };
             onSelectStage += stageSelectEvt;
         }
 

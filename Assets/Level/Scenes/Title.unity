@@ -246,61 +246,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: levelCount
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: minMaxPerRoom.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: stages.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: stages.Array.data[0].scene.guid
-      value: 57113c39f8ab87340ab7d9f9805f804f
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: stages.Array.data[1].scene.guid
-      value: 50eb7ede3685458469dc80e89f364dce
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: stages.Array.data[2].scene.guid
-      value: 42fd50861f2b76343baab67f3f5efb5e
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: stages.Array.data[3].scene.guid
-      value: 02da07aa48732be409add02bd90dd558
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: stages.Array.data[0].scene.asset
-      value: 
-      objectReference: {fileID: 102900000, guid: 57113c39f8ab87340ab7d9f9805f804f, type: 3}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: stages.Array.data[1].scene.asset
-      value: 
-      objectReference: {fileID: 102900000, guid: 50eb7ede3685458469dc80e89f364dce, type: 3}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: stages.Array.data[2].scene.asset
-      value: 
-      objectReference: {fileID: 102900000, guid: 42fd50861f2b76343baab67f3f5efb5e, type: 3}
-    - target: {fileID: 1955143891853150167, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: stages.Array.data[3].scene.asset
-      value: 
-      objectReference: {fileID: 102900000, guid: 02da07aa48732be409add02bd90dd558, type: 3}
     - target: {fileID: 3145260269639533874, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
       propertyPath: m_Name
       value: Map Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145260269639533874, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9033670420904260348, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

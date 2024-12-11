@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Com2usGameDev.Dev
+namespace Com2usGameDev
 {
     public class StateController : IStateAddible
     {

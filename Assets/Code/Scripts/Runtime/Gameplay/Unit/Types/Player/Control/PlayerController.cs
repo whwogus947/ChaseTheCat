@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Com2usGameDev.Dev
+namespace Com2usGameDev
 {
     [RequireComponent(typeof(PlayerBehaviour), typeof(UserInputHandler))]
     public class PlayerController : MonoBehaviour
@@ -20,9 +20,7 @@ namespace Com2usGameDev.Dev
             controller = new StateController(behaviour);
             userInput.BindInputToController(controller);
         }
-
         
-
         void Update()
         {
             userInput.UpdateInput();

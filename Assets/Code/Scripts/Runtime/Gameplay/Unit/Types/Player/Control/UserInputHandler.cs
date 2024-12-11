@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Com2usGameDev.Dev
+namespace Com2usGameDev
 {
     public class UserInputHandler : MonoBehaviour
     {

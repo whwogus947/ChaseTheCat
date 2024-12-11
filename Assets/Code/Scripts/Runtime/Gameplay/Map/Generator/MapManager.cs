@@ -46,11 +46,10 @@ namespace Com2usGameDev
             {
                 AsyncOperation load = SceneManager.LoadSceneAsync(sceneName);
                 await load.ToUniTask(Progress.Create<float>(x => Debug.Log(x)));
-                Debug.Log($"{sceneName} 씬 로드 완료");
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"씬 로드 중 오류 발생: {e.Message}");
+                Debug.LogError($"Error!: {e.Message}");
             }
         }
     }

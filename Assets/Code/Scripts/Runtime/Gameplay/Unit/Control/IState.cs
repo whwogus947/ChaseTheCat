@@ -1,4 +1,4 @@
-namespace Com2usGameDev.Dev
+namespace Com2usGameDev
 {
     public interface IState
     {

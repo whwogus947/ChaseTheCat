@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace Com2usGameDev.Dev
+namespace Com2usGameDev
 {
     public class StateMachine
     {
@@ -41,7 +40,6 @@ namespace Com2usGameDev.Dev
             if (states[currentState].HasSatisfiedState(out IState state))
             {
                 ChangeState(state.GetType());
-                // Debug.Log(currentState);
                 return;
             }
         }

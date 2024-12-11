@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Com2usGameDev.Dev
+namespace Com2usGameDev
 {
     public class UnitBehaviour : MonoBehaviour
     {
@@ -19,12 +19,12 @@ namespace Com2usGameDev.Dev
 
         private Animator ani;
         private Rigidbody2D rb;
-        private int UnitDirection => GetDirection();
+        private int UnitDirection => GetVelocityDirection();
         private float transitionPower;
         private int capturedDirection;
-        private int CharacterDirection
+        protected int CharacterDirection
         {
-            get => TransformToInt();
+            get => GetFaceDirection();
             set => IntToTransform(value);
         }
 
@@ -37,6 +37,7 @@ namespace Com2usGameDev.Dev
         private void Start()
         {
             controllable.Value = true;
+            Initialize();
         }
 
         void Update()
@@ -48,10 +49,15 @@ namespace Com2usGameDev.Dev
             }
         }
 
+        protected virtual void Initialize()
+        {
+
+        }
+
         public void UseVFX()
         {
             var poolObj = pool.GetPooledObject();
-            bool isFlip = TransformToInt() == 1 ? true : false;
+            bool isFlip = GetFaceDirection() == 1 ? true : false;
             poolObj.GetComponent<SpriteRenderer>().flipX = isFlip;
         }
 
@@ -90,7 +96,7 @@ namespace Com2usGameDev.Dev
         public void CaptureDirection(float? value = null)
         {
             SetTransitionPower(value == null ? transitionPower : (float)value);
-            capturedDirection = GetDirection();
+            capturedDirection = GetVelocityDirection();
         }
 
         private void GroundCheck()
@@ -117,7 +123,7 @@ namespace Com2usGameDev.Dev
             return distance < 0.025f;
         }
 
-        private int GetDirection()
+        protected virtual int GetVelocityDirection()
         {
             var velocity = direction.value;
             int velocityDirection = velocity > 0 ? 1 : velocity < 0 ? -1 : 0;
@@ -130,7 +136,7 @@ namespace Com2usGameDev.Dev
 
         private void ToOppositeDirection()
         {
-            unitImage.localScale = new(unitImage.localScale.x * -1, 1, 1);
+            unitImage.localScale = new(unitImage.localScale.x * -1, unitImage.localScale.y, 1);
             capturedDirection *= -1;
         }
 
@@ -139,14 +145,14 @@ namespace Com2usGameDev.Dev
             return direction == CharacterDirection * -1;
         }
 
-        private int TransformToInt()
+        private int GetFaceDirection()
         {
             return unitImage.localScale.x > 0 ? -1 : 1;
         }
 
         private void IntToTransform(int value)
         {
-            unitImage.localScale = new(Mathf.Abs(unitImage.localScale.x) * value * -1, 1, 1);
+            unitImage.localScale = new(Mathf.Abs(unitImage.localScale.x) * value * -1, unitImage.localScale.y, 1);
         }
     }
 }

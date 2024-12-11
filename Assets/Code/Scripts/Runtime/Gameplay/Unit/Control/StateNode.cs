@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Com2usGameDev.Dev
+namespace Com2usGameDev
 {
     public enum State
     {
-        None,
+        Basic,
         Movement,
         Action,
     }
@@ -104,18 +104,17 @@ namespace Com2usGameDev.Dev
 
     public class Nodes
     {
+        #region Player
         public class Empty : StateNode
         {
             public override void OnEnter(UnitBehaviour unit)
             {
-                // unit.SetAnimation("IsWalking", false);
-                // unit.SetAnimation("IsRunning", false);
-                // unit.SetAnimation("IsOnGround", false);
+                
             }
 
             public override void OnExit(UnitBehaviour unit)
             {
-                
+
             }
 
             public override void OnUpdate(UnitBehaviour unit)
@@ -138,7 +137,7 @@ namespace Com2usGameDev.Dev
 
             public override void OnExit(UnitBehaviour unit)
             {
-                
+
             }
 
             public override void OnUpdate(UnitBehaviour unit)
@@ -222,12 +221,12 @@ namespace Com2usGameDev.Dev
 
             public override void OnExit(UnitBehaviour unit)
             {
-                
+
             }
 
             public override void OnUpdate(UnitBehaviour unit)
             {
-                
+
             }
         }
 
@@ -266,7 +265,7 @@ namespace Com2usGameDev.Dev
 
             public override void OnExit(UnitBehaviour unit)
             {
-                
+
             }
 
             public override void OnUpdate(UnitBehaviour unit)
@@ -284,12 +283,12 @@ namespace Com2usGameDev.Dev
 
             public override void OnExit(UnitBehaviour unit)
             {
-                
+
             }
 
             public override void OnUpdate(UnitBehaviour unit)
             {
-                
+
             }
         }
 
@@ -310,5 +309,103 @@ namespace Com2usGameDev.Dev
                 throw new System.NotImplementedException();
             }
         }
+        #endregion
+        #region Monster
+        public class MonIdle : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                Debug.Log("Idle");
+                unit.SetTransitionPower(0);
+                unit.PlayAnimation(AnimationHash, 0.2f);
+                unit.TranslateX();
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                
+            }
+        }
+
+        public class MonWalk : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                Debug.Log("Walk");
+                unit.SetTransitionPower(unit.walk);
+                unit.PlayAnimation(AnimationHash, 0.2f);
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                unit.TranslateX();
+            }
+        }
+
+        public class MonAttack : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public class MonRun : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public class MonDead : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        #endregion
     }
 }

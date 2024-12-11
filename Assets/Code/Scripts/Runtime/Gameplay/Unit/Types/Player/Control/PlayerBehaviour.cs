@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace Com2usGameDev.Dev
+namespace Com2usGameDev
 {
     public class PlayerBehaviour : UnitBehaviour
     {
