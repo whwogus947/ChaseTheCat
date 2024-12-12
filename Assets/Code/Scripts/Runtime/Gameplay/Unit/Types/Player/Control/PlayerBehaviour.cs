@@ -9,6 +9,7 @@ namespace Com2usGameDev
         public BoolValueSO groundChecker;
         public BoolValueSO controllable;
         public VFXPool pool;
+        public LayerMask enemyLayer;
 
         public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
 
@@ -32,6 +33,11 @@ namespace Com2usGameDev
             {
                 ToOppositeDirection();
             }
+        }
+
+        protected override void Dead()
+        {
+            
         }
 
         protected override int GetVelocityDirection()
@@ -78,6 +84,15 @@ namespace Com2usGameDev
         {
             unitImage.localScale = new(unitImage.localScale.x * -1, unitImage.localScale.y, 1);
             capturedDirection *= -1;
+        }
+
+        public override void Attack()
+        {
+            var rayHit = Physics2D.BoxCast((Vector2)transform.position, Vector2.one, 0, FacingDirection * 1f * Vector2.right, 5, enemyLayer.value);
+            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out MonsterBehaviour behaviour))
+            {
+                behaviour.HP -= 40;
+            }
         }
     }
 }

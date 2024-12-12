@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
@@ -13,6 +14,22 @@ namespace Com2usGameDev
         public float jumpCharging;
         public abstract bool Controllable {get; set;}
         public CountdownTimer timer;
+        public float hp;
+
+        public VanishSlider slider;
+        public float HP
+        {
+            get => hp;
+            set
+            {
+                hp = value;
+                slider.SetValue(hp);
+                if (hp <= 0)
+                {
+                    Dead();
+                }
+            }
+        }
 
         protected Transform unitImage;
         protected int capturedDirection;
@@ -38,12 +55,17 @@ namespace Com2usGameDev
             timer = new(0);
             unitImage = transform.GetChild(0);
             Initialize();
+            HP = hp;
         }
 
         void Update()
         {
             CheckPerFrame();            
         }
+
+        public abstract void Attack();
+
+        protected abstract void Dead();
 
         public abstract void UseVFX();
 

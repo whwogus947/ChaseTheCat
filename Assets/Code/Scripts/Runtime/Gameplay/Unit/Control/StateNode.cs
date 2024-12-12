@@ -278,6 +278,7 @@ namespace Com2usGameDev
             public override void OnEnter(UnitBehaviour unit)
             {
                 unit.PlayAnimation(AnimationHash, 0.2f);
+                unit.Attack();
             }
 
             public override void OnExit(UnitBehaviour unit)
@@ -360,6 +361,7 @@ namespace Com2usGameDev
                 unit.SetTransitionPower(0);
                 unit.TranslateX();
                 unit.PlayAnimation(AnimationHash, 0.2f);
+                unit.Attack();
             }
 
             public override void OnExit(UnitBehaviour unit)
