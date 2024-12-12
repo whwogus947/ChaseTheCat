@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Com2usGameDev
 {
@@ -35,6 +35,38 @@ namespace Com2usGameDev
         public void RemoveTimer<T>()
         {
             timerTasks.Remove(typeof(T));
+        }
+    }
+
+    public struct CountdownTimer
+    {
+        private float duration;
+        private float remainingTime;
+
+        public CountdownTimer(float durationInSeconds)
+        {
+            duration = durationInSeconds;
+            remainingTime = durationInSeconds;
+        }
+
+        public void Start(float durationInSeconds)
+        {
+            duration = durationInSeconds;
+            remainingTime = durationInSeconds;
+        }
+
+        public void Tick()
+        {
+            remainingTime = Mathf.Max(0, remainingTime - Time.deltaTime);
+        }
+
+        public readonly float TimeRemaining => remainingTime;
+
+        public readonly bool IsFinished => remainingTime <= 0;
+
+        public void Reset()
+        {
+            remainingTime = duration;
         }
     }
 }

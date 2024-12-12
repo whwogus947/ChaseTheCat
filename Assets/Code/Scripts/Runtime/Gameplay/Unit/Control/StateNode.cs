@@ -127,7 +127,7 @@ namespace Com2usGameDev
         {
             public override void OnEnter(UnitBehaviour unit)
             {
-                unit.controllable.Value = true;
+                unit.Controllable = true;
                 unit.SetAnimation("IsWalking", false);
                 unit.SetAnimation("IsRunning", false);
                 unit.SetAnimation("IsOnGround", true);
@@ -215,7 +215,6 @@ namespace Com2usGameDev
         {
             public override void OnEnter(UnitBehaviour unit)
             {
-                Debug.Log("OnAir!");
                 unit.SetAnimation("IsOnGround", false);
             }
 
@@ -238,12 +237,12 @@ namespace Com2usGameDev
                 unit.Jump();
                 unit.SetAnimation("IsOnGround", false);
                 unit.CaptureDirection(unit.jumpX);
-                unit.controllable.Value = false;
+                unit.Controllable = false;
             }
 
             public override void OnExit(UnitBehaviour unit)
             {
-                unit.controllable.Value = true;
+                unit.Controllable = true;
                 unit.SetAnimation("IsOnGround", true);
             }
 
@@ -356,17 +355,21 @@ namespace Com2usGameDev
         {
             public override void OnEnter(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                Debug.Log("MonAttack");
+                unit.timer = new(0.94f);
+                unit.SetTransitionPower(0);
+                unit.TranslateX();
+                unit.PlayAnimation(AnimationHash, 0.2f);
             }
 
             public override void OnExit(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                
             }
 
             public override void OnUpdate(UnitBehaviour unit)
             {
-                throw new System.NotImplementedException();
+                unit.timer.Tick();
             }
         }
 

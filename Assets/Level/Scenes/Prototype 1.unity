@@ -257,10 +257,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a42ce8405bae449b96ec795e46e1fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {fileID: 0}
-  groundChecker: {fileID: 11400000, guid: a60a5a4b6af21eb4f9f077f257019de8, type: 2}
-  unitImage: {fileID: 656903304}
-  controllable: {fileID: 11400000, guid: df643ffe3b406cb44854317af6bffd6e, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -270,10 +266,10 @@ MonoBehaviour:
   jumpX: 0
   dash: 0
   jumpCharging: 0
-  pool: {fileID: 0}
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
+  attackRange: 3
 --- !u!50 &185635451
 Rigidbody2D:
   serializedVersion: 5
@@ -630,10 +626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a2642b100f94448a05156b9bf0a190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {fileID: 11400000, guid: 9b25a590f530e884ca18114b34f3be27, type: 2}
-  groundChecker: {fileID: 11400000, guid: 1f552f4d0137ace428507734bcd9c659, type: 2}
-  unitImage: {fileID: 467094945}
-  controllable: {fileID: 11400000, guid: 5982c9772d088ed48911175980be3398, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -643,6 +635,9 @@ MonoBehaviour:
   jumpX: 3
   dash: 9
   jumpCharging: 1
+  direction: {fileID: 11400000, guid: 9b25a590f530e884ca18114b34f3be27, type: 2}
+  groundChecker: {fileID: 11400000, guid: 1f552f4d0137ace428507734bcd9c659, type: 2}
+  controllable: {fileID: 11400000, guid: 5982c9772d088ed48911175980be3398, type: 2}
   pool: {fileID: 822160335}
 --- !u!114 &315616699
 MonoBehaviour:
@@ -1037,10 +1032,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a42ce8405bae449b96ec795e46e1fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {fileID: 0}
-  groundChecker: {fileID: 11400000, guid: a60a5a4b6af21eb4f9f077f257019de8, type: 2}
-  unitImage: {fileID: 577759039}
-  controllable: {fileID: 11400000, guid: df643ffe3b406cb44854317af6bffd6e, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -1050,10 +1041,10 @@ MonoBehaviour:
   jumpX: 0
   dash: 0
   jumpCharging: 0
-  pool: {fileID: 0}
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
+  attackRange: 3
 --- !u!1 &577160431
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,8 +1078,8 @@ Transform:
   - {fileID: 542445835}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &577160433
-BoxCollider2D:
+--- !u!58 &577160433
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1122,17 +1113,7 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.5
 --- !u!1001 &577759038
 PrefabInstance:
   m_ObjectHideFlags: 0

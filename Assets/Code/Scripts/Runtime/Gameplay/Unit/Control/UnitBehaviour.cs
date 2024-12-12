@@ -2,12 +2,8 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class UnitBehaviour : MonoBehaviour
+    public abstract class UnitBehaviour : MonoBehaviour
     {
-        public LinearStatSO direction;
-        public BoolValueSO groundChecker;
-        public Transform unitImage;
-        public BoolValueSO controllable;
         public LayerMask groundLayer;
         public float walk;
         public float run;
@@ -15,18 +11,21 @@ namespace Com2usGameDev
         public float jumpX;
         public float dash;
         public float jumpCharging;
-        public VFXPool pool;
+        public abstract bool Controllable {get; set;}
+        public CountdownTimer timer;
 
-        private Animator ani;
-        private Rigidbody2D rb;
-        private int UnitDirection => GetVelocityDirection();
-        private float transitionPower;
-        private int capturedDirection;
-        protected int CharacterDirection
+        protected Transform unitImage;
+        protected int capturedDirection;
+        protected int FacingDirection
         {
             get => GetFaceDirection();
             set => IntToTransform(value);
         }
+
+        private Animator ani;
+        private Rigidbody2D rb;
+        private int VelocityDirection => GetVelocityDirection();
+        private float transitionPower;
 
         private void Awake()
         {
@@ -36,36 +35,29 @@ namespace Com2usGameDev
 
         private void Start()
         {
-            controllable.Value = true;
+            timer = new(0);
+            unitImage = transform.GetChild(0);
             Initialize();
         }
 
         void Update()
         {
-            GroundCheck();
-            if (IsCollideWithWall())
-            {
-                ToOppositeDirection();
-            }
+            CheckPerFrame();            
         }
 
-        protected virtual void Initialize()
-        {
+        public abstract void UseVFX();
 
-        }
+        protected abstract void Initialize();
 
-        public void UseVFX()
-        {
-            var poolObj = pool.GetPooledObject();
-            bool isFlip = GetFaceDirection() == 1 ? true : false;
-            poolObj.GetComponent<SpriteRenderer>().flipX = isFlip;
-        }
+        protected abstract void CheckPerFrame();
+
+        protected abstract int GetVelocityDirection();
 
         public void SetTransitionPower(float power) => transitionPower = power;
 
         public void TranslateX()
         {
-            rb.linearVelocityX = UnitDirection * transitionPower;
+            rb.linearVelocityX = VelocityDirection * transitionPower;
         }
 
         public void TranslateFixedX()
@@ -73,10 +65,7 @@ namespace Com2usGameDev
             rb.linearVelocityX = capturedDirection * transitionPower;
         }
 
-        public void Jump()
-        {
-            rb.AddForceY(jump);
-        }
+        public void Jump() => rb.AddForceY(jump);
 
         public void PlayAnimation(int animHash, float transitionRate = 0f)
         {
@@ -99,53 +88,7 @@ namespace Com2usGameDev
             capturedDirection = GetVelocityDirection();
         }
 
-        private void GroundCheck()
-        {
-            var rayHit = Physics2D.BoxCast(transform.position, Vector2.one * 0.92f, 0, Vector2.down, 20f, groundLayer.value);
-            float distance = float.MaxValue;
-            if (rayHit.collider != null)
-            {
-                distance = rayHit.distance;
-            }
-            controllable.Value = groundChecker.Value = distance < 0.05f;
-        }
-
-        private bool IsCollideWithWall()
-        {
-            if (groundChecker.Value)
-                return false;
-            var rayHit = Physics2D.BoxCast((Vector2)transform.position + CharacterDirection * 0.55f * Vector2.right, new Vector2(0.1f, 0.9f), 0, Vector2.zero, 0, groundLayer.value);
-            float distance = float.MaxValue;
-            if (rayHit.collider != null)
-            {
-                distance = rayHit.distance;
-            }
-            return distance < 0.025f;
-        }
-
-        protected virtual int GetVelocityDirection()
-        {
-            var velocity = direction.value;
-            int velocityDirection = velocity > 0 ? 1 : velocity < 0 ? -1 : 0;
-            if (IsOppositeDirection(velocityDirection) && controllable.Value)
-            {
-                CharacterDirection = velocityDirection;
-            }
-            return velocityDirection;
-        }
-
-        private void ToOppositeDirection()
-        {
-            unitImage.localScale = new(unitImage.localScale.x * -1, unitImage.localScale.y, 1);
-            capturedDirection *= -1;
-        }
-
-        private bool IsOppositeDirection(int direction)
-        {
-            return direction == CharacterDirection * -1;
-        }
-
-        private int GetFaceDirection()
+        protected int GetFaceDirection()
         {
             return unitImage.localScale.x > 0 ? -1 : 1;
         }
