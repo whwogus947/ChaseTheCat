@@ -245,7 +245,7 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b1ed7f2f-dae9-41ef-ae3e-aba2a0a69cb2"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
