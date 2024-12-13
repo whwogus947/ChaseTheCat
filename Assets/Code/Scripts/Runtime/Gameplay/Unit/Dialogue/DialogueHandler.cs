@@ -14,9 +14,15 @@ namespace Com2usGameDev
         public DialogueHandler handler;
         public DialogueDataSO data;
         public UnityAction onLastDialogueEnd = delegate {};
+        public NPCTypeSO NPC => data.NextNpc;
 
         private bool isFirstMessage = true;
         private bool isEventInvoked = false;
+
+        public void StartNewMessage()
+        {
+            data.Reset();
+        }
 
         public void NextMessage(TMP_Text label, bool interruption = false)
         {
@@ -48,7 +54,7 @@ namespace Com2usGameDev
     {
         public bool IsCompleted => isCompleted;
 
-        [SerializeField] private float letterDelay = 0.1f;
+        [SerializeField] private int letterDelay = 100;
         private CancellationTokenSource _cancellationTokenSource;
         private bool isCompleted = true;
 
@@ -78,7 +84,7 @@ namespace Com2usGameDev
                 if (cancellationToken.IsCancellationRequested)
                     break;
 
-                await UniTask.WaitForSeconds(letterDelay);
+                await UniTask.Delay(letterDelay, delayType: DelayType.UnscaledDeltaTime);
                 printText += text[i];
                 label.text = printText;
             }

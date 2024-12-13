@@ -283,6 +283,7 @@ namespace Com2usGameDev
                 {
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     behaviour.InvalidateRigidbody();
+                    unit.SetAnimation("IsHolding", true);
                 }
             }
 
@@ -291,6 +292,7 @@ namespace Com2usGameDev
                 if (unit is PlayerBehaviour behaviour)
                 {
                     behaviour.RegenerateRigidbody();
+                    unit.SetAnimation("IsHolding", false);
                 }
             }
 

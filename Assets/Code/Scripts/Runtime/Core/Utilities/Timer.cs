@@ -27,6 +27,11 @@ namespace Com2usGameDev
             timerTasks[typeof(T)] = false;
         }
 
+        public void EndTimer<T>()
+        {
+            timerTasks[typeof(T)] = true;
+        }
+
         public bool HasTimerExpired<T>()
         {
             return !timerTasks.ContainsKey(typeof(T)) || timerTasks[typeof(T)];

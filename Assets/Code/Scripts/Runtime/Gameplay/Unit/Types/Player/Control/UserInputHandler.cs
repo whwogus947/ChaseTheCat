@@ -7,7 +7,8 @@ namespace Com2usGameDev
     public class UserInputHandler : MonoBehaviour
     {
         public InputControllerSO inputController;
-        public LinearStatSO direction;
+        public LinearStatSO velocityDirection;
+        public LinearStatSO facingDirection;
         public BoolValueSO groundChecker;
         public BoolValueSO controllable;
 
@@ -32,13 +33,26 @@ namespace Com2usGameDev
             input.Player.Jump.canceled += OnReleaseJump;
             input.Player.Attack.performed += OnPressAttack;
             input.Player.StaticFlight.performed += OnPressStaticFlight;
+            input.Player.Interaction.performed += OnInteraction;
+        }
+
+        private void OnInteraction(InputAction.CallbackContext context)
+        {
+            if (gameObject.TryGetComponent(out PlayerBehaviour behaviour))
+            {
+                behaviour.MeetupNPC();
+            }
         }
 
         private void OnPressStaticFlight(InputAction.CallbackContext context)
         {
             if (timer.HasTimerExpired<Nodes.StaticFlight>())
             {
-                timer.StartTimer<Nodes.StaticFlight>(1.5f);
+                timer.StartTimer<Nodes.StaticFlight>(2f);
+            }
+            else
+            {
+                timer.EndTimer<Nodes.StaticFlight>();
             }
         }
 
@@ -124,13 +138,13 @@ namespace Com2usGameDev
 
         private bool IsVelocityZero()
         {
-            return Mathf.Abs(direction.value) == 0;
+            return Mathf.Abs(velocityDirection.value) == 0;
         }
 
         public void UpdateInput()
         {
             var velocity = input.Player.Transit.ReadValue<Vector2>();
-            direction.value = velocity.x > 0 ? 1 : velocity.x < 0 ? -1 : 0;
+            velocityDirection.value = velocity.x > 0 ? 1 : velocity.x < 0 ? -1 : 0;
         }
 
         private void OnDestroy()

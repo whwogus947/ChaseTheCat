@@ -10,6 +10,7 @@ namespace Com2usGameDev
         public BoolValueSO controllable;
         public VFXPool pool;
         public LayerMask enemyLayer;
+        public LayerMask npcLayer;
 
         public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
 
@@ -29,6 +30,15 @@ namespace Com2usGameDev
             var poolObj = pool.GetPooledObject();
             bool isFlip = GetFaceDirection() == 1;
             poolObj.GetComponent<SpriteRenderer>().flipX = isFlip;
+        }
+
+        public void MeetupNPC()
+        {
+            var rayHit = Physics2D.BoxCast((Vector2)transform.position, Vector2.one, 0, FacingDirection * 1f * Vector2.right, 2, npcLayer.value);
+            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out NPCBehaviour behaviour))
+            {
+                behaviour.OpenDialogue();
+            }
         }
 
         protected override void Initialize()
