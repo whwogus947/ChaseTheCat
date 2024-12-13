@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "StaticFlight",
+                    "type": "Button",
+                    "id": "10067ae8-45f9-47ea-be65-f7e26f6529ff",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -191,17 +200,6 @@
                 },
                 {
                     "name": "",
-                    "id": "463bc40c-7623-41bc-adbc-3da826e2c3df",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "36c48a3c-fb51-424b-abd5-e9559a7dce93",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
@@ -213,23 +211,23 @@
                 },
                 {
                     "name": "",
-                    "id": "0b5e5b20-ab28-407c-8c46-5788c7de3646",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Test",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "2d9e4f9a-c80e-43e5-b640-476987fb5c14",
                     "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Test",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1ed7f2f-dae9-41ef-ae3e-aba2a0a69cb2",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "StaticFlight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

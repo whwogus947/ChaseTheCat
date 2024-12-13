@@ -98,6 +98,15 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StaticFlight"",
+                    ""type"": ""Button"",
+                    ""id"": ""10067ae8-45f9-47ea-be65-f7e26f6529ff"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -213,17 +222,6 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""463bc40c-7623-41bc-adbc-3da826e2c3df"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Run"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""36c48a3c-fb51-424b-abd5-e9559a7dce93"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
@@ -235,23 +233,23 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0b5e5b20-ab28-407c-8c46-5788c7de3646"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Test"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""2d9e4f9a-c80e-43e5-b640-476987fb5c14"",
                     ""path"": ""<Keyboard>/t"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Test"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1ed7f2f-dae9-41ef-ae3e-aba2a0a69cb2"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""StaticFlight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -847,6 +845,7 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
+        m_Player_StaticFlight = m_Player.FindAction("StaticFlight", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -934,6 +933,7 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_Test;
+    private readonly InputAction m_Player_StaticFlight;
     public struct PlayerActions
     {
         private @PCInput m_Wrapper;
@@ -946,6 +946,7 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Run => m_Wrapper.m_Player_Run;
         public InputAction @Test => m_Wrapper.m_Player_Test;
+        public InputAction @StaticFlight => m_Wrapper.m_Player_StaticFlight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -979,6 +980,9 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
             @Test.started += instance.OnTest;
             @Test.performed += instance.OnTest;
             @Test.canceled += instance.OnTest;
+            @StaticFlight.started += instance.OnStaticFlight;
+            @StaticFlight.performed += instance.OnStaticFlight;
+            @StaticFlight.canceled += instance.OnStaticFlight;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1007,6 +1011,9 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
             @Test.started -= instance.OnTest;
             @Test.performed -= instance.OnTest;
             @Test.canceled -= instance.OnTest;
+            @StaticFlight.started -= instance.OnStaticFlight;
+            @StaticFlight.performed -= instance.OnStaticFlight;
+            @StaticFlight.canceled -= instance.OnStaticFlight;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1197,6 +1204,7 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
+        void OnStaticFlight(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

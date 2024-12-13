@@ -13215,7 +13215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6101441850423345861, guid: 2daf5833d4956114dbb97498a79c1e3d, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6180853273869251675, guid: 2daf5833d4956114dbb97498a79c1e3d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -17637,6 +17637,10 @@ PrefabInstance:
     - target: {fileID: 2089200878075547167, guid: 1ef72e9dae0b44a4ab5286bf88a72b6f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678904732439354006, guid: 1ef72e9dae0b44a4ab5286bf88a72b6f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 7696477276921894745, guid: 1ef72e9dae0b44a4ab5286bf88a72b6f, type: 3}
       propertyPath: m_Name

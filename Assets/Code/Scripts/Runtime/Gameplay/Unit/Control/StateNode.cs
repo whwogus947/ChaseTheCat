@@ -252,6 +252,54 @@ namespace Com2usGameDev
             }
         }
 
+        public class DoubleJump : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                Debug.Log("DOUBLE JUMP");
+                unit.Jump();
+                unit.SetAnimation("IsOnGround", false);
+                unit.CaptureDirection(unit.jumpX);
+                unit.Controllable = false;
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                unit.Controllable = true;
+                unit.SetAnimation("IsOnGround", true);
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                unit.TranslateFixedX();
+            }
+        }
+
+        public class StaticFlight : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                if (unit is PlayerBehaviour behaviour)
+                {
+                    unit.PlayAnimation(AnimationHash, 0.2f);
+                    behaviour.InvalidateRigidbody();
+                }
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                if (unit is PlayerBehaviour behaviour)
+                {
+                    behaviour.RegenerateRigidbody();
+                }
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                
+            }
+        }
+
         public class Dash : StateNode
         {
             public override void OnEnter(UnitBehaviour unit)

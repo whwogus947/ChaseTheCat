@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +31,15 @@ namespace Com2usGameDev
             input.Player.Jump.performed += OnPressJump;
             input.Player.Jump.canceled += OnReleaseJump;
             input.Player.Attack.performed += OnPressAttack;
+            input.Player.StaticFlight.performed += OnPressStaticFlight;
+        }
+
+        private void OnPressStaticFlight(InputAction.CallbackContext context)
+        {
+            if (timer.HasTimerExpired<Nodes.StaticFlight>())
+            {
+                timer.StartTimer<Nodes.StaticFlight>(1.5f);
+            }
         }
 
         private void OnPressJump(InputAction.CallbackContext context)
@@ -74,7 +84,9 @@ namespace Com2usGameDev
             var emptyAction = StateNode.Creator<Nodes.Empty>.CreateType(State.Action).InProgress();
             var jumpCharging = StateNode.Creator<Nodes.JumpCharging>.CreateType(State.Action).InProgress();
             var jump = StateNode.Creator<Nodes.Jump>.CreateType(State.Action).InProgress();
+            var doubleJump = StateNode.Creator<Nodes.DoubleJump>.CreateType(State.Action).InProgress();
             var attackNormal = StateNode.Creator<Nodes.AttackNormal>.CreateType(State.Action).InProgress();
+            var staticFlight = StateNode.Creator<Nodes.StaticFlight>.CreateType(State.Action).InProgress();
             var onAir = StateNode.Creator<Nodes.OnAir>.CreateType(State.Action).InProgress();
             
             NodeTransition toIdle = new(idle, new(() => IsVelocityZero()));
@@ -87,10 +99,13 @@ namespace Com2usGameDev
 
             NodeTransition toJumpCharging = new(jumpCharging, new(() => input.Player.Jump.phase == InputActionPhase.Performed && groundChecker.Value && !timer.HasTimerExpired<Nodes.JumpCharging>()));
             NodeTransition toJump = new(jump, new(() => input.Player.Jump.phase == InputActionPhase.Waiting));
+            NodeTransition toDoubleJump = new(doubleJump, new(() => input.Player.Jump.phase == InputActionPhase.Performed));
             NodeTransition toOnAir = new(onAir, new(() => !groundChecker.Value));
             NodeTransition toEmptyAction = new(emptyAction, new(() => groundChecker.Value && timer.HasTimerExpired<Nodes.Jump>()));
             NodeTransition toAttack = new(attackNormal, new(() => input.Player.Attack.phase == InputActionPhase.Performed));
             NodeTransition attackToEmpty = new(emptyAction, new(() => input.Player.Attack.phase == InputActionPhase.Waiting && timer.HasTimerExpired<Nodes.AttackNormal>()));
+            NodeTransition toStaticFlight = new(staticFlight, new(() => input.Player.StaticFlight.phase == InputActionPhase.Performed && !groundChecker.Value));
+            NodeTransition staticFlightToEmptyAction = new(emptyAction, new(() => timer.HasTimerExpired<Nodes.StaticFlight>()));
 
             StateNode.Creator<Nodes.Empty>.Using(emptyMovement).WithTransition(emptymovementToIdle).Accomplish(controller);
             StateNode.Creator<Nodes.Idle>.Using(idle).WithTransition(toWalk).WithTransition(toEmptyMovement).WithTransition(toRun).WithAnimation("main-idle").Accomplish(controller);
@@ -100,8 +115,10 @@ namespace Com2usGameDev
 
             StateNode.Creator<Nodes.Empty>.Using(emptyAction).WithTransition(toJumpCharging).WithTransition(toAttack).WithTransition(toOnAir).Accomplish(controller);
             StateNode.Creator<Nodes.JumpCharging>.Using(jumpCharging).WithTransition(toJump).WithTransition(toOnAir).WithAnimation("main-jumpcharging").Accomplish(controller);
-            StateNode.Creator<Nodes.Jump>.Using(jump).WithTransition(toEmptyAction).Accomplish(controller);
-            StateNode.Creator<Nodes.OnAir>.Using(onAir).WithTransition(toEmptyAction).Accomplish(controller);
+            StateNode.Creator<Nodes.Jump>.Using(jump).WithTransition(toEmptyAction).WithTransition(toDoubleJump).WithTransition(toStaticFlight).Accomplish(controller);
+            StateNode.Creator<Nodes.DoubleJump>.Using(doubleJump).WithTransition(toEmptyAction).WithTransition(toStaticFlight).Accomplish(controller);
+            StateNode.Creator<Nodes.StaticFlight>.Using(staticFlight).WithTransition(staticFlightToEmptyAction).WithAnimation("main-holding").Accomplish(controller);
+            StateNode.Creator<Nodes.OnAir>.Using(onAir).WithTransition(toStaticFlight).WithTransition(toEmptyAction).Accomplish(controller);
             StateNode.Creator<Nodes.AttackNormal>.Using(attackNormal).WithAnimation("main-attack").WithTransition(attackToEmpty).Accomplish(controller);
         }
 

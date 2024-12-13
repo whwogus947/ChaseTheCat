@@ -38,9 +38,8 @@ namespace Com2usGameDev
             get => GetFaceDirection();
             set => IntToTransform(value);
         }
-
+        protected Rigidbody2D rb;
         private Animator ani;
-        private Rigidbody2D rb;
         private int VelocityDirection => GetVelocityDirection();
         private float transitionPower;
 

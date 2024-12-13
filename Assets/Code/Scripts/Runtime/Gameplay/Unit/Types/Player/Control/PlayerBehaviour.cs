@@ -13,6 +13,16 @@ namespace Com2usGameDev
 
         public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
 
+        public void InvalidateRigidbody()
+        {
+            rb.gravityScale = 0f;
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        public void RegenerateRigidbody()
+        {
+            rb.gravityScale = 1f;
+        }
         
         public override void UseVFX()
         {
