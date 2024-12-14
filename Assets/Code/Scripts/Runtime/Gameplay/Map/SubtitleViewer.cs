@@ -6,19 +6,28 @@ namespace Com2usGameDev
 {
     public class SubtitleViewer : MonoBehaviour
     {
+        public SceneHandler loadScene;
         public Dialogue dialogue;
-        public SceneHandler scene;
-        public TMP_Text viewText;
-        public Button button;
+
+        private TMP_Text viewText;
+        private Button button;
 
         void Start()
         {
-            dialogue.onLastDialogueEnd += scene.LoadScene;
+            button = GetComponentInChildren<Button>();
+            viewText = GetComponentInChildren<TMP_Text>();
+
+            Initialize();            
+        }
+
+        private void Initialize()
+        {
+            dialogue.onLastDialogueEnd += loadScene.LoadScene;
             button.onClick.AddListener(NextMessage);
             NextMessage();
         }
 
-        public void NextMessage()
+        private void NextMessage()
         {
             dialogue.NextMessage(viewText, true);
         }

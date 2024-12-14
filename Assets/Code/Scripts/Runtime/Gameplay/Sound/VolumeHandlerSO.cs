@@ -12,7 +12,7 @@ namespace Com2usGameDev
         public void HandlingVolume(float value)
         {
             Value = value;
-            onVolumeChange(Value);
+            onVolumeChange?.Invoke(Value);
         }
     }
 }
