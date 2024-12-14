@@ -7,8 +7,7 @@ namespace Com2usGameDev
     public class UserInputHandler : MonoBehaviour
     {
         public InputControllerSO inputController;
-        public LinearStatSO velocityDirection;
-        public LinearStatSO facingDirection;
+        public FloatValueSO velocityDirection;
         public BoolValueSO groundChecker;
         public BoolValueSO controllable;
 
@@ -138,13 +137,13 @@ namespace Com2usGameDev
 
         private bool IsVelocityZero()
         {
-            return Mathf.Abs(velocityDirection.value) == 0;
+            return Mathf.Abs(velocityDirection.Value) == 0;
         }
 
         public void UpdateInput()
         {
             var velocity = input.Player.Transit.ReadValue<Vector2>();
-            velocityDirection.value = velocity.x > 0 ? 1 : velocity.x < 0 ? -1 : 0;
+            velocityDirection.Value = velocity.x > 0 ? 1 : velocity.x < 0 ? -1 : 0;
         }
 
         private void OnDestroy()

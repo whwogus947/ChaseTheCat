@@ -5,7 +5,7 @@ namespace Com2usGameDev
 {
     public class PlayerBehaviour : UnitBehaviour
     {
-        public LinearStatSO direction;
+        public FloatValueSO direction;
         public BoolValueSO groundChecker;
         public BoolValueSO controllable;
         public VFXPool pool;
@@ -62,7 +62,7 @@ namespace Com2usGameDev
 
         protected override int GetVelocityDirection()
         {
-            var velocity = direction.value;
+            var velocity = direction.Value;
             int velocityDirection = velocity > 0 ? 1 : velocity < 0 ? -1 : 0;
             if (IsOppositeDirection(velocityDirection) && controllable.Value)
             {

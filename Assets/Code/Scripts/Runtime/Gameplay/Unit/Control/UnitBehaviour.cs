@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
-    public abstract class UnitBehaviour : MonoBehaviour
+    public abstract class UnitBehaviour : Sonorous
     {
         public LayerMask groundLayer;
         public float walk;
@@ -15,6 +15,7 @@ namespace Com2usGameDev
         public abstract bool Controllable {get; set;}
         public CountdownTimer timer;
         public float hp;
+        public AudioClip attackSound;
 
         public VanishSlider slider;
         public float HP

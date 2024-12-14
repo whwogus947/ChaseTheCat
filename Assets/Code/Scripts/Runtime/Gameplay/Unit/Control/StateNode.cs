@@ -329,6 +329,7 @@ namespace Com2usGameDev
             {
                 unit.PlayAnimation(AnimationHash, 0.2f);
                 unit.Attack();
+                unit.PlaySound(unit.attackSound);
             }
 
             public override void OnExit(UnitBehaviour unit)
