@@ -1,13 +1,14 @@
+using System;
 using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class SoundManager : MonoBehaviour
+    public class SoundManager : UniqueSingleton<SoundManager>
     {
         public AudioBroadcaster BGM;
         public AudioBroadcaster SFX;
 
-        private void Awake()
+        private void Start()
         {
             DontDestroyOnLoad(gameObject);
 
