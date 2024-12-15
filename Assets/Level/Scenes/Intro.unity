@@ -378,6 +378,38 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1847501765}
+    - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
+      propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
+      propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
+      propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8985686684466127583, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
+    - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
+      propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
+      propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
+      propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Com2usGameDev.MapManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
+      propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: a41920b34386c94498a25f0355c7acde, type: 2}
+    - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
+      propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Com2usGameDev.SceneHandlerSO, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5069507970835707422, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
       propertyPath: m_Name
       value: Sub Title

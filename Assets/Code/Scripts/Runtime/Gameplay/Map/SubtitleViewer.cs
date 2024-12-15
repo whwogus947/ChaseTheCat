@@ -1,12 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
     public class SubtitleViewer : MonoBehaviour
     {
-        public SceneHandler loadScene;
+        public UnityEvent loadSceneEvent;
         public Dialogue dialogue;
 
         private TMP_Text viewText;
@@ -22,7 +23,7 @@ namespace Com2usGameDev
 
         private void Initialize()
         {
-            dialogue.onLastDialogueEnd += loadScene.LoadScene;
+            dialogue.onLastDialogueEnd += loadSceneEvent.Invoke;
             button.onClick.AddListener(NextMessage);
             NextMessage();
         }

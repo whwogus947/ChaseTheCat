@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,6 +7,9 @@ namespace Com2usGameDev
 {
     public class MapManager : MonoBehaviour
     {
+        public MapNamePopup mapNamePopup;
+        public GameObject guide;
+
         private MapViewer viewer;
         private MapCreator creator;
 
@@ -17,7 +21,7 @@ namespace Com2usGameDev
 
         void Start()
         {
-            OnSelectStage();
+            AddStageSelectionButtonEvent();
         }
 
         public void OpenUI()
@@ -30,7 +34,12 @@ namespace Com2usGameDev
 
         public void CloseUI() => viewer.gameObject.SetActive(false);
 
-        private void OnSelectStage()
+        public void LoadScene(SceneHandlerSO scene)
+        {
+            LoadSceneUniTask(scene.SceneName).Forget();
+        }
+
+        private void AddStageSelectionButtonEvent()
         {
             viewer.AddOnClickButton(LoadScene);
         }
@@ -45,12 +54,25 @@ namespace Com2usGameDev
             try
             {
                 AsyncOperation load = SceneManager.LoadSceneAsync(sceneName);
+                load.completed += OnLoadComplete;
                 await load.ToUniTask(Progress.Create<float>(x => Debug.Log(x)));
             }
             catch (System.Exception e)
             {
                 Debug.LogError($"Error!: {e.Message}");
             }
+        }
+
+        private void OnLoadComplete(AsyncOperation operation)
+        {
+            OnLoadProcess().Forget();
+        }
+
+        private async UniTaskVoid OnLoadProcess()
+        {
+            var popupClone = Instantiate(mapNamePopup);
+            await UniTask.WaitUntil(() => popupClone == null);
+            Instantiate(guide);
         }
     }
 }
