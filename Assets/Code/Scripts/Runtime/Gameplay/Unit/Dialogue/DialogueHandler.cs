@@ -22,6 +22,7 @@ namespace Com2usGameDev
         public void StartNewMessage()
         {
             data.Reset();
+            handler.Reset();
         }
 
         public void NextMessage(TMP_Text label, bool interruption = false)
@@ -76,13 +77,21 @@ namespace Com2usGameDev
             }
         }
 
+        public void Reset()
+        {
+            isCompleted = true;
+        }
+
         public async UniTaskVoid DialogueRoutine(TMP_Text label, string text, CancellationToken cancellationToken)
         {
             string printText = "";
             for (int i = 0; i < text.Length; i++)
             {
                 if (cancellationToken.IsCancellationRequested)
-                    break;
+                {
+                    label.text = text;
+                    return;
+                }
 
                 await UniTask.Delay(letterDelay, delayType: DelayType.UnscaledDeltaTime);
                 printText += text[i];
