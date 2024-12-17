@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
@@ -11,6 +12,7 @@ namespace Com2usGameDev
         public VFXPool pool;
         public LayerMask enemyLayer;
         public LayerMask npcLayer;
+        public VanishSlider jumpGauge;
 
         public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
 
@@ -44,6 +46,9 @@ namespace Com2usGameDev
         protected override void Initialize()
         {
             controllable.Value = true;
+            var vanishImage = GetComponentInChildren<VanishImage>();
+            vanishImage.maxValue = HP;
+            vanishUI = vanishImage;
         }
 
         protected override void CheckPerFrame()

@@ -3,14 +3,14 @@ using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
-    public class VanishSlider : MonoBehaviour, IVanishable
+    public class VanishImage : MonoBehaviour, IVanishable
     {
         public bool hide;
         public bool shake;
-        public bool solo;
+        public Image main;
+        public Image sub;
+        public float maxValue;
 
-        private Slider main;
-        private Slider sub;
         private CountdownTimer timer;
         private CanvasGroup canvasGroup;
         private readonly float shakeSize = 0.42f;
@@ -19,8 +19,6 @@ namespace Com2usGameDev
         void Awake()
         {
             timer = new(0f);
-            sub = transform.GetChild(0).GetComponent<Slider>();
-            main = transform.GetChild(1).GetComponent<Slider>();
             canvasGroup = GetComponent<CanvasGroup>();
 
             if (hide)
@@ -29,20 +27,20 @@ namespace Com2usGameDev
 
         public void Open(float value)
         {
-            main.value = value;
-            sub.value = value;
+            main.fillAmount = value;
+            sub.fillAmount = value;
             gameObject.SetActive(true);
         }
 
         void Update()
         {
-            bool hasGap = Mathf.Abs(sub.value - main.value) > 0.02f;
+            bool hasGap = Mathf.Abs(sub.fillAmount - main.fillAmount) > 0.02f;
             if (hasGap)
             {
-                sub.value = Mathf.Lerp(sub.value, main.value, Time.deltaTime * 1f);
-                if (Mathf.Abs(sub.value - main.value) < 0.05f)
+                sub.fillAmount = Mathf.Lerp(sub.fillAmount, main.fillAmount, Time.deltaTime * 1f);
+                if (sub.fillAmount - main.fillAmount < 0.05f)
                 {
-                    sub.value = main.value;
+                    sub.fillAmount = main.fillAmount;
                     ShakePosition(0);
                 }
             }
@@ -50,12 +48,11 @@ namespace Com2usGameDev
             if (!hide)
                 return;
 
-            if (!timer.IsFinished && (hasGap || solo))
+            if (!timer.IsFinished && hasGap)
             {
                 timer.Tick();
                 var leftover = Mathf.Min(0.2f, timer.TimeRemaining) / 0.2f;
                 SetSliderTransparency(leftover);
-                
                 if (shake)
                 {
                     var tempSize = timer.TimeRemaining / fadeTime;
@@ -68,17 +65,12 @@ namespace Com2usGameDev
         public void SetValue(float value)
         {
             InvokeTimer();
-            main.value = value;
+            main.fillAmount = value / maxValue;
         }
 
         private void InvokeTimer()
         {
-            if (timer.IsFinished)
-            {
-                timer = new(fadeTime);
-                return;
-            }
-            timer.Reset();
+            timer = new(fadeTime);
         }
 
         private void ShakePosition(float size)

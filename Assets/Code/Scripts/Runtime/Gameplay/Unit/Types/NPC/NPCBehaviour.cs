@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Com2usGameDev
 {
@@ -6,6 +7,7 @@ namespace Com2usGameDev
     {
         [SerializeField] private Dialogue dialogue;
         private SocialInteraction social;
+        private UnityAction onInteract;
 
         void Start()
         {
@@ -14,7 +16,13 @@ namespace Com2usGameDev
 
         public void OpenDialogue()
         {
+            onInteract?.Invoke();
             social.Open(dialogue);
+        }
+
+        public void AddEvent(UnityAction @event)
+        {
+            onInteract += @event;
         }
     }
 }

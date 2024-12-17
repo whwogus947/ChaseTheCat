@@ -27,6 +27,7 @@ namespace Com2usGameDev
         {
             propertyBlock = new MaterialPropertyBlock();
             renderers = GetComponentsInChildren<Renderer>();
+            vanishUI = GetComponentInChildren<VanishSlider>();
         }
 
         protected override void CheckPerFrame()
@@ -56,7 +57,7 @@ namespace Com2usGameDev
             isDissolveOn = true;
             DissolveRoutine().Forget();
             Controllable = false;
-            slider.gameObject.SetActive(false);
+            vanishUI.OnFadeaway();
         }
 
         private async UniTaskVoid DissolveRoutine()

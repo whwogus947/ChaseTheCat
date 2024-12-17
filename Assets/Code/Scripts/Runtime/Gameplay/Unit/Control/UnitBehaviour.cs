@@ -12,19 +12,20 @@ namespace Com2usGameDev
         public float jumpX;
         public float dash;
         public float jumpCharging;
+        public float chargePower;
         public abstract bool Controllable {get; set;}
         public CountdownTimer timer;
         public float hp;
         public AudioClip attackSound;
 
-        public VanishSlider slider;
+        protected IVanishable vanishUI;
         public float HP
         {
             get => hp;
             set
             {
                 hp = value;
-                slider.SetValue(hp);
+                vanishUI.SetValue(hp);
                 if (hp <= 0)
                 {
                     Dead();
@@ -87,7 +88,7 @@ namespace Com2usGameDev
             rb.linearVelocityX = capturedDirection * transitionPower;
         }
 
-        public void Jump() => rb.AddForceY(jump);
+        public void Jump() => rb.AddForceY(jump * Mathf.Clamp(chargePower, 0, 1));
 
         public void PlayAnimation(int animHash, float transitionRate = 0f)
         {

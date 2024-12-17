@@ -192,11 +192,15 @@ namespace Com2usGameDev
 
         public class JumpCharging : StateNode
         {
+            private PlayerBehaviour playerBehaviour;
+
             public override void OnEnter(UnitBehaviour unit)
             {
+                playerBehaviour = unit as PlayerBehaviour;
                 Debug.Log("CHARGING!");
                 unit.PlayAnimation(AnimationHash, 0.2f);
                 unit.SetAnimation("IsOnGround", true);
+                unit.chargePower = 0;
             }
 
             public override void OnExit(UnitBehaviour unit)
@@ -208,6 +212,8 @@ namespace Com2usGameDev
             {
                 unit.SetTransitionPower(unit.jumpCharging);
                 unit.TranslateX();
+                unit.chargePower += Time.deltaTime;
+                playerBehaviour.jumpGauge.SetValue(unit.chargePower);
             }
         }
 
