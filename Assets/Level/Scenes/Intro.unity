@@ -381,7 +381,7 @@ PrefabInstance:
     - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
       propertyPath: dialogue.data
       value: 
-      objectReference: {fileID: 11400000, guid: a4643c3bf7efb3a4fa87da5869ae31b3, type: 2}
+      objectReference: {fileID: 11400000, guid: 91eabbd43aa228f47b4463d88d5c98a7, type: 2}
     - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
       propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1

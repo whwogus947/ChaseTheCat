@@ -41,6 +41,10 @@ namespace Com2usGameDev
             {
                 behaviour.OpenDialogue();
             }
+            else if (rayHit.collider != null && rayHit.collider.TryGetComponent(out CatHairBall ball))
+            {
+                ball.InteractWithBall();
+            }
         }
 
         protected override void Initialize()
