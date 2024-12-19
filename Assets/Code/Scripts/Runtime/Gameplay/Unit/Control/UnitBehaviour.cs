@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
-    public abstract class UnitBehaviour : MonoBehaviour
+    public abstract class UnitBehaviour : Sonorous
     {
         public LayerMask groundLayer;
         public float walk;
@@ -11,8 +12,26 @@ namespace Com2usGameDev
         public float jumpX;
         public float dash;
         public float jumpCharging;
+        public float chargePower;
         public abstract bool Controllable {get; set;}
         public CountdownTimer timer;
+        public float hp;
+        public AudioClip attackSound;
+
+        protected IVanishable vanishUI;
+        public float HP
+        {
+            get => hp;
+            set
+            {
+                hp = value;
+                vanishUI.SetValue(hp);
+                if (hp <= 0)
+                {
+                    Dead();
+                }
+            }
+        }
 
         protected Transform unitImage;
         protected int capturedDirection;
@@ -21,9 +40,8 @@ namespace Com2usGameDev
             get => GetFaceDirection();
             set => IntToTransform(value);
         }
-
+        protected Rigidbody2D rb;
         private Animator ani;
-        private Rigidbody2D rb;
         private int VelocityDirection => GetVelocityDirection();
         private float transitionPower;
 
@@ -38,12 +56,17 @@ namespace Com2usGameDev
             timer = new(0);
             unitImage = transform.GetChild(0);
             Initialize();
+            HP = hp;
         }
 
         void Update()
         {
             CheckPerFrame();            
         }
+
+        public abstract void Attack();
+
+        protected abstract void Dead();
 
         public abstract void UseVFX();
 
@@ -65,7 +88,7 @@ namespace Com2usGameDev
             rb.linearVelocityX = capturedDirection * transitionPower;
         }
 
-        public void Jump() => rb.AddForceY(jump);
+        public void Jump() => rb.AddForceY(jump * Mathf.Clamp(chargePower, 0, 1));
 
         public void PlayAnimation(int animHash, float transitionRate = 0f)
         {

@@ -102,6 +102,39 @@ namespace Com2usGameDev
         }
     }
 
+    public abstract class SkillNode : StateNode
+    {
+        public bool IsUsable
+        {
+            get
+            {
+                if (isUsable)
+                    return true;
+                
+                isUsable = HasAbility();
+                return isUsable;
+            }
+        }
+
+        protected const string abilityType = nameof(SkillAbility);
+        protected PlayerBehaviour player;
+        protected abstract string SkillName {get;}
+        protected bool isUsable = false;
+
+        protected bool HasAbility()
+            => player != null && player.ability.HasAbility(abilityType, SkillName);
+            
+        public override void OnEnter(UnitBehaviour unit)
+        {
+            if (player == null)
+                player = unit as PlayerBehaviour;
+            
+            OnSkillEnter(player);
+        }
+
+        public abstract void OnSkillEnter(PlayerBehaviour player);
+    }
+
     public class Nodes
     {
         #region Player
@@ -192,11 +225,15 @@ namespace Com2usGameDev
 
         public class JumpCharging : StateNode
         {
+            private PlayerBehaviour playerBehaviour;
+
             public override void OnEnter(UnitBehaviour unit)
             {
+                playerBehaviour = unit as PlayerBehaviour;
                 Debug.Log("CHARGING!");
                 unit.PlayAnimation(AnimationHash, 0.2f);
                 unit.SetAnimation("IsOnGround", true);
+                unit.chargePower = 0;
             }
 
             public override void OnExit(UnitBehaviour unit)
@@ -208,6 +245,8 @@ namespace Com2usGameDev
             {
                 unit.SetTransitionPower(unit.jumpCharging);
                 unit.TranslateX();
+                unit.chargePower += Time.deltaTime;
+                playerBehaviour.jumpGauge.SetValue(unit.chargePower);
             }
         }
 
@@ -252,6 +291,63 @@ namespace Com2usGameDev
             }
         }
 
+        public class DoubleJump : SkillNode
+        {
+            protected override string SkillName => nameof(TwoStepJumpSO);
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                unit.Controllable = true;
+                unit.SetAnimation("IsOnGround", true);
+            }
+
+            public override void OnSkillEnter(PlayerBehaviour player)
+            {
+                isUsable = HasAbility();
+                if (!isUsable)
+                    return;
+
+                Debug.Log("DOUBLE JUMP");
+                player.Jump();
+                player.SetAnimation("IsOnGround", false);
+                player.CaptureDirection(player.jumpX);
+                player.Controllable = false;
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                if (isUsable)
+                    unit.TranslateFixedX();
+            }
+        }
+
+        public class StaticFlight : StateNode
+        {
+            public override void OnEnter(UnitBehaviour unit)
+            {
+                if (unit is PlayerBehaviour behaviour)
+                {
+                    unit.PlayAnimation(AnimationHash, 0.2f);
+                    behaviour.InvalidateRigidbody();
+                    unit.SetAnimation("IsHolding", true);
+                }
+            }
+
+            public override void OnExit(UnitBehaviour unit)
+            {
+                if (unit is PlayerBehaviour behaviour)
+                {
+                    behaviour.RegenerateRigidbody();
+                    unit.SetAnimation("IsHolding", false);
+                }
+            }
+
+            public override void OnUpdate(UnitBehaviour unit)
+            {
+                
+            }
+        }
+
         public class Dash : StateNode
         {
             public override void OnEnter(UnitBehaviour unit)
@@ -278,6 +374,8 @@ namespace Com2usGameDev
             public override void OnEnter(UnitBehaviour unit)
             {
                 unit.PlayAnimation(AnimationHash, 0.2f);
+                unit.Attack();
+                unit.PlaySound(unit.attackSound);
             }
 
             public override void OnExit(UnitBehaviour unit)
@@ -360,6 +458,7 @@ namespace Com2usGameDev
                 unit.SetTransitionPower(0);
                 unit.TranslateX();
                 unit.PlayAnimation(AnimationHash, 0.2f);
+                unit.Attack();
             }
 
             public override void OnExit(UnitBehaviour unit)

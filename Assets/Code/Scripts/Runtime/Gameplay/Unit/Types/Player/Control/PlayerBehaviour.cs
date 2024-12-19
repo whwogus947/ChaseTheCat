@@ -1,17 +1,32 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
     public class PlayerBehaviour : UnitBehaviour
     {
-        public LinearStatSO direction;
+        public FloatValueSO direction;
         public BoolValueSO groundChecker;
         public BoolValueSO controllable;
         public VFXPool pool;
+        public LayerMask enemyLayer;
+        public LayerMask npcLayer;
+        public VanishSlider jumpGauge;
+        public AbilityController ability;
 
         public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
 
+        public void InvalidateRigidbody()
+        {
+            rb.gravityScale = 0f;
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        public void RegenerateRigidbody()
+        {
+            rb.gravityScale = 1f;
+        }
         
         public override void UseVFX()
         {
@@ -20,9 +35,25 @@ namespace Com2usGameDev
             poolObj.GetComponent<SpriteRenderer>().flipX = isFlip;
         }
 
+        public void MeetupNPC()
+        {
+            var rayHit = Physics2D.BoxCast((Vector2)transform.position, Vector2.one, 0, FacingDirection * 1f * Vector2.right, 2, npcLayer.value);
+            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out NPCBehaviour behaviour))
+            {
+                behaviour.OpenDialogue();
+            }
+            else if (rayHit.collider != null && rayHit.collider.TryGetComponent(out CatHairBall ball))
+            {
+                ball.InteractWithBall();
+            }
+        }
+
         protected override void Initialize()
         {
             controllable.Value = true;
+            var vanishImage = GetComponentInChildren<VanishImage>();
+            vanishImage.maxValue = HP;
+            vanishUI = vanishImage;
         }
 
         protected override void CheckPerFrame()
@@ -34,9 +65,14 @@ namespace Com2usGameDev
             }
         }
 
+        protected override void Dead()
+        {
+            
+        }
+
         protected override int GetVelocityDirection()
         {
-            var velocity = direction.value;
+            var velocity = direction.Value;
             int velocityDirection = velocity > 0 ? 1 : velocity < 0 ? -1 : 0;
             if (IsOppositeDirection(velocityDirection) && controllable.Value)
             {
@@ -78,6 +114,15 @@ namespace Com2usGameDev
         {
             unitImage.localScale = new(unitImage.localScale.x * -1, unitImage.localScale.y, 1);
             capturedDirection *= -1;
+        }
+
+        public override void Attack()
+        {
+            var rayHit = Physics2D.BoxCast((Vector2)transform.position, Vector2.one, 0, FacingDirection * 1f * Vector2.right, 5, enemyLayer.value);
+            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out MonsterBehaviour behaviour))
+            {
+                behaviour.HP -= 40;
+            }
         }
     }
 }

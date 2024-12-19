@@ -1,6 +1,7 @@
 using System.Threading;
 using Com2usGameDev;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
@@ -13,11 +14,18 @@ namespace Com2usGameDev
         public DialogueHandler handler;
         public DialogueDataSO data;
         public UnityAction onLastDialogueEnd = delegate {};
+        public NPCTypeSO NPC => data.NextNpc;
 
         private bool isFirstMessage = true;
         private bool isEventInvoked = false;
 
-        public void NextMessage(Label label, bool interruption = false)
+        public void StartNewMessage()
+        {
+            data.Reset();
+            handler.Reset();
+        }
+
+        public void NextMessage(TMP_Text label, bool interruption = false)
         {
             if (isFirstMessage)
             {
@@ -47,11 +55,11 @@ namespace Com2usGameDev
     {
         public bool IsCompleted => isCompleted;
 
-        [SerializeField] private float letterDelay = 0.1f;
+        [SerializeField] private int letterDelay = 100;
         private CancellationTokenSource _cancellationTokenSource;
         private bool isCompleted = true;
 
-        public void StartDialogue(Label print, string text, bool checkBefore = true)
+        public void StartDialogue(TMP_Text print, string text, bool checkBefore = true)
         {
             if (checkBefore && !isCompleted)
                 return;
@@ -69,15 +77,23 @@ namespace Com2usGameDev
             }
         }
 
-        public async UniTaskVoid DialogueRoutine(Label label, string text, CancellationToken cancellationToken)
+        public void Reset()
+        {
+            isCompleted = true;
+        }
+
+        public async UniTaskVoid DialogueRoutine(TMP_Text label, string text, CancellationToken cancellationToken)
         {
             string printText = "";
             for (int i = 0; i < text.Length; i++)
             {
                 if (cancellationToken.IsCancellationRequested)
-                    break;
+                {
+                    label.text = text;
+                    return;
+                }
 
-                await UniTask.WaitForSeconds(letterDelay);
+                await UniTask.Delay(letterDelay, delayType: DelayType.UnscaledDeltaTime);
                 printText += text[i];
                 label.text = printText;
             }

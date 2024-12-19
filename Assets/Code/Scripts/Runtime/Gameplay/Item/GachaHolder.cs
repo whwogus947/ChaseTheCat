@@ -1,0 +1,54 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Com2usGameDev
+{
+    public class GachaHolder : MonoBehaviour
+    {
+        public AbilityController abilityController;
+        public List<AbilitySO> abilities;
+        public Button gachaButton;
+        
+        void Start()
+        {
+        
+        }
+
+        public void OpenGacha()
+        {
+            gameObject.SetActive(true);
+        
+            gachaButton.onClick.RemoveAllListeners();
+            var randomAbilities = GetRandomAbility(3);
+            foreach (var ability in randomAbilities)
+            {
+                gachaButton.onClick.AddListener(() => OnClickGacha(ability));
+            }
+        }
+
+        public List<AbilitySO> GetRandomAbility(int count)
+        {
+            var temp = new List<AbilitySO>(abilities);
+            var result = new List<AbilitySO>();
+            for (int i = 0; i < count; i++)
+            {
+                var index = Random.Range(0, temp.Count);
+                result.Add(temp[index]);
+                temp.RemoveAt(index);
+            }
+            return result;
+        }
+        
+        public void OnClickGacha(AbilitySO ability)
+        {
+            abilityController.AddAbility(ability);
+            CloseGacha();
+        }
+
+        private void CloseGacha()
+        {
+            gameObject.SetActive(false);
+        }
+    }
+}

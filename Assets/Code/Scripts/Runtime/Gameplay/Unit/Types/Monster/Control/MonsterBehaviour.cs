@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
@@ -6,10 +8,15 @@ namespace Com2usGameDev
     {
         public LayerMask playerLayer;
         public float attackRange;
+        [Header("Sample")]
+        
 
         private Transform player;
 
         public override bool Controllable { get => enabled; set => enabled = value; }
+        private MaterialPropertyBlock propertyBlock;
+        private Renderer[] renderers;
+        private bool isDissolveOn = false;
 
         public override void UseVFX()
         {
@@ -18,12 +25,52 @@ namespace Com2usGameDev
 
         protected override void Initialize()
         {
-            
+            propertyBlock = new MaterialPropertyBlock();
+            renderers = GetComponentsInChildren<Renderer>();
+            vanishUI = GetComponentInChildren<VanishSlider>();
         }
 
         protected override void CheckPerFrame()
         {
-            
+
+        }
+
+        public void UpdateAllRendererProperties(float value)
+        {
+            foreach (Renderer renderer in renderers)
+            {
+                renderer.GetPropertyBlock(propertyBlock);
+
+                propertyBlock.SetFloat("_Dissolve", value);
+
+                renderer.SetPropertyBlock(propertyBlock);
+            }
+        }
+
+        protected override void Dead()
+        {
+            if (isDissolveOn)
+                return;
+
+            GetComponent<Collider2D>().enabled = false;
+
+            isDissolveOn = true;
+            DissolveRoutine().Forget();
+            Controllable = false;
+            vanishUI.OnFadeaway();
+        }
+
+        private async UniTaskVoid DissolveRoutine()
+        {
+            float alpha = 0;
+            while (alpha <= 1)
+            {
+                alpha += Time.deltaTime * 1f;
+                UpdateAllRendererProperties(alpha);
+                await UniTask.Yield();
+            }
+            UpdateAllRendererProperties(1);
+            Destroy(gameObject);
         }
 
         protected override int GetVelocityDirection()
@@ -73,6 +120,15 @@ namespace Com2usGameDev
         private float DistanceX(float playerX)
         {
             return Mathf.Abs(playerX - transform.position.x);
+        }
+
+        public override void Attack()
+        {
+            var rayHit = Physics2D.BoxCast((Vector2)transform.position, Vector2.one, 0, FacingDirection * 1f * Vector2.right, 2, playerLayer.value);
+            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out PlayerBehaviour behaviour))
+            {
+                behaviour.HP -= 10;
+            }
         }
     }
 }
