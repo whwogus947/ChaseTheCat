@@ -13,6 +13,7 @@ namespace Com2usGameDev
         public LayerMask enemyLayer;
         public LayerMask npcLayer;
         public VanishSlider jumpGauge;
+        public AbilityController ability;
 
         public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
 

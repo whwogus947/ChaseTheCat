@@ -102,6 +102,39 @@ namespace Com2usGameDev
         }
     }
 
+    public abstract class SkillNode : StateNode
+    {
+        public bool IsUsable
+        {
+            get
+            {
+                if (isUsable)
+                    return true;
+                
+                isUsable = HasAbility();
+                return isUsable;
+            }
+        }
+
+        protected const string abilityType = nameof(SkillAbility);
+        protected PlayerBehaviour player;
+        protected abstract string SkillName {get;}
+        protected bool isUsable = false;
+
+        protected bool HasAbility()
+            => player != null && player.ability.HasAbility(abilityType, SkillName);
+            
+        public override void OnEnter(UnitBehaviour unit)
+        {
+            if (player == null)
+                player = unit as PlayerBehaviour;
+            
+            OnSkillEnter(player);
+        }
+
+        public abstract void OnSkillEnter(PlayerBehaviour player);
+    }
+
     public class Nodes
     {
         #region Player
@@ -258,16 +291,9 @@ namespace Com2usGameDev
             }
         }
 
-        public class DoubleJump : StateNode
+        public class DoubleJump : SkillNode
         {
-            public override void OnEnter(UnitBehaviour unit)
-            {
-                Debug.Log("DOUBLE JUMP");
-                unit.Jump();
-                unit.SetAnimation("IsOnGround", false);
-                unit.CaptureDirection(unit.jumpX);
-                unit.Controllable = false;
-            }
+            protected override string SkillName => nameof(TwoStepJumpSO);
 
             public override void OnExit(UnitBehaviour unit)
             {
@@ -275,9 +301,23 @@ namespace Com2usGameDev
                 unit.SetAnimation("IsOnGround", true);
             }
 
+            public override void OnSkillEnter(PlayerBehaviour player)
+            {
+                isUsable = HasAbility();
+                if (!isUsable)
+                    return;
+
+                Debug.Log("DOUBLE JUMP");
+                player.Jump();
+                player.SetAnimation("IsOnGround", false);
+                player.CaptureDirection(player.jumpX);
+                player.Controllable = false;
+            }
+
             public override void OnUpdate(UnitBehaviour unit)
             {
-                unit.TranslateFixedX();
+                if (isUsable)
+                    unit.TranslateFixedX();
             }
         }
 
