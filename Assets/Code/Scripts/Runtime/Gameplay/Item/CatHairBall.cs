@@ -7,7 +7,7 @@ namespace Com2usGameDev
     {
         public float maxBrightness = 20;
         public float brightnessPower = 1f;
-        public GameObject selectionUI;
+        public GachaHolder selectionUI;
         public GameObject particle;
         public Transform brightFX;
 
@@ -51,7 +51,7 @@ namespace Com2usGameDev
                 
                 SetBrightness(brightness);
             }
-            Instantiate(selectionUI);
+            Instantiate(selectionUI).OpenGacha();
             Destroy(gameObject);
         }
 

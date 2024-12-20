@@ -8,22 +8,28 @@ namespace Com2usGameDev
     {
         public AbilityController abilityController;
         public List<AbilitySO> abilities;
-        public Button gachaButton;
-        
-        void Start()
-        {
-        
-        }
+        public Transform storage;
 
         public void OpenGacha()
         {
             gameObject.SetActive(true);
-        
-            gachaButton.onClick.RemoveAllListeners();
-            var randomAbilities = GetRandomAbility(3);
-            foreach (var ability in randomAbilities)
+            var gachaButtons = storage.GetComponentsInChildren<Button>(true);
+            foreach (var gachaButton in gachaButtons)
             {
-                gachaButton.onClick.AddListener(() => OnClickGacha(ability));
+                gachaButton.onClick.RemoveAllListeners();
+                gachaButton.gameObject.SetActive(false);
+            }
+        
+            var randomAbilities = GetRandomAbility(3);
+            for (int i = 0; i < randomAbilities.Count; i++)
+            {
+                int idx = i;
+                
+                gachaButtons[idx].gameObject.SetActive(true);
+                var item = gachaButtons[idx].GetComponent<GachaItem>();
+                item.SetGachaItem(randomAbilities[idx].grade.selectionIcon, randomAbilities[idx].colorIcon);
+
+                gachaButtons[idx].onClick.AddListener(() => OnClickGacha(randomAbilities[idx]));
             }
         }
 

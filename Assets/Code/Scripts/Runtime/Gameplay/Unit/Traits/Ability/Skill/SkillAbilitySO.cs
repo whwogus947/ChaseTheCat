@@ -6,7 +6,6 @@ namespace Com2usGameDev
     {
         public override string AbilityType { get => nameof(SkillAbilitySO); }
         public Sprite grayIcon;
-        public Sprite colorIcon;
 
         public SkillTypeSO skillType;
         public int maxLevel;

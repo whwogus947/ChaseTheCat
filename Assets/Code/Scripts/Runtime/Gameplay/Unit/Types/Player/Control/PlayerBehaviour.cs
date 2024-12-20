@@ -60,6 +60,8 @@ namespace Com2usGameDev
             var vanishImage = GetComponentInChildren<VanishImage>();
             vanishImage.maxValue = HP;
             vanishUI = vanishImage;
+
+            Skills.AddListener(AddSkill);
         }
 
         protected override void CheckPerFrame()
@@ -83,9 +85,8 @@ namespace Com2usGameDev
             skill.CoolDown();
         }
 
-        public void AddSkill(SkillAbilitySO skill)
+        private void AddSkill(SkillAbilitySO skill)
         {
-            Skills.Add(skill);
             skillViewGroup.AddSkill(skill);
         }
 

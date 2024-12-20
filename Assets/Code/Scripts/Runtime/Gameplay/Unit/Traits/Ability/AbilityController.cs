@@ -54,10 +54,12 @@ namespace Com2usGameDev
     public class AbilityContainer<T> : IAbilityContainer where T : AbilitySO
     {
         private readonly List<T> abilities;
+        private UnityAction<T> onAddContainer;
 
         public AbilityContainer()
         {
             abilities = new();
+            onAddContainer = delegate { };
         }
 
         public void Add(AbilitySO ability)
@@ -65,6 +67,7 @@ namespace Com2usGameDev
             T casted = ability as T;
             if (!abilities.Contains(casted))
             {
+                onAddContainer(casted);
                 abilities.Add(casted);
                 ability.OnDiscover();
             }
@@ -73,6 +76,8 @@ namespace Com2usGameDev
                 ability.OnAquire();
             }
         }
+
+        public void AddListener(UnityAction<T> action) => onAddContainer += action;
 
         public bool Has(AbilitySO ability) => abilities.Contains(ability as T);
 

@@ -7,6 +7,7 @@ namespace Com2usGameDev
         public abstract string AbilityType { get; }
         public abstract string AbilityName { get; }
         public GradeTypeSO grade;
+        public Sprite colorIcon;
 
         public abstract void OnAquire();
 
