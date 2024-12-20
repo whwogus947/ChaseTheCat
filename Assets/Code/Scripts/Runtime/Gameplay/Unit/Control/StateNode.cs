@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Com2usGameDev
 {
@@ -14,6 +15,7 @@ namespace Com2usGameDev
     {
         public State NodeState { get; private set; }
         public int AnimationHash { get; private set; }
+        public UnityAction OnEnterAction { get; private set; }
 
         private readonly List<ITransition> transitions;
 
@@ -99,37 +101,46 @@ namespace Com2usGameDev
                 addible.AddState(node);
                 return node;
             }
+
+            public T WithAction(UnityAction @action)
+            {
+                node.OnEnterAction = @action;
+                return node;
+            }
         }
     }
 
     public abstract class SkillNode : StateNode
     {
-        public bool IsUsable
+        public bool IsUsable(AbilityController controller)
         {
-            get
-            {
-                if (isUsable)
-                    return true;
-                
-                isUsable = HasAbility();
-                return isUsable;
-            }
+            bool isUsable = HasAbility(controller) && skillAbility.IsReady;
+            return isUsable;
         }
 
-        protected const string abilityType = nameof(SkillAbility);
+        protected const string abilityType = nameof(SkillAbilitySO);
         protected PlayerBehaviour player;
         protected abstract string SkillName {get;}
-        protected bool isUsable = false;
 
-        protected bool HasAbility()
-            => player != null && player.ability.HasAbility(abilityType, SkillName);
+        private SkillAbilitySO skillAbility;
+
+        protected bool HasAbility(AbilityController controller)
+        {
+            if (skillAbility == null)
+                skillAbility = controller.GetAbility<SkillAbilitySO>(abilityType, SkillName);
+            return skillAbility != null;
+        }
             
         public override void OnEnter(UnitBehaviour unit)
         {
             if (player == null)
                 player = unit as PlayerBehaviour;
+            if (skillAbility == null)
+                skillAbility = player.ability.GetAbility<SkillAbilitySO>(abilityType, SkillName);
             
             OnSkillEnter(player);
+            Debug.Log("entered");
+            skillAbility.Reset();
         }
 
         public abstract void OnSkillEnter(PlayerBehaviour player);
@@ -303,10 +314,6 @@ namespace Com2usGameDev
 
             public override void OnSkillEnter(PlayerBehaviour player)
             {
-                isUsable = HasAbility();
-                if (!isUsable)
-                    return;
-
                 Debug.Log("DOUBLE JUMP");
                 player.Jump();
                 player.SetAnimation("IsOnGround", false);
@@ -316,8 +323,7 @@ namespace Com2usGameDev
 
             public override void OnUpdate(UnitBehaviour unit)
             {
-                if (isUsable)
-                    unit.TranslateFixedX();
+                unit.TranslateFixedX();
             }
         }
 
@@ -348,19 +354,22 @@ namespace Com2usGameDev
             }
         }
 
-        public class Dash : StateNode
+        public class Dash : SkillNode
         {
-            public override void OnEnter(UnitBehaviour unit)
-            {
-                unit.PlayAnimation(AnimationHash, 0.2f);
-                unit.SetTransitionPower(unit.dash);
-                unit.CaptureDirection();
-                unit.UseVFX();
-            }
+            protected override string SkillName => nameof(DashSkillSO);
 
             public override void OnExit(UnitBehaviour unit)
             {
+                Debug.Log("Exit Dash");
+            }
 
+            public override void OnSkillEnter(PlayerBehaviour player)
+            {
+                player.PlayAnimation(AnimationHash, 0.2f);
+                player.SetTransitionPower(player.dash);
+                player.CaptureDirection();
+                player.UseVFX();
+                OnEnterAction();
             }
 
             public override void OnUpdate(UnitBehaviour unit)

@@ -1,34 +1,57 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Com2usGameDev
 {
     [CreateAssetMenu(fileName = "Ability Controller", menuName = "Cum2usGameDev/Ability/Controller")]
     public class AbilityController : ResettableSO
     {
-        private Dictionary<string, AbilityContainer<AbilitySO>> container;
+        public Dictionary<string, IAbilityContainer> containers;
 
-        public void AddAbility(AbilitySO ability)
+        public void AddAbility<T>(T ability) where T : AbilitySO
         {
-            if (!container.ContainsKey(ability.AbilityType))
-                container[ability.AbilityType] = new();
-            container[ability.AbilityType].Add(ability);
+            if (!containers.ContainsKey(ability.AbilityType))
+                containers[ability.AbilityType] = new AbilityContainer<AbilitySO>();
+            containers[ability.AbilityType].Add(ability);
         }
 
-        public bool HasAbility(AbilitySO ability)
-            => container.ContainsKey(ability.AbilityType) && container[ability.AbilityType].Has(ability);
+        public bool HasAbility<T>(T ability) where T : AbilitySO
+            => containers.ContainsKey(ability.AbilityType) && containers[ability.AbilityType].Has(ability);
 
         public bool HasAbility(string abilityType, string abilityName)
-            => container.ContainsKey(abilityType) && container[abilityType].Has(abilityName);
+            => containers.ContainsKey(abilityType) && containers[abilityType].Has(abilityName);
+
+        public T GetAbility<T>(string abilityType, string abilityName) where T : AbilitySO
+        {
+            if (!containers.ContainsKey(abilityType))
+                return null;
+            return containers[abilityType].Find(abilityName) as T;
+        }
 
         public override void Initialize()
         {
-            container = new();
+            containers = new();
             Debug.Log("Ability Controller Has Initialized");
+        }
+
+        public AbilityContainer<T> GetContainer<T>(string abilityType) where T : AbilitySO
+        {
+            if (!containers.ContainsKey(abilityType))
+                containers[abilityType] = new AbilityContainer<T>();
+            return containers[abilityType] as AbilityContainer<T>;
         }
     }
 
-    public class AbilityContainer<T> where T : AbilitySO
+    public interface IAbilityContainer
+    {
+        void Add(AbilitySO ability);
+        bool Has(AbilitySO ability);
+        bool Has(string abilityName);
+        AbilitySO Find(string abilityName);
+    }
+
+    public class AbilityContainer<T> : IAbilityContainer where T : AbilitySO
     {
         private readonly List<T> abilities;
 
@@ -37,10 +60,30 @@ namespace Com2usGameDev
             abilities = new();
         }
 
-        public void Add(T ability) => abilities.Add(ability);
+        public void Add(AbilitySO ability)
+        {
+            T casted = ability as T;
+            if (!abilities.Contains(casted))
+            {
+                abilities.Add(casted);
+                ability.OnDiscover();
+            }
+            else
+            {
+                ability.OnAquire();
+            }
+        }
 
-        public bool Has(T ability) => abilities.Contains(ability);
+        public bool Has(AbilitySO ability) => abilities.Contains(ability as T);
 
         public bool Has(string abilityName) => abilities.Exists(ability => ability.AbilityName == abilityName);
+
+        public AbilitySO Find(string abilityName) => abilities.Find(ability => ability.AbilityName == abilityName);
+
+        public void Foreach(UnityAction<T> action)
+        {
+            foreach (var ability in abilities)
+                action(ability);
+        }
     }
 }

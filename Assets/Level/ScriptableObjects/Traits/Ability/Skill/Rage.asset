@@ -12,3 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0170e54bb29c36c40b3d696e65a87602, type: 3}
   m_Name: Rage
   m_EditorClassIdentifier: 
+  grade: {fileID: 0}
+  grayIcon: {fileID: 21300000, guid: 147e04924194cb1479e525fafa4919b8, type: 3}
+  colorIcon: {fileID: 21300000, guid: 185d9d85fdd535746ad452c7361759d9, type: 3}
+  skillType: {fileID: 0}
+  maxLevel: 5
+  epConsumption: 0
+  maxCoolTime: 3

@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ namespace Com2usGameDev
         public FloatValueSO velocityDirection;
         public BoolValueSO groundChecker;
         public BoolValueSO controllable;
+        public AbilityController abilityController;
 
         private PCInput input;
         private readonly Timer timer = new();
@@ -73,17 +75,11 @@ namespace Com2usGameDev
         private void OnPressDash(InputAction.CallbackContext context)
         {
             isDashPressed = true;
-            timer.StartTimer<Nodes.Dash>(0.7f);
         }
 
-        private bool IsDashPressed()
+        private void StartTimer<T>(float seconds)
         {
-            if (isDashPressed && !timer.HasTimerExpired<Nodes.Dash>())
-            {
-                isDashPressed = false;
-                return true;
-            }
-            return false;
+            timer.StartTimer<T>(seconds);
         }
 
         public void BindInputToController(StateController controller)
@@ -101,12 +97,12 @@ namespace Com2usGameDev
             var attackNormal = StateNode.Creator<Nodes.AttackNormal>.CreateType(State.Action).InProgress();
             var staticFlight = StateNode.Creator<Nodes.StaticFlight>.CreateType(State.Action).InProgress();
             var onAir = StateNode.Creator<Nodes.OnAir>.CreateType(State.Action).InProgress();
-            
+
             NodeTransition toIdle = new(idle, new(() => IsVelocityZero()));
             NodeTransition toEmptyMovement = new(emptyMovement, new(() => !controllable.Value));
             NodeTransition toWalk = new(walk, new(() => !IsVelocityZero() && input.Player.Run.phase == InputActionPhase.Waiting));
             NodeTransition toRun = new(run, new(() => !IsVelocityZero() && input.Player.Run.phase == InputActionPhase.Performed));
-            NodeTransition toDash = new(dash, new(() => !IsVelocityZero() && IsDashPressed() && input.Player.Dash.phase == InputActionPhase.Performed));
+            NodeTransition toDash = new(dash, new(() => dash.IsUsable(abilityController) && !IsVelocityZero() && isDashPressed && (input.Player.Dash.phase == InputActionPhase.Performed)));
             NodeTransition emptymovementToIdle = new(idle, new(() => controllable.Value && groundChecker.Value));
             NodeTransition dashToIdle = new(idle, new(() => timer.HasTimerExpired<Nodes.Dash>() && groundChecker.Value));
 
@@ -124,7 +120,7 @@ namespace Com2usGameDev
             StateNode.Creator<Nodes.Idle>.Using(idle).WithTransition(toWalk).WithTransition(toEmptyMovement).WithTransition(toRun).WithAnimation("main-idle").Accomplish(controller);
             StateNode.Creator<Nodes.Walk>.Using(walk).WithTransition(toIdle).WithTransition(toEmptyMovement).WithTransition(toRun).WithTransition(toDash).WithAnimation("main_walk").Accomplish(controller);
             StateNode.Creator<Nodes.Run>.Using(run).WithTransition(toWalk).WithTransition(toEmptyMovement).WithTransition(toIdle).WithTransition(toDash).WithAnimation("main-run").Accomplish(controller);
-            StateNode.Creator<Nodes.Dash>.Using(dash).WithTransition(dashToIdle).WithAnimation("main-dash").Accomplish(controller);
+            StateNode.Creator<Nodes.Dash>.Using(dash).WithTransition(dashToIdle).WithAnimation("main-dash").WithAction(() => StartTimer<Nodes.Dash>(0.7f)).Accomplish(controller);
 
             StateNode.Creator<Nodes.Empty>.Using(emptyAction).WithTransition(toJumpCharging).WithTransition(toAttack).WithTransition(toOnAir).Accomplish(controller);
             StateNode.Creator<Nodes.JumpCharging>.Using(jumpCharging).WithTransition(toJump).WithTransition(toOnAir).WithAnimation("main-jumpcharging").Accomplish(controller);

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Com2usGameDev
 {
     [CreateAssetMenu(fileName = "Slingshot Count Skill", menuName = "Cum2usGameDev/Ability/Skill/List/SlingshotCountSkill")]
-    public class SlingshotCountSkillSO : SkillAbility
+    public class SlingshotCountSkillSO : SkillAbilitySO
     {
         public override string AbilityName => nameof(SlingshotCountSkillSO);
 

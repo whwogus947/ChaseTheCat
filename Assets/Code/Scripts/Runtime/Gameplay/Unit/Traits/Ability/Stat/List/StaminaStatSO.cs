@@ -7,7 +7,7 @@ namespace Com2usGameDev
     {
         public override string AbilityName => nameof(StaminaStatSO);
 
-        public override void OnAquire(AbilityController controller)
+        public override void OnAquire()
         {
             throw new System.NotImplementedException();
         }

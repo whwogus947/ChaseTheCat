@@ -1,4 +1,5 @@
 
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +15,13 @@ namespace Com2usGameDev
         public LayerMask npcLayer;
         public VanishSlider jumpGauge;
         public AbilityController ability;
+        public SkillAbilitySO dashSkill;
+        public SkillViewGroup skillViewGroup;
 
         public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
+
+        private const string skillType = nameof(SkillAbilitySO);
+        private AbilityContainer<SkillAbilitySO> Skills => ability.GetContainer<SkillAbilitySO>(skillType);
 
         public void InvalidateRigidbody()
         {
@@ -63,6 +69,24 @@ namespace Com2usGameDev
             {
                 ToOppositeDirection();
             }
+
+            UpdateAllSkills();
+        }
+
+        private void UpdateAllSkills()
+        {
+            Skills.Foreach(x => SkillUpdate(x));
+        }
+
+        private void SkillUpdate(SkillAbilitySO skill)
+        {
+            skill.CoolDown();
+        }
+
+        public void AddSkill(SkillAbilitySO skill)
+        {
+            Skills.Add(skill);
+            skillViewGroup.AddSkill(skill);
         }
 
         protected override void Dead()

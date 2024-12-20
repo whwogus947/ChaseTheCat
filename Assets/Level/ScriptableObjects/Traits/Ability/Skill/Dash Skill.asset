@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f36e0046ca2a1c40b10ceca624b542f, type: 3}
-  m_Name: Poison Damage Skill
+  m_Script: {fileID: 11500000, guid: abbfccc5ecd43144ba70cd481a0416f7, type: 3}
+  m_Name: Dash Skill
   m_EditorClassIdentifier: 
   grade: {fileID: 0}
-  grayIcon: {fileID: 21300000, guid: 4f26a30182ac53a4eb50627e5462faf6, type: 3}
-  colorIcon: {fileID: 21300000, guid: 3916b35b94a540343ba65c1ec2afd377, type: 3}
+  grayIcon: {fileID: 21300000, guid: 808e6adb51cacaa4a9897d0fd3f7acb3, type: 3}
+  colorIcon: {fileID: 21300000, guid: 42d5b9c2c0546b543bbe4a9c1591529a, type: 3}
   skillType: {fileID: 0}
   maxLevel: 5
-  epConsumption: 5
-  maxCoolTime: 2
+  epConsumption: 0
+  maxCoolTime: 1

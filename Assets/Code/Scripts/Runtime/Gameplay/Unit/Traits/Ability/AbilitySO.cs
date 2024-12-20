@@ -8,6 +8,11 @@ namespace Com2usGameDev
         public abstract string AbilityName { get; }
         public GradeTypeSO grade;
 
-        public abstract void OnAquire(AbilityController controller);
+        public abstract void OnAquire();
+
+        public virtual void OnDiscover()
+        {
+            Debug.Log("Ability Discovered");
+        }
     }
 }
