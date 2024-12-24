@@ -13,6 +13,7 @@ namespace Com2usGameDev
         public void OpenGacha()
         {
             gameObject.SetActive(true);
+            Time.timeScale = 0f;
             var gachaButtons = storage.GetComponentsInChildren<Button>(true);
             foreach (var gachaButton in gachaButtons)
             {
@@ -48,6 +49,7 @@ namespace Com2usGameDev
         
         public void OnClickGacha(AbilitySO ability)
         {
+            Time.timeScale = 1f;
             abilityController.AddAbility(ability);
             CloseGacha();
         }

@@ -1,7 +1,5 @@
-
-using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
@@ -15,8 +13,22 @@ namespace Com2usGameDev
         public LayerMask npcLayer;
         public VanishSlider jumpGauge;
         public AbilityController ability;
-        public SkillAbilitySO dashSkill;
         public SkillViewGroup skillViewGroup;
+        public PlayerStatSO playerStat;
+        public VanishImage hpSlider;
+        public VanishImage epSlider;
+        public List<SkillAbilitySO> initialSkills;
+
+        public float EP
+        {
+            get => ep;
+            set
+            {
+                ep = Mathf.Clamp(value, 0, playerStat.maxEP);
+                epSlider.SetValue(ep);
+            }
+        }
+        public float ep;
 
         public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
 
@@ -57,11 +69,15 @@ namespace Com2usGameDev
         protected override void Initialize()
         {
             controllable.Value = true;
-            var vanishImage = GetComponentInChildren<VanishImage>();
-            vanishImage.maxValue = HP;
+            var vanishImage = hpSlider;
+            vanishImage.MaxValue = HP;
             vanishUI = vanishImage;
+            epSlider.MaxValue = playerStat.maxEP;
+            EP = 100;
 
             Skills.AddListener(AddSkill);
+
+            initialSkills.ForEach(x => Skills.Add(x));
         }
 
         protected override void CheckPerFrame()
@@ -73,11 +89,12 @@ namespace Com2usGameDev
             }
 
             UpdateAllSkills();
+            EP += Time.deltaTime * playerStat.epRecoverySpeed;
         }
 
         private void UpdateAllSkills()
         {
-            Skills.Foreach(x => SkillUpdate(x));
+            Skills?.Foreach(x => SkillUpdate(x));
         }
 
         private void SkillUpdate(SkillAbilitySO skill)

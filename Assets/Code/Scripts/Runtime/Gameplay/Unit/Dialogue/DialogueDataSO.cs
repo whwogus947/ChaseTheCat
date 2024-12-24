@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    [CreateAssetMenu(fileName = "Dialogue Data", menuName = "Cum2usGameDev/NPC/Dialogue")]
+    [CreateAssetMenu(fileName = "Dialogue Data", menuName = "Cum2usGameDev/Unit/NPC/Dialogue")]
     public class DialogueDataSO : ScriptableObject
     {
         public DialogueText[] dialogueTexts;

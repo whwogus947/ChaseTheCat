@@ -13,12 +13,13 @@ namespace Com2usGameDev
         {
             states = new();
             this.behaviour = behaviour;
-            currentState = typeof(Nodes.Empty);
+            currentState = typeof(Nodes.Common.Empty);
         }
 
         public void Add(IState state)
         {
             states[state.GetType()] = state;
+            state.OnInitialize(behaviour);
         }
 
         public void Update()

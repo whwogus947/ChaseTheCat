@@ -29,7 +29,7 @@ namespace Com2usGameDev
 
         private void SkillCoolTime(float progress)
         {
-            colorIcon.fillAmount = progress;
+            grayIcon.fillAmount = progress;
         }
     }
 }

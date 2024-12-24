@@ -4,7 +4,7 @@ namespace Com2usGameDev
 {
     public class Sonorous : MonoBehaviour
     {
-        // [ReadOnly] 
+        [ReadOnly]
         public AudioChannelSO audioChannel;
 
         public void PlaySound(AudioClip clip)

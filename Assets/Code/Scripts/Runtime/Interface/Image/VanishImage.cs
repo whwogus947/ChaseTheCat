@@ -9,7 +9,7 @@ namespace Com2usGameDev
         public bool shake;
         public Image main;
         public Image sub;
-        public float maxValue;
+        public float MaxValue {get; set;}
 
         private CountdownTimer timer;
         private CanvasGroup canvasGroup;
@@ -34,14 +34,15 @@ namespace Com2usGameDev
 
         void Update()
         {
-            bool hasGap = Mathf.Abs(sub.fillAmount - main.fillAmount) > 0.02f;
+            bool hasGap = Mathf.Abs(sub.fillAmount - main.fillAmount) > 0.01f;
             if (hasGap)
             {
                 sub.fillAmount = Mathf.Lerp(sub.fillAmount, main.fillAmount, Time.deltaTime * 1f);
-                if (sub.fillAmount - main.fillAmount < 0.05f)
+                if (sub.fillAmount - main.fillAmount < 0.01f)
                 {
                     sub.fillAmount = main.fillAmount;
-                    ShakePosition(0);
+                    if (shake)
+                        ShakePosition(0);
                 }
             }
 
@@ -65,7 +66,7 @@ namespace Com2usGameDev
         public void SetValue(float value)
         {
             InvokeTimer();
-            main.fillAmount = value / maxValue;
+            main.fillAmount = value / MaxValue;
         }
 
         private void InvokeTimer()

@@ -7,7 +7,7 @@ namespace Com2usGameDev
     [CreateAssetMenu(fileName = "Ability Controller", menuName = "Cum2usGameDev/Ability/Controller")]
     public class AbilityController : ResettableSO
     {
-        public Dictionary<string, IAbilityContainer> containers;
+        private Dictionary<string, IAbilityContainer> containers = new();
 
         public void AddAbility<T>(T ability) where T : AbilitySO
         {
@@ -32,6 +32,7 @@ namespace Com2usGameDev
         public override void Initialize()
         {
             containers = new();
+            containers.Clear();
             Debug.Log("Ability Controller Has Initialized");
         }
 

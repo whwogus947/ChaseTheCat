@@ -4,6 +4,7 @@ namespace Com2usGameDev
     {
         public static IState Empty => null;
         State NodeState {get;}
+        void OnInitialize(UnitBehaviour unit);
         void OnEnter(UnitBehaviour unit);
         void OnUpdate(UnitBehaviour unit);
         void OnExit(UnitBehaviour unit);
