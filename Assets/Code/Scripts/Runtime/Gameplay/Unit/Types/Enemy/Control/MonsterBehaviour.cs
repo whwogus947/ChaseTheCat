@@ -23,6 +23,11 @@ namespace Com2usGameDev
             
         }
 
+        public void ChangeDirectionToOpposite()
+        {
+            FacingDirection *= -1;
+        }
+
         protected override void Initialize()
         {
             propertyBlock = new MaterialPropertyBlock();
@@ -80,12 +85,10 @@ namespace Com2usGameDev
 
         public bool IsChasable()
         {
-            return IsGround(Vector3.right * GetVelocityDirection());
-        }
-
-        public bool IsMovable(int direction)
-        {
-            return IsGround(Vector3.right * direction);
+            bool isChasable = IsGround(Vector3.right * GetVelocityDirection());
+            if (!isChasable)
+                ChangeDirectionToOpposite();
+            return isChasable;
         }
 
         private int GetTargetDirection(Vector3 target)
@@ -95,7 +98,7 @@ namespace Com2usGameDev
 
         private bool IsGround(Vector3 relativePos)
         {
-            var cols = Physics2D.OverlapBox(transform.position + Vector3.down + relativePos, Vector2.one, 0f, groundLayer.value);
+            var cols = Physics2D.OverlapBox(transform.position + Vector3.down * 0.5f + relativePos, Vector2.one * 0.3f, 0f, groundLayer.value);
             return cols != null;
         }
 
@@ -119,7 +122,8 @@ namespace Com2usGameDev
 
         private float DistanceX(float playerX)
         {
-            return Mathf.Abs(playerX - transform.position.x);
+            // return Mathf.Abs(playerX - transform.position.x);
+            return Vector2.Distance(player.position, transform.position);
         }
 
         public override void Attack()

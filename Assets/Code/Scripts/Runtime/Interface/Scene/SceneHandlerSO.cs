@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace Com2usGameDev
 {
-    [CreateAssetMenu(fileName = "Scene Loader", menuName = "Cum2usGameDev/UI/SceneLoader")]
+    [CreateAssetMenu(fileName = "Scene Loader", menuName = "Cum2usGameDev/Map/Scene")]
     public class SceneHandlerSO : ScriptableObject
     {
         public string SceneName => scene.Name;

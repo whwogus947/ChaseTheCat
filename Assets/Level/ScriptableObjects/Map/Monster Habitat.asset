@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068a4b5948ab2a5489a21c6b487a8ced, type: 3}
+  m_Name: Monster Habitat
+  m_EditorClassIdentifier: 
+  unvisited: {fileID: 21300000, guid: 04470c9bee212cc46b4e7476170e9ee2, type: 3}
+  visited: {fileID: 21300000, guid: 59d58d959a6989e4ba4300850afedb0c, type: 3}
+  visitable: {fileID: 21300000, guid: c443432397d9ad44b8559ca5332fc9d5, type: 3}
+  scene: {fileID: 11400000, guid: a41920b34386c94498a25f0355c7acde, type: 2}

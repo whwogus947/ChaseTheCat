@@ -446,12 +446,21 @@ namespace Com2usGameDev
         {
             public class Idle : StateNode
             {
+                private float idleTimer;
+
+                public bool IsWandering()
+                {
+                    idleTimer -= Time.deltaTime;
+                    return idleTimer <= 0;
+                }
+
                 public override void OnEnter(UnitBehaviour unit)
                 {
                     Debug.Log("Idle");
                     unit.SetTransitionPower(0);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.TranslateX();
+                    idleTimer = UnityEngine.Random.Range(3, 5);
                 }
 
                 public override void OnExit(UnitBehaviour unit)
@@ -467,22 +476,32 @@ namespace Com2usGameDev
 
             public class Walk : StateNode
             {
+                private float roamTimer;
+
+                public bool IsRoaming()
+                {
+                    roamTimer -= Time.deltaTime;
+                    return roamTimer > 0;
+                }
+
                 public override void OnEnter(UnitBehaviour unit)
                 {
                     Debug.Log("Walk");
                     unit.SetTransitionPower(unit.walk);
                     unit.PlayAnimation(AnimationHash, 0.2f);
+                    roamTimer = UnityEngine.Random.Range(5, 10);
                 }
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-
+                    roamTimer = 0;
                 }
 
                 public override void OnUpdate(UnitBehaviour unit)
                 {
                     unit.TranslateX();
                 }
+                
             }
 
             public class Attack : StateNode

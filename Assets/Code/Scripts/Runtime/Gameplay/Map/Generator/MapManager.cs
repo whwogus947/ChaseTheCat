@@ -2,37 +2,41 @@ using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
-    public class MapManager : MonoBehaviour
+    public class MapManager : UniqueSingleton<MapManager>
     {
         public MapNamePopup mapNamePopup;
         public GameObject guide;
 
+        private MapPalette palette;
         private MapViewer viewer;
         private MapCreator creator;
 
-        private void Awake()
+        protected override void Initialize()
         {
             viewer = GetComponentInChildren<MapViewer>(true);
             creator = GetComponentInChildren<MapCreator>(true);
+            palette = GetComponentInChildren<MapPalette>(true);
         }
 
         void Start()
         {
             AddStageSelectionButtonEvent();
+            palette.AddEvent(CloseUI);
         }
 
         public void OpenUI()
         {
-            viewer.gameObject.SetActive(true);
+            palette.gameObject.SetActive(true);
 
             var rootStage = creator.GetRootStage();
-            viewer.DrawAllStages(rootStage);
+            // viewer.DrawAllStages(rootStage);
         }
 
-        public void CloseUI() => viewer.gameObject.SetActive(false);
+        public void CloseUI(Button btn) => palette.gameObject.SetActive(false);
 
         public void LoadScene(SceneHandlerSO scene)
         {

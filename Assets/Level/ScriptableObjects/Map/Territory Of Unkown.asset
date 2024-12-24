@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068a4b5948ab2a5489a21c6b487a8ced, type: 3}
+  m_Name: Territory Of Unkown
+  m_EditorClassIdentifier: 
+  unvisited: {fileID: 21300000, guid: e352ad08fb52fef48bad2bd60f1c60ed, type: 3}
+  visited: {fileID: 21300000, guid: 637d6e1923d2c574586b51b922b3769b, type: 3}
+  visitable: {fileID: 21300000, guid: 2981cee755f11bb4db01c91c1a42df54, type: 3}
+  scene: {fileID: 11400000, guid: a41920b34386c94498a25f0355c7acde, type: 2}
