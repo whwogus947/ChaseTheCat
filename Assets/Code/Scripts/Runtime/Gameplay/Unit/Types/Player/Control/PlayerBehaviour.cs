@@ -18,6 +18,7 @@ namespace Com2usGameDev
         public VanishImage hpSlider;
         public VanishImage epSlider;
         public List<SkillAbilitySO> initialSkills;
+        public Transform fxStorage;
 
         public float EP
         {
@@ -34,6 +35,7 @@ namespace Com2usGameDev
 
         private const string skillType = nameof(SkillAbilitySO);
         private AbilityContainer<SkillAbilitySO> Skills => ability.GetContainer<SkillAbilitySO>(skillType);
+        private WeaponPlacer weaponPlacer;
 
         public void InvalidateRigidbody()
         {
@@ -46,11 +48,22 @@ namespace Com2usGameDev
             rb.gravityScale = 1f;
         }
         
-        public override void UseVFX()
+        public override void UseVFX(PoolItem fx)
         {
-            var poolObj = pool.GetPooledObject();
-            bool isFlip = GetFaceDirection() == 1;
-            poolObj.GetComponent<SpriteRenderer>().flipX = isFlip;
+            if (fx == null)
+                return;
+
+            var poolObj = pool.GetPooledObject(fx);
+            if (poolObj.isFixed)
+            {
+                poolObj.transform.SetParent(fxStorage, false);
+            }
+            else
+            {
+                bool isFlip = GetFaceDirection() == 1;
+                poolObj.transform.position = transform.position - fx.transform.position * GetFaceDirection();
+                poolObj.GetComponent<SpriteRenderer>().flipX = isFlip;
+            }
         }
 
         public void MeetupNPC()
@@ -78,6 +91,8 @@ namespace Com2usGameDev
             Skills.AddListener(AddSkill);
 
             initialSkills.ForEach(x => Skills.Add(x));
+            weaponPlacer = GetComponent<WeaponPlacer>();
+            weaponPlacer.fxEvent += UseVFX;
         }
 
         protected override void CheckPerFrame()
@@ -165,6 +180,7 @@ namespace Com2usGameDev
             {
                 behaviour.HP -= 40;
             }
+            weaponPlacer.Use();
         }
     }
 }

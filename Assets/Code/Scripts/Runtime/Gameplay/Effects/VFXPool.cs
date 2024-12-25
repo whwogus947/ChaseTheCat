@@ -1,19 +1,52 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
 namespace Com2usGameDev
 {
-    public class VFXPool : MonoBehaviour
+    [CreateAssetMenu(fileName = "VFX Pool", menuName = "Cum2usGameDev/Ability/VFXPool")]
+    public class VFXPool : ScriptableObject
     {
-        [SerializeField] private PoolItem prefabToPool;
+        private Dictionary<PoolItem, ObjectPool<PoolItem>> pools = new();
+        private GameObject frontman;
 
-        private ObjectPool<PoolItem> objectPool;
+        [SerializeField] private int maxPoolSize = 15;
+        private PoolItem current;
 
-        [SerializeField] private int maxPoolSize = 100;
-
-        private void Awake()
+        public PoolItem GetPooledObject(PoolItem target)
         {
-            objectPool = new ObjectPool<PoolItem>(
+            current = target;
+            if (frontman == null || !pools.ContainsKey(current))
+            {
+                AddNewPool(current);
+            }
+            return pools[current].Get();
+        }
+
+        private void ReleasePooledObject(PoolItem obj)
+        {
+            pools[current].Release(obj);
+        }
+
+        private void Initiate()
+        {
+            frontman = new GameObject("Pool Frontman");
+            pools = new();
+            DontDestroyOnLoad(frontman);
+        }
+
+        private void AddNewPool(PoolItem key)
+        {
+            if (frontman == null)
+            {
+                Initiate();
+            }
+            if (pools.ContainsKey(key))
+            {
+                return;
+            }
+
+            var pool = new ObjectPool<PoolItem>(
                 createFunc: CreatePooledObject,
                 actionOnGet: OnGetFromPool,
                 actionOnRelease: OnReleaseToPool,
@@ -22,18 +55,19 @@ namespace Com2usGameDev
                 defaultCapacity: 10,
                 maxSize: maxPoolSize
             );
+            pools.Add(key, pool);            
         }
 
         private PoolItem CreatePooledObject()
         {
-            PoolItem obj = Instantiate(prefabToPool, transform);
+            PoolItem obj = Instantiate(current);
+            obj.onReturnToPool += ReleasePooledObject;
             return obj;
         }
 
         private void OnGetFromPool(PoolItem obj)
         {
             obj.gameObject.SetActive(true);
-            obj.transform.position = obj.GetOffset();
         }
 
         private void OnReleaseToPool(PoolItem obj)
@@ -44,29 +78,6 @@ namespace Com2usGameDev
         private void OnDestroyPoolObject(PoolItem obj)
         {
             Destroy(obj);
-        }
-
-        public PoolItem GetPooledObject()
-        {
-            return objectPool.Get();
-        }
-
-        public void ReleasePooledObject(PoolItem obj)
-        {
-            objectPool.Release(obj);
-        }
-
-        public PoolItem GetPooledObject(Vector3 position, Quaternion rotation)
-        {
-            PoolItem obj = objectPool.Get();
-            obj.transform.position = position;
-            obj.transform.rotation = rotation;
-            return obj;
-        }
-
-        private void OnDestroy()
-        {
-            objectPool.Dispose();
         }
     }
 }

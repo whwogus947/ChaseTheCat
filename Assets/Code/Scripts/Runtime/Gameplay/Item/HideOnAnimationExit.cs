@@ -2,9 +2,8 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class AnimationTransitionHandler : StateMachineBehaviour
+    public class HideOnAnimationExit : StateMachineBehaviour
     {
-        private PoolItem item;
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         //{
@@ -20,9 +19,7 @@ namespace Com2usGameDev
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (item == null)
-                item = animator.GetComponent<PoolItem>();
-            item.onReturnToPool(item);
+            animator.gameObject.SetActive(false);
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()

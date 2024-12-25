@@ -18,7 +18,7 @@ namespace Com2usGameDev
         private Renderer[] renderers;
         private bool isDissolveOn = false;
 
-        public override void UseVFX()
+        public override void UseVFX(PoolItem fx)
         {
             
         }

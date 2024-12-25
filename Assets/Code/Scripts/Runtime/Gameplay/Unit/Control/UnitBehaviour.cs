@@ -67,7 +67,7 @@ namespace Com2usGameDev
 
         protected abstract void Dead();
 
-        public abstract void UseVFX();
+        public abstract void UseVFX(PoolItem fx);
 
         protected abstract void Initialize();
 

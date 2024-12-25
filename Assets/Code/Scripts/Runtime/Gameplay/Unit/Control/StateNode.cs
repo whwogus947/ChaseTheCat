@@ -120,9 +120,9 @@ namespace Com2usGameDev
     {
         protected const string abilityType = nameof(SkillAbilitySO);
         protected abstract string SkillName { get; }
+        protected SkillAbilitySO skillAbility;
 
         private float EP => skillAbility.epConsumption;
-        private SkillAbilitySO skillAbility;
         private Func<bool> skillCondition;
 
         public bool IsUsable(AbilityController controller)
@@ -393,7 +393,7 @@ namespace Com2usGameDev
                     player.PlayAnimation(AnimationHash, 0.2f);
                     player.SetTransitionPower(player.dash);
                     player.CaptureDirection();
-                    player.UseVFX();
+                    player.UseVFX(skillAbility.fx);
                     OnEnterAction();
                 }
 

@@ -1,16 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Com2usGameDev
 {
     public class PoolItem : MonoBehaviour
     {
-        public VFXPool pool;
-        public GameObject item;
-        public Transform offset;
-        
-        public Vector3 GetOffset()
-        {
-            return offset.position;
-        }
+        public bool isFixed;
+        public UnityAction<PoolItem> onReturnToPool;
     }
 }
