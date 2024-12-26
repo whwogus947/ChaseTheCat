@@ -181,6 +181,7 @@ namespace Com2usGameDev
                 behaviour.HP -= 40;
             }
             weaponPlacer.Use();
+            weaponPlacer.AnimatorEvent(PlayAnimation);
         }
     }
 }

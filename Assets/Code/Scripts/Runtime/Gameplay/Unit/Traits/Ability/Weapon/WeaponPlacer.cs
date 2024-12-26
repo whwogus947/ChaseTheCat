@@ -7,7 +7,8 @@ namespace Com2usGameDev
 {
     public class WeaponPlacer : MonoBehaviour
     {
-        public Transform hand;
+        public Transform leftHand;
+        public Transform rightHand;
         public GameObject vfxStorage;
         public List<WeaponAbility> initialWeapons;
         public UnityAction<PoolItem> fxEvent;
@@ -22,11 +23,17 @@ namespace Com2usGameDev
                 Replace(weapons[0]);
         }
 
+        public void AnimatorEvent(UnityAction<int, float> animationHash)
+        {
+            animationHash?.Invoke(currentWeapon.AnimationHash, 0.2f);
+        }
+
         public void AddWeapon(WeaponAbility weapon)
         {
             if (!weapons.Contains(weapon))
             {
-                weapon.Obtain(hand.gameObject, vfxStorage);
+                Transform parent = weapon.isRightHanded ? rightHand : leftHand;
+                weapon.Obtain(parent);
                 weapons.Add(weapon);
             }
         }
@@ -56,7 +63,6 @@ namespace Com2usGameDev
         {
             if (currentWeapon != null)
             {
-                Debug.Log("Use Weapon");
                 currentWeapon.UseWeapon();
                 if (currentWeapon.fx != null)
                 {

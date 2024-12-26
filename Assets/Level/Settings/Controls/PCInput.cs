@@ -107,6 +107,15 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rope"",
+                    ""type"": ""Button"",
+                    ""id"": ""9610a87c-13f0-49ef-9969-ad0fed7137da"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -250,6 +259,28 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c49ec12-cecb-4e75-94c8-7a7ece7a5b33"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rope"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b46542e-d514-4de2-92cd-87b41278532e"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Rope"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -846,6 +877,7 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
         m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
         m_Player_StaticFlight = m_Player.FindAction("StaticFlight", throwIfNotFound: true);
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
+        m_Player_Rope = m_Player.FindAction("Rope", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -934,6 +966,7 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Test;
     private readonly InputAction m_Player_StaticFlight;
     private readonly InputAction m_Player_Interaction;
+    private readonly InputAction m_Player_Rope;
     public struct PlayerActions
     {
         private @PCInput m_Wrapper;
@@ -947,6 +980,7 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
         public InputAction @Test => m_Wrapper.m_Player_Test;
         public InputAction @StaticFlight => m_Wrapper.m_Player_StaticFlight;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
+        public InputAction @Rope => m_Wrapper.m_Player_Rope;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -983,6 +1017,9 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
+            @Rope.started += instance.OnRope;
+            @Rope.performed += instance.OnRope;
+            @Rope.canceled += instance.OnRope;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1014,6 +1051,9 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
+            @Rope.started -= instance.OnRope;
+            @Rope.performed -= instance.OnRope;
+            @Rope.canceled -= instance.OnRope;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1205,6 +1245,7 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
         void OnTest(InputAction.CallbackContext context);
         void OnStaticFlight(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
+        void OnRope(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

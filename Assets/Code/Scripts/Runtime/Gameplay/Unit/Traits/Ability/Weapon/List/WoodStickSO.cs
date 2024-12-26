@@ -8,6 +8,9 @@ namespace Com2usGameDev
     {
         public override string AbilityName => nameof(WoodStickSO);
 
+        public override int AnimationHash => Animator.StringToHash("main-attack");
+
+
         // private int animationHash = Animator.StringToHash("Player Attack");
         // private Animator animator;
 
@@ -18,7 +21,6 @@ namespace Com2usGameDev
 
         public override void UseWeapon()
         {
-            Debug.Log("Wood Stick Attack");
             // FXRoutine().Forget();
         }
 

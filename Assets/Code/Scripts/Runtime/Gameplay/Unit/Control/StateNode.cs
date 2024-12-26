@@ -266,7 +266,6 @@ namespace Com2usGameDev
                 public override void OnEnter(UnitBehaviour unit)
                 {
                     playerBehaviour = unit as PlayerBehaviour;
-                    Debug.Log("CHARGING!");
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.SetAnimation("IsOnGround", true);
                     unit.chargePower = 0;
@@ -308,7 +307,6 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    Debug.Log("JUMP");
                     unit.Jump();
                     unit.SetAnimation("IsOnGround", false);
                     unit.CaptureDirection(unit.jumpX);
@@ -407,7 +405,7 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    unit.PlayAnimation(AnimationHash, 0.2f);
+                    // unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.Attack();
                     unit.PlaySound(unit.attackSound);
                 }
@@ -423,21 +421,44 @@ namespace Com2usGameDev
                 }
             }
 
-            public class AttackRanged : StateNode
+            public class Rope : StateNode
             {
+                private PlayerBehaviour playerBehaviour;
+
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    throw new System.NotImplementedException();
+                    Debug.Log("Rope");
+                    if (playerBehaviour == null)
+                        playerBehaviour = unit as PlayerBehaviour;
+
+                    bool isEntered = false;
+                    for (int i = 1; i < 15; i++)
+                    {
+                        var start = (Vector2)playerBehaviour.transform.position + Vector2.up * i;
+                        var end = start + Vector2.down;
+                        Debug.DrawLine(start, end, Color.red, 1f);
+
+                        var col = Physics2D.Linecast(start, end, playerBehaviour.groundLayer.value);
+                        if (col.collider != null)
+                        {
+                            if (col.collider != null && isEntered)
+                            {
+                                playerBehaviour.transform.position = start;
+                                Debug.DrawLine(start, end, Color.green, 1.5f);
+                                break;
+                            }
+                            isEntered = true;
+                        }
+                    }
                 }
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-                    throw new System.NotImplementedException();
+                    
                 }
-
                 public override void OnUpdate(UnitBehaviour unit)
                 {
-                    throw new System.NotImplementedException();
+                    
                 }
             }
         }
@@ -456,7 +477,6 @@ namespace Com2usGameDev
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    Debug.Log("Idle");
                     unit.SetTransitionPower(0);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.TranslateX();
@@ -486,7 +506,6 @@ namespace Com2usGameDev
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    Debug.Log("Walk");
                     unit.SetTransitionPower(unit.walk);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     roamTimer = UnityEngine.Random.Range(5, 10);
@@ -508,7 +527,6 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    Debug.Log("MonAttack");
                     unit.timer = new(0.94f);
                     unit.SetTransitionPower(0);
                     unit.TranslateX();

@@ -7,6 +7,8 @@ namespace Com2usGameDev
     {
         public override string AbilityName => nameof(SlingshotSO);
 
+        public override int AnimationHash => Animator.StringToHash("main-attack2");
+
         // private int animationHash = Animator.StringToHash("Player Attack");
         // private Animator animator;
 
