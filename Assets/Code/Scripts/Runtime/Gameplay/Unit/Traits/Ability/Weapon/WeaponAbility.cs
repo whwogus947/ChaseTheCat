@@ -11,9 +11,7 @@ namespace Com2usGameDev
         public bool isRightHanded;
 
         [SerializeField] private GameObject weaponPrefab;
-        // [SerializeField] private GameObject FX;
-        private GameObject weaponOnHand;
-        // protected GameObject fxClone;
+        protected GameObject weaponOnHand;
 
         public void Obtain(Transform _hand)
         {

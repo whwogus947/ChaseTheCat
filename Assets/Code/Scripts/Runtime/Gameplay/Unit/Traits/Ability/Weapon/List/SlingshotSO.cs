@@ -6,11 +6,9 @@ namespace Com2usGameDev
     public class SlingshotSO : WeaponAbility
     {
         public override string AbilityName => nameof(SlingshotSO);
-
         public override int AnimationHash => Animator.StringToHash("main-attack2");
 
-        // private int animationHash = Animator.StringToHash("Player Attack");
-        // private Animator animator;
+        private SlingshotController slingshotController;
 
         public override void OnAquire()
         {
@@ -19,12 +17,10 @@ namespace Com2usGameDev
 
         public override void UseWeapon()
         {
-            // fxClone.SetActive(true);
-            // if (animator == null)
-            //     animator = fxClone.GetComponent<Animator>();
+            if (slingshotController == null)
+                slingshotController = weaponOnHand.GetComponent<SlingshotController>();
             
-            // animator.CrossFade(animationHash, 0.2f);
-            // Debug.Log("Wood Stick Attack");
+            slingshotController.LineDrawingTimer = 0.688f;
         }
     }
 }
