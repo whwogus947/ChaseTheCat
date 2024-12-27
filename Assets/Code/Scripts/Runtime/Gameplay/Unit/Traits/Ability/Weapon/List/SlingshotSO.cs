@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Com2usGameDev
 {
     [CreateAssetMenu(fileName = "Slingshot", menuName = "Cum2usGameDev/Ability/Weapon/List/Slingshot")]
-    public class SlingshotSO : WeaponAbility
+    public class SlingshotSO : WeaponAbilitySO
     {
         public override string AbilityName => nameof(SlingshotSO);
         public override int AnimationHash => Animator.StringToHash("main-attack2");

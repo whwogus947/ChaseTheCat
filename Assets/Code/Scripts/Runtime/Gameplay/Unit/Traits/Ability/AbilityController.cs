@@ -82,6 +82,8 @@ namespace Com2usGameDev
 
         public bool Has(AbilitySO ability) => abilities.Contains(ability as T);
 
+        public void Remove(AbilitySO ability) => abilities.Remove(ability as T);
+
         public bool Has(string abilityName) => abilities.Exists(ability => ability.AbilityName == abilityName);
 
         public AbilitySO Find(string abilityName) => abilities.Find(ability => ability.AbilityName == abilityName);

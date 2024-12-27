@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Com2usGameDev
 {
     [CreateAssetMenu(fileName = "WoodStick", menuName = "Cum2usGameDev/Ability/Weapon/List/WoodStick")]
-    public class WoodStickSO : WeaponAbility
+    public class WoodStickSO : WeaponAbilitySO
     {
         public override string AbilityName => nameof(WoodStickSO);
         public override int AnimationHash => Animator.StringToHash("main-attack");

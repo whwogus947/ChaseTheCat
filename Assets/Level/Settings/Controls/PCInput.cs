@@ -116,6 +116,24 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""331fadc9-c062-4298-805f-3fd419cc08fc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BeforeWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""37ff7215-5ed9-407c-8126-fd8b8f3a907c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -281,6 +299,50 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Rope"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20fd1e12-f6ec-455c-b42a-7277c276eb97"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""837c71f9-2892-4292-9c62-22da7c3bdfce"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""NextWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb765e9e-43db-4c7c-bb29-5bcc1529b09f"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BeforeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""402bb695-29d4-4c10-a6cf-7a883e657820"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""BeforeWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -878,6 +940,8 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
         m_Player_StaticFlight = m_Player.FindAction("StaticFlight", throwIfNotFound: true);
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
         m_Player_Rope = m_Player.FindAction("Rope", throwIfNotFound: true);
+        m_Player_NextWeapon = m_Player.FindAction("NextWeapon", throwIfNotFound: true);
+        m_Player_BeforeWeapon = m_Player.FindAction("BeforeWeapon", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -967,6 +1031,8 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_StaticFlight;
     private readonly InputAction m_Player_Interaction;
     private readonly InputAction m_Player_Rope;
+    private readonly InputAction m_Player_NextWeapon;
+    private readonly InputAction m_Player_BeforeWeapon;
     public struct PlayerActions
     {
         private @PCInput m_Wrapper;
@@ -981,6 +1047,8 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
         public InputAction @StaticFlight => m_Wrapper.m_Player_StaticFlight;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputAction @Rope => m_Wrapper.m_Player_Rope;
+        public InputAction @NextWeapon => m_Wrapper.m_Player_NextWeapon;
+        public InputAction @BeforeWeapon => m_Wrapper.m_Player_BeforeWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1020,6 +1088,12 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
             @Rope.started += instance.OnRope;
             @Rope.performed += instance.OnRope;
             @Rope.canceled += instance.OnRope;
+            @NextWeapon.started += instance.OnNextWeapon;
+            @NextWeapon.performed += instance.OnNextWeapon;
+            @NextWeapon.canceled += instance.OnNextWeapon;
+            @BeforeWeapon.started += instance.OnBeforeWeapon;
+            @BeforeWeapon.performed += instance.OnBeforeWeapon;
+            @BeforeWeapon.canceled += instance.OnBeforeWeapon;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1054,6 +1128,12 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
             @Rope.started -= instance.OnRope;
             @Rope.performed -= instance.OnRope;
             @Rope.canceled -= instance.OnRope;
+            @NextWeapon.started -= instance.OnNextWeapon;
+            @NextWeapon.performed -= instance.OnNextWeapon;
+            @NextWeapon.canceled -= instance.OnNextWeapon;
+            @BeforeWeapon.started -= instance.OnBeforeWeapon;
+            @BeforeWeapon.performed -= instance.OnBeforeWeapon;
+            @BeforeWeapon.canceled -= instance.OnBeforeWeapon;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1246,6 +1326,8 @@ public partial class @PCInput: IInputActionCollection2, IDisposable
         void OnStaticFlight(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnRope(InputAction.CallbackContext context);
+        void OnNextWeapon(InputAction.CallbackContext context);
+        void OnBeforeWeapon(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

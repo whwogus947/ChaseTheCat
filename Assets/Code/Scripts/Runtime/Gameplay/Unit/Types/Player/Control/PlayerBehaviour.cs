@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -96,7 +97,7 @@ namespace Com2usGameDev
             weaponPlacer.onGetWeapon += OnGetWeapon;
         }
 
-        private void OnGetWeapon(WeaponAbility weapon)
+        private void OnGetWeapon(WeaponAbilitySO weapon)
         {
             ability.AddAbility(weapon);
         }

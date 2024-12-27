@@ -87,9 +87,9 @@ namespace Com2usGameDev
             timer.StartTimer<T>(seconds);
         }
 
-        private WeaponAbility GetWeapon(string weaponName)
+        private WeaponAbilitySO GetWeapon(string weaponName)
         {
-            return abilityController.GetAbility<WeaponAbility>(nameof(WeaponAbility), weaponName);
+            return abilityController.GetAbility<WeaponAbilitySO>(nameof(WeaponAbilitySO), weaponName);
         }
 
         public void BindInputToController(StateController controller)

@@ -3,17 +3,19 @@ using UnityEngine;
 namespace Com2usGameDev
 {
     [CreateAssetMenu(fileName = "Hook", menuName = "Cum2usGameDev/Ability/Weapon/List/Hook")]
-    public class HookSO : WeaponAbility
+    public class HookSO : WeaponAbilitySO
     {
         public override int AnimationHash => Animator.StringToHash("main-hook");
         public override string AbilityName => nameof(HookSO);
         public bool IsUsing { get; set; } = false;
+        public int initialCount;
 
         private HookController hookController;
 
         public override void OnAquire()
         {
             IsUsing = false;
+            Count = initialCount;
         }
 
         public override void UseWeapon()
@@ -21,9 +23,14 @@ namespace Com2usGameDev
             if (hookController == null)
                 hookController = weaponOnHand.GetComponent<HookController>();
 
-            Debug.Log("Use Rope!");
             IsUsing = true;
-            hookController.CastRope(() => IsUsing = false);
+            hookController.CastRope(OnAfterUseRope);
+        }
+
+        private void OnAfterUseRope()
+        {
+            TakeOne();
+            IsUsing = false;
         }
     }
 }
