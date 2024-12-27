@@ -15,6 +15,6 @@ MonoBehaviour:
   grade: {fileID: 0}
   colorIcon: {fileID: 0}
   fx: {fileID: 0}
-  fxDelay: 0.3
+  fxDelay: 0.7
   isRightHanded: 1
   weaponPrefab: {fileID: 2417765233820116300, guid: 2ca88ada98656ea4b9aec710f1e1a18f, type: 3}

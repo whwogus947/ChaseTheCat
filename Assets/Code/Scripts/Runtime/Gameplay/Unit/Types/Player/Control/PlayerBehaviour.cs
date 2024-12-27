@@ -93,6 +93,12 @@ namespace Com2usGameDev
             initialSkills.ForEach(x => Skills.Add(x));
             weaponPlacer = GetComponent<WeaponPlacer>();
             weaponPlacer.fxEvent += UseVFX;
+            weaponPlacer.onGetWeapon += OnGetWeapon;
+        }
+
+        private void OnGetWeapon(WeaponAbility weapon)
+        {
+            ability.AddAbility(weapon);
         }
 
         protected override void CheckPerFrame()
@@ -173,15 +179,14 @@ namespace Com2usGameDev
             capturedDirection *= -1;
         }
 
-        public override void Attack()
+        public override async void Attack()
         {
-            var rayHit = Physics2D.BoxCast((Vector2)transform.position, Vector2.one, 0, FacingDirection * 1f * Vector2.right, 5, enemyLayer.value);
-            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out MonsterBehaviour behaviour))
-            {
-                behaviour.HP -= 40;
-            }
-            weaponPlacer.Use();
             weaponPlacer.AnimatorEvent(PlayAnimation);
+            await weaponPlacer.Use();
+            if (weaponPlacer.IsOffenseWeapon(out IOffensiveWeapon weapon))
+            {
+                weapon.Attack((Vector2)transform.position, FacingDirection * 1f * Vector2.right, enemyLayer, 0);
+            }
         }
     }
 }

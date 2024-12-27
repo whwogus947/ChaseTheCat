@@ -1,13 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class SlingshotController : MonoBehaviour
+    public class SlingshotController : MonoBehaviour, IOffensiveWeapon
     {
         public LineRenderer[] lines;
         public Transform handlePrefab;
-        public float LineDrawingTimer {get; set;} = 0f;
+        public float LineDrawingTimer { get; set; } = 0f;
+        public SlingshotBullet slingshotBullet;
+        public int poolSize = 10;
+        public float bulletSpeed = 10;
+        public float bulletLifetime = 1f;
 
+        private Queue<SlingshotBullet> objectPool = new();
         private Transform handleStorage;
 
         void Start()
@@ -15,6 +21,13 @@ namespace Com2usGameDev
             handleStorage = GetComponentInParent<WeaponPlacer>().leftHand;
             DrawLines();
             ResetLines();
+
+            for (int i = 0; i < poolSize; i++)
+            {
+                SlingshotBullet obj = Instantiate(slingshotBullet);
+                obj.gameObject.SetActive(false);
+                objectPool.Enqueue(obj);
+            }
         }
 
         void Update()
@@ -58,6 +71,35 @@ namespace Com2usGameDev
             }
             handlePrefab.SetParent(transform);
             handlePrefab.position = (lines[0].transform.position + lines[1].transform.position) / 2f;
+        }
+
+        public void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
+        {
+            var bullet = GetFromPool(handlePrefab.position);
+            bullet.Initialize(bulletSpeed, to, layer, bulletLifetime, ReturnToPool);
+        }
+
+        public SlingshotBullet GetFromPool(Vector3 position)
+        {
+            if (objectPool.Count > 0)
+            {
+                SlingshotBullet obj = objectPool.Dequeue();
+                obj.gameObject.SetActive(true);
+                obj.transform.position = position;
+                obj.transform.rotation = Quaternion.identity;
+                return obj;
+            }
+            else
+            {
+                SlingshotBullet obj = Instantiate(slingshotBullet, position, Quaternion.identity);
+                return obj;
+            }
+        }
+
+        public void ReturnToPool(SlingshotBullet obj)
+        {
+            obj.gameObject.SetActive(false);
+            objectPool.Enqueue(obj);
         }
     }
 }

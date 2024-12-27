@@ -367,3 +367,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   maxRopeLength: 12
+  controllable: {fileID: 11400000, guid: 5982c9772d088ed48911175980be3398, type: 2}

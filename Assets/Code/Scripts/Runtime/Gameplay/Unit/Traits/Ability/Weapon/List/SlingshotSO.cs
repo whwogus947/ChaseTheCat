@@ -7,20 +7,22 @@ namespace Com2usGameDev
     {
         public override string AbilityName => nameof(SlingshotSO);
         public override int AnimationHash => Animator.StringToHash("main-attack2");
+        public float fireTiming = 0.688f;
 
         private SlingshotController slingshotController;
 
         public override void OnAquire()
         {
-            
+
         }
 
         public override void UseWeapon()
         {
             if (slingshotController == null)
                 slingshotController = weaponOnHand.GetComponent<SlingshotController>();
-            
-            slingshotController.LineDrawingTimer = 0.688f;
+
+            fxDelay = fireTiming;
+            slingshotController.LineDrawingTimer = fireTiming;
         }
     }
 }

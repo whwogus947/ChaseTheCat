@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Com2usGameDev
 {
@@ -20,12 +21,16 @@ namespace Com2usGameDev
         private Rigidbody2D rb;
         private Vector2 hookLocalPosition;
         private bool isUpperDirection = true;
+        private UnityAction onResetHook;
+        private PlayerController userInputHandler;
         
         void Start()
         {
-            player = GetComponentInParent<PlayerBehaviour>().transform;
+            player = transform.root;
             rb = player.GetComponent<Rigidbody2D>();
+            userInputHandler = player.GetComponent<PlayerController>();
             hookLocalPosition = hook.localPosition;
+            line.gameObject.SetActive(false);
         }
 
         void Update()
@@ -45,8 +50,12 @@ namespace Com2usGameDev
             }
         }
 
-        public void CastRope()
+        public void CastRope(UnityAction onReset)
         {
+            line.gameObject.SetActive(true);
+            onResetHook = onReset;
+            rb.linearVelocity = Vector2.zero;
+            userInputHandler.enabled = false;
             hook.gameObject.SetActive(true);
             hook.SetParent(null);
             isHooked = false;
@@ -68,12 +77,15 @@ namespace Com2usGameDev
 
         private void ResetHook()
         {
+            onResetHook();
             hook.SetParent(transform);
             hook.localPosition = hookLocalPosition;
             isTransported = true;
             isHooked = false;
             isUnhooked = false;
             isUpperDirection = true;
+            userInputHandler.enabled = true;
+            line.gameObject.SetActive(false);
         }
 
         private void DrawRope()
@@ -135,7 +147,6 @@ namespace Com2usGameDev
             {
                 isTransported = true;
                 rb.GetComponent<Collider2D>().isTrigger = false;
-                Debug.Log("Transport End!");
                 ResetHook();
             }
         }

@@ -79,7 +79,8 @@ namespace Com2usGameDev
 
         public void TranslateX()
         {
-            rb.linearVelocityX = VelocityDirection * transitionPower;
+            if (Controllable)
+                rb.linearVelocityX = VelocityDirection * transitionPower;
         }
 
         public void TranslateFixedX()

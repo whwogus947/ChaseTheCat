@@ -107,6 +107,10 @@ MonoBehaviour:
   - {fileID: 5864228756022881956}
   - {fileID: 5195995885468072842}
   handlePrefab: {fileID: 338269237607716451}
+  slingshotBullet: {fileID: -6597234266567329502, guid: 328db4f1d1ba61043b7b217a235ba53a, type: 3}
+  poolSize: 10
+  bulletSpeed: 25
+  bulletLifetime: 0.35
 --- !u!1 &4090198627137620984
 GameObject:
   m_ObjectHideFlags: 0

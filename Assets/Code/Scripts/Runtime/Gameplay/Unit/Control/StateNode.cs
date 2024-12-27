@@ -175,12 +175,12 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-
+                    Debug.Log("Empty");
                 }
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-
+                    Debug.Log("Exit Empty");
                 }
 
                 public override void OnUpdate(UnitBehaviour unit)
@@ -196,6 +196,7 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
+                    // Debug.Log("Idle");
                     unit.Controllable = true;
                     unit.SetAnimation("IsWalking", false);
                     unit.SetAnimation("IsRunning", false);
@@ -219,6 +220,7 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
+                    // Debug.Log("Walk");
                     unit.SetAnimation("IsWalking", true);
                     unit.SetAnimation("IsRunning", false);
                     unit.SetAnimation("IsOnGround", true);
@@ -289,6 +291,7 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
+                    // Debug.Log("OnAir");
                     unit.SetAnimation("IsOnGround", false);
                 }
 
@@ -307,6 +310,7 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
+                    // Debug.Log("Jump");
                     unit.Jump();
                     unit.SetAnimation("IsOnGround", false);
                     unit.CaptureDirection(unit.jumpX);
@@ -337,7 +341,7 @@ namespace Com2usGameDev
 
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
-                    Debug.Log("DOUBLE JUMP");
+                    // Debug.Log("DOUBLE JUMP");
                     player.Jump();
                     player.SetAnimation("IsOnGround", false);
                     player.CaptureDirection(player.jumpX);
@@ -383,7 +387,7 @@ namespace Com2usGameDev
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-                    Debug.Log("Exit Dash");
+                    
                 }
 
                 public override void OnSkillEnter(PlayerBehaviour player)
@@ -405,7 +409,6 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    // unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.Attack();
                     unit.PlaySound(unit.attackSound);
                 }
@@ -428,33 +431,14 @@ namespace Com2usGameDev
                 public override void OnEnter(UnitBehaviour unit)
                 {
                     Debug.Log("Rope");
-                    if (playerBehaviour == null)
-                        playerBehaviour = unit as PlayerBehaviour;
-
-                    bool isEntered = false;
-                    for (int i = 1; i < 15; i++)
-                    {
-                        var start = (Vector2)playerBehaviour.transform.position + Vector2.up * i;
-                        var end = start + Vector2.down;
-                        Debug.DrawLine(start, end, Color.red, 1f);
-
-                        var col = Physics2D.Linecast(start, end, playerBehaviour.groundLayer.value);
-                        if (col.collider != null)
-                        {
-                            if (col.collider != null && isEntered)
-                            {
-                                playerBehaviour.transform.position = start;
-                                Debug.DrawLine(start, end, Color.green, 1.5f);
-                                break;
-                            }
-                            isEntered = true;
-                        }
-                    }
+                    unit.Controllable = false;
+                    unit.SetTransitionPower(0);
+                    unit.TranslateX();
                 }
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-                    
+                    unit.Controllable = true;
                 }
                 public override void OnUpdate(UnitBehaviour unit)
                 {

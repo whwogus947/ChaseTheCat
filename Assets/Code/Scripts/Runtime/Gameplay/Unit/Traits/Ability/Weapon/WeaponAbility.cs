@@ -9,6 +9,7 @@ namespace Com2usGameDev
         public PoolItem fx;
         public float fxDelay = 0.3f;
         public bool isRightHanded;
+        public GameObject Entity => weaponOnHand;
 
         [SerializeField] private GameObject weaponPrefab;
         protected GameObject weaponOnHand;
@@ -22,6 +23,7 @@ namespace Com2usGameDev
         public void Equip()
         {
             weaponOnHand.SetActive(true);
+            OnAquire();
         }
 
         public void Unequip()

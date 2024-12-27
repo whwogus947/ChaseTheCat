@@ -15,7 +15,6 @@ namespace Com2usGameDev
         private PCInput input;
         private readonly Timer timer = new();
         private bool isDashPressed;
-        private PlayerBehaviour behaviour;
 
         private void Awake()
         {
@@ -25,7 +24,6 @@ namespace Com2usGameDev
         private void Start()
         {
             UserKeyPress();
-            behaviour = GetComponent<PlayerBehaviour>();
         }
 
         private void UserKeyPress()
@@ -36,13 +34,13 @@ namespace Com2usGameDev
             input.Player.Attack.performed += OnPressAttack;
             input.Player.StaticFlight.performed += OnPressStaticFlight;
             input.Player.Interaction.performed += OnInteraction;
-            input.Player.Rope.performed += OnPressRope;
+            // input.Player.Rope.performed += OnPressRope;
         }
 
-        private void OnPressRope(InputAction.CallbackContext context)
-        {
-            timer.StartTimer<Nodes.Player.Rope>(1f);
-        }
+        // private void OnPressRope(InputAction.CallbackContext context)
+        // {
+        //     timer.StartTimer<Nodes.Player.Rope>(1f);
+        // }
 
         private void OnInteraction(InputAction.CallbackContext context)
         {
@@ -71,7 +69,7 @@ namespace Com2usGameDev
 
         private void OnPressAttack(InputAction.CallbackContext context)
         {
-            timer.StartTimer<Nodes.Player.AttackNormal>(0.4f);
+            timer.StartTimer<Nodes.Player.AttackNormal>(0.8f);
         }
 
         private void OnReleaseJump(InputAction.CallbackContext context)
@@ -89,6 +87,11 @@ namespace Com2usGameDev
             timer.StartTimer<T>(seconds);
         }
 
+        private WeaponAbility GetWeapon(string weaponName)
+        {
+            return abilityController.GetAbility<WeaponAbility>(nameof(WeaponAbility), weaponName);
+        }
+
         public void BindInputToController(StateController controller)
         {
             var emptyMovement = StateNode.Creator<Nodes.Common.Empty>.CreateType(State.Movement).InProgress();
@@ -104,7 +107,7 @@ namespace Com2usGameDev
             var attackNormal = StateNode.Creator<Nodes.Player.AttackNormal>.CreateType(State.Action).InProgress();
             var staticFlight = StateNode.Creator<Nodes.Player.StaticFlight>.CreateType(State.Action).InProgress();
             var onAir = StateNode.Creator<Nodes.Player.OnAir>.CreateType(State.Action).InProgress();
-            var rope = StateNode.Creator<Nodes.Player.Rope>.CreateType(State.Action).InProgress();
+            // var rope = StateNode.Creator<Nodes.Player.Rope>.CreateType(State.Action).InProgress();
 
             NodeTransition toIdle = new(idle, new(() => IsVelocityZero()));
             NodeTransition toEmptyMovement = new(emptyMovement, new(() => !controllable.Value));
@@ -123,8 +126,8 @@ namespace Com2usGameDev
             NodeTransition attackToEmpty = new(emptyAction, new(() => input.Player.Attack.phase == InputActionPhase.Waiting && timer.HasTimerExpired<Nodes.Player.AttackNormal>()));
             NodeTransition toStaticFlight = new(staticFlight, new(() => input.Player.StaticFlight.phase == InputActionPhase.Performed && !groundChecker.Value));
             NodeTransition staticFlightToEmptyAction = new(emptyAction, new(() => timer.HasTimerExpired<Nodes.Player.StaticFlight>()));
-            NodeTransition toRope = new(rope, new(() => input.Player.Rope.phase == InputActionPhase.Performed));
-            NodeTransition ropeToEmpty = new(emptyAction, new(() => timer.HasTimerExpired<Nodes.Player.Rope>()));
+            // NodeTransition toRope = new(rope, new(() => (GetWeapon(nameof(HookSO)) as HookSO).IsUsing));
+            // NodeTransition ropeToIdle = new(emptyAction, new(() => !(GetWeapon(nameof(HookSO)) as HookSO).IsUsing));
 
             // Movement
             StateNode.Creator<Nodes.Common.Empty>.Using(emptyMovement).
@@ -162,10 +165,10 @@ namespace Com2usGameDev
 
             // Action
             StateNode.Creator<Nodes.Common.Empty>.Using(emptyAction).
+                // WithTransition(toRope).
                 WithTransition(toJumpCharging).
                 WithTransition(toAttack).
                 WithTransition(toOnAir).
-                WithTransition(toRope).
                 Accomplish(controller);
 
             StateNode.Creator<Nodes.Player.JumpCharging>.Using(jumpCharging).
@@ -200,9 +203,9 @@ namespace Com2usGameDev
                 WithTransition(attackToEmpty).
                 Accomplish(controller);
 
-            StateNode.Creator<Nodes.Player.Rope>.Using(rope).
-                WithTransition(ropeToEmpty).
-                Accomplish(controller);
+            // StateNode.Creator<Nodes.Player.Rope>.Using(rope).
+            //     WithTransition(ropeToIdle).
+            //     Accomplish(controller);
         }
 
         private bool IsVelocityZero()

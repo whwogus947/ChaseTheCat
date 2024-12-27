@@ -12,6 +12,7 @@ namespace Com2usGameDev
         public GameObject vfxStorage;
         public List<WeaponAbility> initialWeapons;
         public UnityAction<PoolItem> fxEvent;
+        public UnityAction<WeaponAbility> onGetWeapon;
 
         private readonly List<WeaponAbility> weapons = new();
         private WeaponAbility currentWeapon;
@@ -21,6 +22,17 @@ namespace Com2usGameDev
             initialWeapons.ForEach(AddWeapon);
             if (weapons.Count > 0)
                 Replace(weapons[0]);
+        }
+
+        public bool IsOffenseWeapon(out IOffensiveWeapon offensiveWeapon)
+        {
+            if (currentWeapon.Entity.TryGetComponent(out IOffensiveWeapon weapon))
+            {
+                offensiveWeapon = weapon;
+                return true;
+            }
+            offensiveWeapon = null;
+            return false;
         }
 
         public void AnimatorEvent(UnityAction<int, float> animationHash)
@@ -35,6 +47,7 @@ namespace Com2usGameDev
                 Transform parent = weapon.isRightHanded ? rightHand : leftHand;
                 weapon.Obtain(parent);
                 weapons.Add(weapon);
+                onGetWeapon(weapon);
             }
         }
 
@@ -59,25 +72,17 @@ namespace Com2usGameDev
             currentWeapon.Unequip();
         }
 
-        public void Use()
+        public async UniTask Use()
         {
-            if (currentWeapon != null)
-            {
-                currentWeapon.UseWeapon();
-                if (currentWeapon.fx != null)
-                {
-                    if (currentWeapon.fxDelay > 0)
-                        FXRoutine().Forget();
-                    else
-                        fxEvent?.Invoke(currentWeapon.fx);
-                }
-            }
-        }
+            if (currentWeapon == null)
+                return;
 
-        private async UniTaskVoid FXRoutine()
-        {
-            await UniTask.WaitForSeconds(currentWeapon.fxDelay);
-            fxEvent?.Invoke(currentWeapon.fx);
+            currentWeapon.UseWeapon();
+            if (currentWeapon.fxDelay > 0)
+                await UniTask.WaitForSeconds(currentWeapon.fxDelay);
+
+            if (currentWeapon.fx != null)
+                fxEvent?.Invoke(currentWeapon.fx);
         }
     }
 }

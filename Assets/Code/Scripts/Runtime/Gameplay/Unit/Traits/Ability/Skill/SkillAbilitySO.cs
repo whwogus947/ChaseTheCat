@@ -46,7 +46,6 @@ namespace Com2usGameDev
 
         public void Reset()
         {
-            Debug.Log("Reset!");
             coolTime = maxCoolTime;
         }
     }
