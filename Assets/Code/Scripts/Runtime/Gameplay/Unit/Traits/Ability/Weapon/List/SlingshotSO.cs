@@ -7,7 +7,8 @@ namespace Com2usGameDev
     {
         public override string AbilityName => nameof(SlingshotSO);
         public override int AnimationHash => Animator.StringToHash("main-attack2");
-        public float fireTiming = 0.688f;
+        
+        [SerializeField] private float fireTiming = 0.688f;
 
         private SlingshotController slingshotController;
 

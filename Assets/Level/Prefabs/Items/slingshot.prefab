@@ -111,6 +111,8 @@ MonoBehaviour:
   poolSize: 10
   bulletSpeed: 25
   bulletLifetime: 0.35
+  pool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
+  hitFX: {fileID: 6623290591316154811, guid: bf9b6cc2b8e2f874daf92450ec6d5269, type: 3}
 --- !u!1 &4090198627137620984
 GameObject:
   m_ObjectHideFlags: 0

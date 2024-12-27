@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfea86fe40e97194a9c5800b3705acb5, type: 3}
-  m_Name: Hook
+  m_Script: {fileID: 11500000, guid: 63f2e50754e287248aa38bad0272f517, type: 3}
+  m_Name: Toy Mouse
   m_EditorClassIdentifier: 
   grade: {fileID: 11400000, guid: 3232cc1d559b7874fad86185334869a8, type: 2}
-  colorIcon: {fileID: 21300000, guid: 68cb9d3ae6620b84d95d1246f9200e10, type: 3}
+  colorIcon: {fileID: 21300000, guid: 53342e70acf39ab4b924b6a503e1827e, type: 3}
   fx: {fileID: 0}
   fxDelay: 0.3
-  isRightHanded: 1
+  isRightHanded: 0
   frame: {fileID: 21300000, guid: 89f52c2e8c1c522418ec36e965ca1382, type: 3}
   isLimited: 1
-  weaponPrefab: {fileID: 5915254348658230180, guid: e7d1573252b1f5842972cf9983db242c, type: 3}
-  initialCount: 2
+  weaponPrefab: {fileID: 7350736844942199881, guid: c098726cbf65f6f44964bbaf00f57747, type: 3}
+  initialCount: 8

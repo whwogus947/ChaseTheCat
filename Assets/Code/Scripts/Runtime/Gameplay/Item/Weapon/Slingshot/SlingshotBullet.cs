@@ -10,6 +10,7 @@ namespace Com2usGameDev
         private LayerMask enemyLayer;
         private UnityAction<SlingshotBullet> onReturnPool;
         private float timer;
+        private UnityAction onHit;
 
         public void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
@@ -18,7 +19,13 @@ namespace Com2usGameDev
             {
                 behaviour.HP -= 40 + defaultDamage;
                 onReturnPool(this);
+                onHit();
             }
+        }
+
+        public void AddHitEvent(UnityAction @event)
+        {
+            onHit = @event;
         }
 
         public void Initialize(float speed, Vector2 direction, LayerMask layer, float lifeTime, UnityAction<SlingshotBullet> onReturnPool)

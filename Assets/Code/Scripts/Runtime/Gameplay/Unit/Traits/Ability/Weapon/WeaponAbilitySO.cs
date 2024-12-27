@@ -32,16 +32,17 @@ namespace Com2usGameDev
         public void Obtain(Transform _hand, int count = 1)
         {
             onCountChanged = delegate { };
-            weaponOnHand = Instantiate(weaponPrefab, _hand);
+            weaponOnHand = Instantiate(weaponPrefab);
+            weaponOnHand.transform.SetParent(_hand, false);
             weaponOnHand.SetActive(false);
             if (isLimited)
                 this._count = count;
+            OnAquire();
         }
 
         public void Equip()
         {
             weaponOnHand.SetActive(true);
-            OnAquire();
         }
 
         protected void TakeOne()
@@ -55,5 +56,12 @@ namespace Com2usGameDev
         }
 
         public abstract void UseWeapon();
+// 
+        // protected int Direction()
+        // {
+        //     Transform root = weaponOnHand.transform.root;
+        //     var direction = (root.position - weaponOnHand.transform.position).x;
+        //     return direction > 0 ? 1 : -1;
+        // }
     }
 }

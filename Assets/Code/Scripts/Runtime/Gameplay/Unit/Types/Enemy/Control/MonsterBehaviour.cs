@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
@@ -8,7 +7,10 @@ namespace Com2usGameDev
     {
         public LayerMask playerLayer;
         public float attackRange;
-        [Header("Sample")]
+
+        [Header("FX")]
+        public VFXPool fXPool;
+        public PoolItem attackFx;
         
 
         private Transform player;
@@ -132,6 +134,10 @@ namespace Com2usGameDev
             if (rayHit.collider != null && rayHit.collider.TryGetComponent(out PlayerBehaviour behaviour))
             {
                 behaviour.HP -= 10;
+                var fx = fXPool.GetPooledObject(attackFx);
+                fx.transform.position = (Vector2)transform.position + FacingDirection * 1.4f * Vector2.right;
+                var scale = fx.transform.localScale;
+                fx.transform.localScale = new(scale.x * FacingDirection, scale.y, scale.z);
             }
         }
     }

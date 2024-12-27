@@ -175,12 +175,12 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    Debug.Log("Empty");
+                    // Debug.Log("Empty");
                 }
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-                    Debug.Log("Exit Empty");
+                    // Debug.Log("Exit Empty");
                 }
 
                 public override void OnUpdate(UnitBehaviour unit)

@@ -711,7 +711,7 @@ Transform:
   m_GameObject: {fileID: 7127652686908901203}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13, y: 29.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -775,6 +775,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   attackRange: 3
+  fXPool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
+  attackFx: {fileID: -3694694298195838430, guid: 95f7d0629a27d5e48ad2faa58fbb0f15, type: 3}
 --- !u!114 &1029255541828704044
 MonoBehaviour:
   m_ObjectHideFlags: 0

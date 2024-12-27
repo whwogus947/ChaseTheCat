@@ -12,6 +12,8 @@ namespace Com2usGameDev
         public int poolSize = 10;
         public float bulletSpeed = 10;
         public float bulletLifetime = 1f;
+        public VFXPool pool;
+        public PoolItem hitFX;
 
         private Queue<SlingshotBullet> objectPool = new();
         private Transform handleStorage;
@@ -98,6 +100,11 @@ namespace Com2usGameDev
 
         public void ReturnToPool(SlingshotBullet obj)
         {
+            obj.AddHitEvent(() =>
+            {
+                var fx = pool.GetPooledObject(hitFX);
+                fx.transform.position = obj.transform.position;
+            });
             obj.gameObject.SetActive(false);
             objectPool.Enqueue(obj);
         }
