@@ -467,13 +467,9 @@ namespace Com2usGameDev
         {
             public class Idle : StateNode
             {
-                private float idleTimer;
+                private float idleTimer = 0f;
 
-                public bool IsWandering()
-                {
-                    idleTimer -= Time.deltaTime;
-                    return idleTimer <= 0;
-                }
+                public bool IsTimeOver() => idleTimer <= 0;
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
@@ -481,48 +477,49 @@ namespace Com2usGameDev
                     unit.SetTransitionPower(0);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.TranslateX();
-                    idleTimer = UnityEngine.Random.Range(3, 5);
+                    idleTimer = UnityEngine.Random.Range(2, 5);
                 }
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-
+                    // idleTimer = 0f;
                 }
 
                 public override void OnUpdate(UnitBehaviour unit)
                 {
-
+                    idleTimer -= Time.deltaTime;
                 }
+
+                public void ResetTimer() => idleTimer = 0f;
             }
 
             public class Roam : StateNode
             {
-                private float roamTimer;
+                private float roamTimer = 0;
 
-                public bool IsRoaming()
-                {
-                    roamTimer -= Time.deltaTime;
-                    return roamTimer > 0;
-                }
+                public bool IsTimeOver() => roamTimer <= 0;
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
                     Debug.Log("roam entered");
                     unit.SetTransitionPower(unit.walk);
                     unit.PlayAnimation(AnimationHash, 0.2f);
-                    roamTimer = UnityEngine.Random.Range(5, 10);
+                    roamTimer = UnityEngine.Random.Range(2, 5);
+                    (unit as MonsterBehaviour).ResetVelocityDirection();
                 }
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-                    roamTimer = 0;
+                    
                 }
 
                 public override void OnUpdate(UnitBehaviour unit)
                 {
                     unit.TranslateX();
+                    roamTimer -= Time.deltaTime;
                 }
-                
+
+                public void ResetTimer() => roamTimer = 0f;                
             }
 
             public class Chase : StateNode
@@ -545,11 +542,33 @@ namespace Com2usGameDev
                 }
             }
 
-            public class Attack : StateNode
+            public class NormalAttack : StateNode
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
                     unit.timer = new(0.94f);
+                    unit.SetTransitionPower(0);
+                    unit.TranslateX();
+                    unit.PlayAnimation(AnimationHash, 0.2f);
+                    unit.Attack();
+                }
+
+                public override void OnExit(UnitBehaviour unit)
+                {
+
+                }
+
+                public override void OnUpdate(UnitBehaviour unit)
+                {
+                    unit.timer.Tick();
+                }
+            }
+
+            public class RangedAttack : StateNode
+            {
+                public override void OnEnter(UnitBehaviour unit)
+                {
+                    unit.timer = new(0.5f);
                     unit.SetTransitionPower(0);
                     unit.TranslateX();
                     unit.PlayAnimation(AnimationHash, 0.2f);
@@ -597,24 +616,6 @@ namespace Com2usGameDev
                     _isReady = false;
                     await UniTask.WaitForSeconds(time);
                     _isReady = true;
-                }
-            }
-
-            public class Dead : StateNode
-            {
-                public override void OnEnter(UnitBehaviour unit)
-                {
-                    throw new System.NotImplementedException();
-                }
-
-                public override void OnExit(UnitBehaviour unit)
-                {
-                    throw new System.NotImplementedException();
-                }
-
-                public override void OnUpdate(UnitBehaviour unit)
-                {
-                    throw new System.NotImplementedException();
                 }
             }
         }

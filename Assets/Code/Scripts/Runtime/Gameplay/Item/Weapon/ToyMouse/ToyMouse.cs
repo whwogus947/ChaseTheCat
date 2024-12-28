@@ -2,16 +2,20 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class ToyMouse : MonoBehaviour, IOffensiveWeapon
+    public class ToyMouse : OffensiveWeapon
     {
-        public LayerMask monsterLayer;
+        public LayerMask attackLayer;
         public LayerMask groundLayer;
         public Vector2Int throwPower;
+        public bool spin = false;
+        public float spinSpeed = 180;
 
         private Rigidbody2D rb;
         private CircleCollider2D circleCollider;
+        private Transform spinTransform;
+        private int direction;
 
-        public void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
+        public override void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
             var clone = Instantiate(this, transform.position, transform.rotation);
             clone.transform.SetParent(null, true);
@@ -19,6 +23,7 @@ namespace Com2usGameDev
             clone.rb.bodyType = RigidbodyType2D.Dynamic;
             clone.rb.AddForce(to * throwPower.x + Vector2.up * throwPower.y);
             clone.circleCollider.enabled = true;
+            clone.direction = to.x > 0 ? -1 : 1;
         }
 
         private void Awake()
@@ -30,7 +35,10 @@ namespace Com2usGameDev
 
         void Start()
         {
-            
+            if (spin && transform.childCount < 1)
+                spin = false;
+            else if (spin)
+                spinTransform = transform.GetChild(0);
         }
 
         void Update()
@@ -38,10 +46,13 @@ namespace Com2usGameDev
             if (!circleCollider.enabled)
                 return;
 
-            var col = Physics2D.OverlapCircle(transform.position, 1f, monsterLayer.value);
-            if (col != null && col.TryGetComponent(out MonsterBehaviour monsterBehaviour))
+            if (spin)
+                spinTransform.Rotate(Vector3.forward, spinSpeed * direction * Time.deltaTime);
+
+            var col = Physics2D.OverlapCircle(transform.position, 1f, attackLayer.value);
+            if (col != null && col.TryGetComponent(out UnitBehaviour behaviour))
             {
-                monsterBehaviour.HP -= 30;
+                behaviour.HP -= 30;
                 Destroy(gameObject);
             }
 

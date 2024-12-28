@@ -6,23 +6,20 @@ namespace Com2usGameDev
     public class MonsterBehaviour : UnitBehaviour
     {
         public LayerMask playerLayer;
-        public float attackRange;
-
-        [Header("FX")]
-        public VFXPool fXPool;
-        public PoolItem attackFx;
-        
-
+        public OffensiveWeapon weapon;
         private Transform player;
 
         public override bool Controllable { get => enabled; set => enabled = value; }
         private MaterialPropertyBlock propertyBlock;
         private Renderer[] renderers;
         private bool isDissolveOn = false;
+        private bool isAttacking = false;
+
+        public float DetectRange => weapon.detectRange;
 
         public override void UseVFX(PoolItem fx)
         {
-            
+
         }
 
         public void ChangeDirectionToOpposite()
@@ -80,6 +77,8 @@ namespace Com2usGameDev
             Destroy(gameObject);
         }
 
+        public void ResetVelocityDirection() => player = null;
+
         protected override int GetVelocityDirection()
         {
             return FacingDirection = player != null ? GetTargetDirection(player.position) : FacingDirection;
@@ -114,13 +113,14 @@ namespace Com2usGameDev
             return cols != null;
         }
 
-        public bool IsPlayerBeside()
+        public bool IsPlayerBeside(float? size = null)
         {
-            var cols = Physics2D.OverlapBox(transform.position, new Vector2(4, 0.45f), 0f, playerLayer.value);
+            float detectSizeX = size == null ? 4 : (float)size;
+            var cols = Physics2D.OverlapBox(transform.position, new Vector2(detectSizeX, 0.45f), 0f, playerLayer.value);
             if (player == null && cols != null)
                 player = cols.transform;
 
-            return cols != null&& DistanceX(player.position.x) <= attackRange;
+            return cols != null && DistanceX(player.position.x) <= DetectRange;
         }
 
         private float DistanceX(float playerX)
@@ -129,17 +129,15 @@ namespace Com2usGameDev
             return Vector2.Distance(player.position, transform.position);
         }
 
-        public override void Attack()
+        public override async void Attack()
         {
-            var rayHit = Physics2D.BoxCast((Vector2)transform.position, Vector2.one, 0, FacingDirection * 1f * Vector2.right, 2, playerLayer.value);
-            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out PlayerBehaviour behaviour))
-            {
-                behaviour.HP -= 10;
-                var fx = fXPool.GetPooledObject(attackFx);
-                fx.transform.position = (Vector2)transform.position + FacingDirection * 1.4f * Vector2.right;
-                var scale = fx.transform.localScale;
-                fx.transform.localScale = new(scale.x * FacingDirection, scale.y, scale.z);
-            }
+            if (weapon == null || isAttacking)
+                return;
+
+            isAttacking = true;
+            await UniTask.WaitForSeconds(weapon.delay);
+            weapon.Attack(transform.position, FacingDirection * Vector2.right, playerLayer, 0);
+            isAttacking = false;
         }
     }
 }

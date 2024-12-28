@@ -2,16 +2,16 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class CatnipBall : MonoBehaviour, IOffensiveWeapon
+    public class CatnipBall : OffensiveWeapon
     {
-        public LayerMask monsterLayer;
+        public LayerMask attackLayer;
         public LayerMask groundLayer;
         public Vector2Int throwPower;
 
         private Rigidbody2D rb;
         private CircleCollider2D circleCollider;
 
-        public void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
+        public override void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
             var clone = Instantiate(this, transform.position, transform.rotation);
             clone.transform.SetParent(null, true);
@@ -38,10 +38,10 @@ namespace Com2usGameDev
             if (!circleCollider.enabled)
                 return;
 
-            var col = Physics2D.OverlapCircle(transform.position, 1f, monsterLayer.value);
-            if (col != null && col.TryGetComponent(out MonsterBehaviour monsterBehaviour))
+            var col = Physics2D.OverlapCircle(transform.position, 1f, attackLayer.value);
+            if (col != null && col.TryGetComponent(out UnitBehaviour behaviour))
             {
-                monsterBehaviour.HP -= 30;
+                behaviour.HP -= 30;
                 Destroy(gameObject);
             }
 
