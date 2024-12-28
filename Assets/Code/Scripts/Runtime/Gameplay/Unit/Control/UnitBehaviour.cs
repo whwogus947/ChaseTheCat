@@ -100,6 +100,11 @@ namespace Com2usGameDev
             ani.Play(animHash);
         }
 
+        protected void PlayAnimation(string animName, float transitionRate = 0f)
+        {
+            ani.CrossFade(animName, transitionRate);
+        }
+
         public void SetAnimation(string animHash, bool value)
         {
             ani.SetBool(animHash, value);

@@ -10,7 +10,7 @@ namespace Com2usGameDev
 
         public override void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
-            var rayHit = Physics2D.BoxCast((Vector2)transform.position, Vector2.one, 0, to, 1, layer.value);
+            var rayHit = Physics2D.BoxCast(from, Vector2.one, 0, to, attackRange, layer.value);
             if (rayHit.collider != null && rayHit.collider.TryGetComponent(out PlayerBehaviour behaviour))
             {
                 behaviour.HP -= 10;

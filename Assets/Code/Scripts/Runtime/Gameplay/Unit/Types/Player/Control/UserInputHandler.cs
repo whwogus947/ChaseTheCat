@@ -165,7 +165,6 @@ namespace Com2usGameDev
 
             // Action
             StateNode.Creator<Nodes.Common.Empty>.Using(emptyAction).
-                // WithTransition(toRope).
                 WithTransition(toJumpCharging).
                 WithTransition(toAttack).
                 WithTransition(toOnAir).
@@ -196,16 +195,13 @@ namespace Com2usGameDev
             StateNode.Creator<Nodes.Player.OnAir>.Using(onAir).
                 WithTransition(toStaticFlight).
                 WithTransition(toEmptyAction).
+                WithAnimation("main-hit").
                 Accomplish(controller);
 
             StateNode.Creator<Nodes.Player.AttackNormal>.Using(attackNormal).
                 WithAnimation("main-attack").
                 WithTransition(attackToEmpty).
                 Accomplish(controller);
-
-            // StateNode.Creator<Nodes.Player.Rope>.Using(rope).
-            //     WithTransition(ropeToIdle).
-            //     Accomplish(controller);
         }
 
         private bool IsVelocityZero()

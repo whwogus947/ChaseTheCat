@@ -8,6 +8,7 @@ namespace Com2usGameDev
         public LayerMask playerLayer;
         public OffensiveWeapon weapon;
         private Transform player;
+        public float detectRange = 4f;
 
         public override bool Controllable { get => enabled; set => enabled = value; }
         private MaterialPropertyBlock propertyBlock;
@@ -15,7 +16,6 @@ namespace Com2usGameDev
         private bool isDissolveOn = false;
         private bool isAttacking = false;
 
-        public float DetectRange => weapon.detectRange;
 
         public override void UseVFX(PoolItem fx)
         {
@@ -120,7 +120,7 @@ namespace Com2usGameDev
             if (player == null && cols != null)
                 player = cols.transform;
 
-            return cols != null && DistanceX(player.position.x) <= DetectRange;
+            return cols != null && DistanceX(player.position.x) <= detectRange;
         }
 
         private float DistanceX(float playerX)
@@ -136,6 +136,8 @@ namespace Com2usGameDev
 
             isAttacking = true;
             await UniTask.WaitForSeconds(weapon.delay);
+            if (this == null)
+                return;
             weapon.Attack(transform.position, FacingDirection * Vector2.right, playerLayer, 0);
             isAttacking = false;
         }

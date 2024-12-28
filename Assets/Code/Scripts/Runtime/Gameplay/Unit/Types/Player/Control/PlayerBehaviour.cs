@@ -21,6 +21,10 @@ namespace Com2usGameDev
         public List<SkillAbilitySO> initialSkills;
         public Transform fxStorage;
 
+        private float maxHeight;
+        private readonly float threshold = -7.5f;
+        private readonly int power = 2;
+
         public float EP
         {
             get => ep;
@@ -80,6 +84,20 @@ namespace Com2usGameDev
             }
         }
 
+        public void ResetMaxHeight() => maxHeight = transform.position.y;
+
+        public void CalculateFallDamage()
+        {
+            var endHeight = transform.position.y;
+            var gap = endHeight - maxHeight;
+            if (gap < threshold && groundChecker.Value)
+            {
+                PlayAnimation("main-hit", 0.2f);
+                HP += (int)gap * power;
+                maxHeight = transform.position.y;
+            }
+        }
+
         protected override void Initialize()
         {
             controllable.Value = true;
@@ -95,6 +113,13 @@ namespace Com2usGameDev
             weaponPlacer = GetComponent<WeaponPlacer>();
             weaponPlacer.fxEvent += UseVFX;
             weaponPlacer.onGetWeapon += OnGetWeapon;
+            maxHeight = transform.position.y;
+        }
+
+        private void UpdateFallHeight()
+        {
+            if (transform.position.y > maxHeight)
+                maxHeight = transform.position.y;
         }
 
         private void OnGetWeapon(WeaponAbilitySO weapon)
@@ -112,6 +137,7 @@ namespace Com2usGameDev
 
             UpdateAllSkills();
             EP += Time.deltaTime * playerStat.epRecoverySpeed;
+            UpdateFallHeight();
         }
 
         private void UpdateAllSkills()

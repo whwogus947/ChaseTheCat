@@ -307,18 +307,17 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    // Debug.Log("OnAir");
                     unit.SetAnimation("IsOnGround", false);
                 }
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-
+                    (unit as PlayerBehaviour).CalculateFallDamage();
                 }
 
                 public override void OnUpdate(UnitBehaviour unit)
                 {
-
+                    
                 }
             }
 
@@ -337,6 +336,8 @@ namespace Com2usGameDev
                 {
                     unit.Controllable = true;
                     unit.SetAnimation("IsOnGround", true);
+
+                    (unit as PlayerBehaviour).CalculateFallDamage();
                 }
 
                 public override void OnUpdate(UnitBehaviour unit)
@@ -353,6 +354,8 @@ namespace Com2usGameDev
                 {
                     unit.Controllable = true;
                     unit.SetAnimation("IsOnGround", true);
+
+                    (unit as PlayerBehaviour).CalculateFallDamage();
                 }
 
                 public override void OnSkillEnter(PlayerBehaviour player)
@@ -376,6 +379,8 @@ namespace Com2usGameDev
                 {
                     if (unit is PlayerBehaviour behaviour)
                     {
+                        behaviour.ResetMaxHeight();
+                        
                         unit.PlayAnimation(AnimationHash, 0.2f);
                         behaviour.InvalidateRigidbody();
                         unit.SetAnimation("IsHolding", true);

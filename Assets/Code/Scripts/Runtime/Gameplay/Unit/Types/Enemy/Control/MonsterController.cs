@@ -37,11 +37,11 @@ namespace Com2usGameDev
             var normalAttack = StateNode.Creator<Nodes.Enemy.NormalAttack>.CreateType(State.Basic).InProgress();
 
             NodeTransition toEmpty = new(empty, new(() => behaviour.timer.IsFinished));
-            NodeTransition toIdle = new(idle, new(() => (roam.IsTimeOver() && idle.IsTimeOver()) || (behaviour.timer.IsFinished && !behaviour.IsPlayerBeside(behaviour.DetectRange) && !behaviour.IsPlayerNearby()) || !behaviour.IsOnGround()));
-            NodeTransition toChasing = new(chasing, new(() => behaviour.timer.IsFinished && !behaviour.IsPlayerBeside(behaviour.DetectRange) && behaviour.IsPlayerNearby() && behaviour.IsOnGround()));
-            NodeTransition toRoam = new(roam, new(() => idle.IsTimeOver() || !roam.IsTimeOver() && !behaviour.IsPlayerBeside(behaviour.DetectRange) && !behaviour.IsPlayerNearby() && behaviour.IsOnGround()));
-            NodeTransition roamToIdle = new(idle, new(() => roam.IsTimeOver() && behaviour.timer.IsFinished && !behaviour.IsPlayerBeside(behaviour.DetectRange) && !behaviour.IsPlayerNearby() || !behaviour.IsOnGround()));
-            NodeTransition toNormalAttack = new(normalAttack, new(() => behaviour.IsPlayerBeside(behaviour.DetectRange) && behaviour.IsOnGround()));
+            NodeTransition toIdle = new(idle, new(() => (roam.IsTimeOver() && idle.IsTimeOver()) || (behaviour.timer.IsFinished && !behaviour.IsPlayerBeside(behaviour.detectRange) && !behaviour.IsPlayerNearby()) || !behaviour.IsOnGround()));
+            NodeTransition toChasing = new(chasing, new(() => behaviour.timer.IsFinished && !behaviour.IsPlayerBeside(behaviour.detectRange) && behaviour.IsPlayerNearby() && behaviour.IsOnGround()));
+            NodeTransition toRoam = new(roam, new(() => idle.IsTimeOver() || !roam.IsTimeOver() && !behaviour.IsPlayerBeside(behaviour.detectRange) && !behaviour.IsPlayerNearby() && behaviour.IsOnGround()));
+            NodeTransition roamToIdle = new(idle, new(() => roam.IsTimeOver() && behaviour.timer.IsFinished && !behaviour.IsPlayerBeside(behaviour.detectRange) && !behaviour.IsPlayerNearby() || !behaviour.IsOnGround()));
+            NodeTransition toNormalAttack = new(normalAttack, new(() => behaviour.IsPlayerBeside(behaviour.detectRange) && behaviour.IsOnGround()));
             NodeTransition toSprint = new(sprint, new(() => sprint.IsReady && behaviour.IsPlayerNearby(12f) && behaviour.IsOnGround()));
 
             StateNode.Creator<Nodes.Common.Empty>.Using(empty).WithTransition(toIdle).WithTransition(toChasing).WithTransition(toNormalAttack).Accomplish(controller);
