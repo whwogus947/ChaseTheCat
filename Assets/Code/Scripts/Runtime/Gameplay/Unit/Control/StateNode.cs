@@ -65,6 +65,12 @@ namespace Com2usGameDev
             addible.AddState(this);
         }
 
+        public void RemoveTransition(Type state)
+        {
+            if (transitions.Exists(x => x.To.GetType() == state))
+                transitions.Remove(transitions.Find(x => x.To.GetType() == state));
+        }
+
         public class Creator<T> where T : StateNode, new()
         {
             private T node;
@@ -112,6 +118,15 @@ namespace Com2usGameDev
             {
                 node.OnEnterAction = @action;
                 return node;
+            }
+
+            public void AccomplishOnly(IStateAddible addible, List<SpecialSO> specials)
+            {
+                if (specials.Exists(x => x.BehaviourType == typeof(T)))
+                {
+                    addible.AddState(node);
+                    return;
+                }
             }
         }
     }

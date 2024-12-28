@@ -1,3 +1,5 @@
+using System;
+
 namespace Com2usGameDev
 {
     public interface IState
@@ -9,6 +11,7 @@ namespace Com2usGameDev
         void OnUpdate(UnitBehaviour unit);
         void OnExit(UnitBehaviour unit);
         bool HasSatisfiedState(out IState state);
+        void RemoveTransition(Type state);
     }
     
     public interface ITransition

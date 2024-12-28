@@ -32054,6 +32054,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8045032624550818877, guid: 0764888420725fc46ac5b696b4093b90, type: 3}
+      propertyPath: specials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045032624550818877, guid: 0764888420725fc46ac5b696b4093b90, type: 3}
+      propertyPath: 'specials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5fe73b4aa68fadd4984883c6690df68d, type: 2}
     - target: {fileID: 8266856264529920366, guid: 0764888420725fc46ac5b696b4093b90, type: 3}
       propertyPath: m_Name
       value: Mob 2-1
@@ -32332,6 +32340,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1868259637}
     m_Modifications:
+    - target: {fileID: 114031787279420947, guid: 77d0616f4bf8e364f8f5a0d049e5b26d, type: 3}
+      propertyPath: specials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114031787279420947, guid: 77d0616f4bf8e364f8f5a0d049e5b26d, type: 3}
+      propertyPath: 'specials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5fe73b4aa68fadd4984883c6690df68d, type: 2}
     - target: {fileID: 1231250790801386319, guid: 77d0616f4bf8e364f8f5a0d049e5b26d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14

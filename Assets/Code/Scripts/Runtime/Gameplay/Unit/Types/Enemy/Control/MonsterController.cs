@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com2usGameDev
@@ -5,6 +6,8 @@ namespace Com2usGameDev
     [RequireComponent(typeof(MonsterBehaviour))]
     public class MonsterController : MonoBehaviour
     {
+        public List<SpecialSO> specials;
+
         private StateController controller;
         private MonsterBehaviour behaviour;
 
@@ -33,7 +36,7 @@ namespace Com2usGameDev
             // var run = StateNode.Creator<Nodes.MonRun>.CreateType(State.Basic).InProgress();
             var attackNormal = StateNode.Creator<Nodes.Enemy.Attack>.CreateType(State.Basic).InProgress();
             // var dead = StateNode.Creator<Nodes.MonDead>.CreateType(State.Basic).InProgress();
-            
+
             NodeTransition toEmpty = new(empty, new(() => behaviour.timer.IsFinished));
             // NodeTransition toIdle = new(idle, new(() => !roam.IsRoaming() && behaviour.timer.IsFinished && !behaviour.IsPlayerBeside() && !behaviour.IsPlayerNearby() || (!behaviour.IsChasable() && !roam.IsRoaming())));
             NodeTransition toIdle = new(idle, new(() => !roam.IsRoaming() && behaviour.timer.IsFinished && !behaviour.IsPlayerBeside() && !behaviour.IsPlayerNearby() || !behaviour.IsChasable()));
@@ -44,9 +47,10 @@ namespace Com2usGameDev
 
             StateNode.Creator<Nodes.Common.Empty>.Using(empty).WithTransition(toIdle).WithTransition(toChasing).WithTransition(toAttackNormal).Accomplish(controller);
             StateNode.Creator<Nodes.Enemy.Idle>.Using(idle).WithTransition(toRoam).WithTransition(toChasing).WithTransition(toAttackNormal).WithAnimation("mob_idle").Accomplish(controller);
-            StateNode.Creator<Nodes.Enemy.Walk>.Using(chasing).WithTransition(toIdle).WithTransition(toAttackNormal).WithAnimation("mob_walk").Accomplish(controller);            
-            StateNode.Creator<Nodes.Enemy.Attack>.Using(attackNormal).WithTransition(toIdle).WithTransition(toChasing).WithTransition(toEmpty).WithAnimation("mob_attack").Accomplish(controller);            
+            StateNode.Creator<Nodes.Enemy.Walk>.Using(chasing).WithTransition(toIdle).WithTransition(toAttackNormal).WithAnimation("mob_walk").Accomplish(controller);
+            StateNode.Creator<Nodes.Enemy.Attack>.Using(attackNormal).WithTransition(toIdle).WithTransition(toChasing).WithTransition(toEmpty).WithAnimation("mob_attack").Accomplish(controller);
             StateNode.Creator<Nodes.Enemy.Walk>.Using(roam).WithTransition(toIdle).WithTransition(toChasing).WithTransition(toAttackNormal).WithAnimation("mob_walk").Accomplish(controller);
+
         }
     }
 }
