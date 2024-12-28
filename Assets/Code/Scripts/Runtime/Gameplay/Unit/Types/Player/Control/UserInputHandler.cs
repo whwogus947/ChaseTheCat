@@ -124,7 +124,7 @@ namespace Com2usGameDev
             NodeTransition toEmptyAction = new(emptyAction, new(() => groundChecker.Value && timer.HasTimerExpired<Nodes.Player.Jump>()));
             NodeTransition toAttack = new(attackNormal, new(() => input.Player.Attack.phase == InputActionPhase.Performed));
             NodeTransition attackToEmpty = new(emptyAction, new(() => input.Player.Attack.phase == InputActionPhase.Waiting && timer.HasTimerExpired<Nodes.Player.AttackNormal>()));
-            NodeTransition toStaticFlight = new(staticFlight, new(() => input.Player.StaticFlight.phase == InputActionPhase.Performed && !groundChecker.Value));
+            NodeTransition toStaticFlight = new(staticFlight, new(() => staticFlight.IsUsable(abilityController) && input.Player.StaticFlight.phase == InputActionPhase.Performed && !groundChecker.Value));
             NodeTransition staticFlightToEmptyAction = new(emptyAction, new(() => timer.HasTimerExpired<Nodes.Player.StaticFlight>()));
             // NodeTransition toRope = new(rope, new(() => (GetWeapon(nameof(HookSO)) as HookSO).IsUsing));
             // NodeTransition ropeToIdle = new(emptyAction, new(() => !(GetWeapon(nameof(HookSO)) as HookSO).IsUsing));

@@ -373,19 +373,9 @@ namespace Com2usGameDev
                 }
             }
 
-            public class StaticFlight : StateNode
+            public class StaticFlight : SkillNode
             {
-                public override void OnEnter(UnitBehaviour unit)
-                {
-                    if (unit is PlayerBehaviour behaviour)
-                    {
-                        behaviour.ResetMaxHeight();
-                        
-                        unit.PlayAnimation(AnimationHash, 0.2f);
-                        behaviour.InvalidateRigidbody();
-                        unit.SetAnimation("IsHolding", true);
-                    }
-                }
+                protected override string SkillName => nameof(StaticFlightSkillSO);
 
                 public override void OnExit(UnitBehaviour unit)
                 {
@@ -394,6 +384,15 @@ namespace Com2usGameDev
                         behaviour.RegenerateRigidbody();
                         unit.SetAnimation("IsHolding", false);
                     }
+                }
+
+                public override void OnSkillEnter(PlayerBehaviour player)
+                {
+                    player.ResetMaxHeight();
+
+                    player.PlayAnimation(AnimationHash, 0.2f);
+                    player.InvalidateRigidbody();
+                    player.SetAnimation("IsHolding", true);
                 }
 
                 public override void OnUpdate(UnitBehaviour unit)

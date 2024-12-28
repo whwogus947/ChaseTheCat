@@ -991,6 +991,7 @@ MonoBehaviour:
   initialSkills:
   - {fileID: 11400000, guid: 9c337de9539992443a6826debc168dda, type: 2}
   - {fileID: 11400000, guid: af8d7c72e13243c489372d7da1219f01, type: 2}
+  - {fileID: 11400000, guid: 3d90c550cdab9a340b556f0ba2155e49, type: 2}
   fxStorage: {fileID: 2065468819}
   ep: 0
 --- !u!114 &315616699
