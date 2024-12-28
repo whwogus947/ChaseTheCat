@@ -18,21 +18,26 @@ namespace Com2usGameDev
             clone.transform.localScale = Vector3.one;
             clone.rb.bodyType = RigidbodyType2D.Dynamic;
             clone.rb.AddForce(to * throwPower.x + Vector2.up * throwPower.y);
+            clone.circleCollider.enabled = true;
         }
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             circleCollider = GetComponent<CircleCollider2D>();
+            circleCollider.enabled = false;
         }
 
         void Start()
         {
-
+            
         }
 
         void Update()
         {
+            if (!circleCollider.enabled)
+                return;
+
             var col = Physics2D.OverlapCircle(transform.position, 1f, monsterLayer.value);
             if (col != null && col.TryGetComponent(out MonsterBehaviour monsterBehaviour))
             {

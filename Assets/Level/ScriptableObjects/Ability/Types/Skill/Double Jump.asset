@@ -15,7 +15,8 @@ MonoBehaviour:
   grade: {fileID: 11400000, guid: 3232cc1d559b7874fad86185334869a8, type: 2}
   colorIcon: {fileID: 21300000, guid: 0ccbe49634ffa7b48979b4f0ec0e5950, type: 3}
   grayIcon: {fileID: 21300000, guid: be280ca3346d0004fa568a790d1f7cc1, type: 3}
+  fx: {fileID: 0}
   skillType: {fileID: 0}
   maxLevel: 0
-  epConsumption: 50
+  epConsumption: 5
   maxCoolTime: 1

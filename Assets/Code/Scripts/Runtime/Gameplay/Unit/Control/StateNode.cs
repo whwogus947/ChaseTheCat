@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -476,6 +477,7 @@ namespace Com2usGameDev
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
+                    Debug.Log("idle entered");
                     unit.SetTransitionPower(0);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.TranslateX();
@@ -493,7 +495,7 @@ namespace Com2usGameDev
                 }
             }
 
-            public class Walk : StateNode
+            public class Roam : StateNode
             {
                 private float roamTimer;
 
@@ -505,6 +507,7 @@ namespace Com2usGameDev
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
+                    Debug.Log("roam entered");
                     unit.SetTransitionPower(unit.walk);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     roamTimer = UnityEngine.Random.Range(5, 10);
@@ -520,6 +523,26 @@ namespace Com2usGameDev
                     unit.TranslateX();
                 }
                 
+            }
+
+            public class Chase : StateNode
+            {
+                public override void OnEnter(UnitBehaviour unit)
+                {
+                    Debug.Log("chase entered");
+                    unit.SetTransitionPower(unit.walk * 1.4f);
+                    unit.PlayAnimation(AnimationHash, 0.2f);
+                }
+
+                public override void OnExit(UnitBehaviour unit)
+                {
+                    
+                }
+
+                public override void OnUpdate(UnitBehaviour unit)
+                {
+                    unit.TranslateX();
+                }
             }
 
             public class Attack : StateNode
@@ -544,25 +567,40 @@ namespace Com2usGameDev
                 }
             }
 
-            public class MonRun : StateNode
+            public class Sprint : StateNode
             {
+                public bool IsReady => _isReady;
+
+                private bool _isReady = true;
+
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    throw new System.NotImplementedException();
+                    Debug.Log("sprint entered");
+                    unit.SetTransitionPower(unit.walk * 3f);
+                    unit.PlayAnimation(AnimationHash, 0.2f);
+                    if (IsReady)
+                        Countdown(10f).Forget();
                 }
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-                    throw new System.NotImplementedException();
+                    
                 }
 
                 public override void OnUpdate(UnitBehaviour unit)
                 {
-                    throw new System.NotImplementedException();
+                    unit.TranslateX();
+                }
+
+                private async UniTaskVoid Countdown(float time)
+                {
+                    _isReady = false;
+                    await UniTask.WaitForSeconds(time);
+                    _isReady = true;
                 }
             }
 
-            public class MonDead : StateNode
+            public class Dead : StateNode
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {

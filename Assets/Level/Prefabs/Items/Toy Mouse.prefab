@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6852276234052957888}
   - component: {fileID: 784986940453926401}
   - component: {fileID: 7333835992547090735}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Toy Mouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7350736844942199881}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

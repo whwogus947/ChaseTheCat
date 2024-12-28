@@ -70,8 +70,9 @@ namespace Com2usGameDev
 
             if (!states.ContainsKey(target))
             {
+                UnityEngine.Debug.Log("Delete" + target);
+                
                 states[currentState].RemoveTransition(target);
-                ChangeState(currentState);
                 return false;
             }
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3354078584517200605}
   - component: {fileID: 6544676105603978770}
   - component: {fileID: 8671365451419125866}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Catnipball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7465909904799511595}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

@@ -13,7 +13,7 @@ namespace Com2usGameDev
 
         public virtual void OnDiscover()
         {
-            Debug.Log("Ability Discovered");
+            
         }
     }
 }

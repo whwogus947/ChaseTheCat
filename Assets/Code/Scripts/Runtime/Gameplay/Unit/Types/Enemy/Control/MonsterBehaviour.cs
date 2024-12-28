@@ -85,7 +85,7 @@ namespace Com2usGameDev
             return FacingDirection = player != null ? GetTargetDirection(player.position) : FacingDirection;
         }
 
-        public bool IsChasable()
+        public bool IsOnGround()
         {
             bool isChasable = IsGround(Vector3.right * GetVelocityDirection());
             if (!isChasable)
@@ -104,9 +104,10 @@ namespace Com2usGameDev
             return cols != null;
         }
 
-        public bool IsPlayerNearby()
+        public bool IsPlayerNearby(float? size = null)
         {
-            var cols = Physics2D.OverlapBox(transform.position, new Vector2(8, 2), 0f, playerLayer.value);
+            float detectSizeX = size == null ? 16 : (float)size;
+            var cols = Physics2D.OverlapBox(transform.position, new Vector2(detectSizeX, 0.45f), 0f, playerLayer.value);
             if (player == null && cols != null)
                 player = cols.transform;
 
@@ -115,7 +116,7 @@ namespace Com2usGameDev
 
         public bool IsPlayerBeside()
         {
-            var cols = Physics2D.OverlapBox(transform.position, new Vector2(4, 2), 0f, playerLayer.value);
+            var cols = Physics2D.OverlapBox(transform.position, new Vector2(4, 0.45f), 0f, playerLayer.value);
             if (player == null && cols != null)
                 player = cols.transform;
 
