@@ -6,6 +6,7 @@ namespace Com2usGameDev
     {
         public Vector2 offset;
         public Transform Background { get; set; }
+        public float multiplier = 0.33f;
 
         private Camera mainCam;
         private float ySize;
@@ -33,7 +34,7 @@ namespace Com2usGameDev
             };
             mainCam.transform.position = playerPos;
 
-            Background.localPosition = playerPos.y * 0.33f * Vector3.up;
+            Background.localPosition = playerPos.y * multiplier * Vector3.up;
         }
     }
 }

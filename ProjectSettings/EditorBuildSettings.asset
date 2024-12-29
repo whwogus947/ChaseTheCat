@@ -12,13 +12,13 @@ EditorBuildSettings:
     path: Assets/Level/Scenes/Intro.unity
     guid: 42fd50861f2b76343baab67f3f5efb5e
   - enabled: 1
-    path: Assets/Level/Scenes/Prototype.unity
+    path: Assets/Level/Scenes/Stage1.unity
     guid: 57113c39f8ab87340ab7d9f9805f804f
   - enabled: 1
     path: Assets/Level/Scenes/Start Map.unity
     guid: 50eb7ede3685458469dc80e89f364dce
   - enabled: 1
-    path: Assets/Level/Scenes/Prototype 4(no Player).unity
+    path: Assets/Level/Scenes/Stage2.unity
     guid: 143bdd679222bd6468564210e3dd355d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: c6ea1cf780e67854d9796cfa2f7a8e12, type: 3}

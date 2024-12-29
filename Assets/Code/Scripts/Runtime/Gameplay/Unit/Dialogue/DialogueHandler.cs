@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System.Threading;
 using Com2usGameDev;
 using Cysharp.Threading.Tasks;
@@ -85,6 +86,7 @@ namespace Com2usGameDev
 
         public async UniTaskVoid DialogueRoutine(TMP_Text label, string text, CancellationToken cancellationToken)
         {
+            bool isInsideTag = false;
             string printText = "";
             for (int i = 0; i < text.Length; i++)
             {
@@ -94,13 +96,68 @@ namespace Com2usGameDev
                     return;
                 }
 
+                char currentChar = text[i];
+
+                if (currentChar == '<')
+                {
+                    isInsideTag = true;
+                    continue;
+                }
+                if (currentChar == '>')
+                {
+                    isInsideTag = false;
+                    continue;
+                }
+                if (isInsideTag)
+                {
+                    continue;
+                }
+
                 await UniTask.Delay(letterDelay, delayType: DelayType.UnscaledDeltaTime);
-                printText += text[i];
+                printText = text[0..i];
                 label.text = printText;
             }
             label.text = text;
             isCompleted = true;
         }
+
+        // public async UniTaskVoid DialogueRoutine(TMP_Text label, string text, CancellationToken cancellationToken)
+        // {
+        //     string openingColorTag = "";
+        //     string pureText = text;
+
+        //     Regex colorTagRegex = new Regex(@"<color=.*?>");
+        //     Match colorMatch = colorTagRegex.Match(text);
+
+        //     if (colorMatch.Success)
+        //     {
+        //         openingColorTag = colorMatch.Value;
+        //         int closeTagIndex = text.LastIndexOf("</color>");
+
+        //         pureText = text.Substring(openingColorTag.Length,
+        //                                 closeTagIndex - openingColorTag.Length);
+        //     }
+
+        //     string printText = "";
+        //     for (int i = 0; i < pureText.Length; i++)
+        //     {
+        //         if (cancellationToken.IsCancellationRequested)
+        //         {
+        //             label.text = text;
+        //             return;
+        //         }
+
+        //         await UniTask.Delay(letterDelay, delayType: DelayType.UnscaledDeltaTime);
+        //         printText += pureText[i];
+
+        //         label.text = colorMatch.Success
+        //             ? openingColorTag + printText + "</color>"
+        //             : printText;
+        //     }
+
+        //     label.text = text;
+        //     isCompleted = true;
+        // }
     }
 
     [System.Serializable]

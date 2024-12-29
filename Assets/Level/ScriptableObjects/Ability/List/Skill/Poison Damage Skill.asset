@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Poison Damage Skill
   m_EditorClassIdentifier: 
   grade: {fileID: 11400000, guid: 36257959b91d6ca41ba4ec41cb55eea1, type: 2}
-  colorIcon: {fileID: 21300000, guid: 3916b35b94a540343ba65c1ec2afd377, type: 3}
+  colorIcon: {fileID: 21300000, guid: 87cadde792f2ddc4d8e890cef117c127, type: 3}
   grayIcon: {fileID: 21300000, guid: 4f26a30182ac53a4eb50627e5462faf6, type: 3}
   fx: {fileID: 0}
   skillType: {fileID: 11400000, guid: fc26b1c6d79c81c499344ecbe21a2c71, type: 2}
