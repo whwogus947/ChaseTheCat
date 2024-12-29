@@ -12,6 +12,11 @@ namespace Com2usGameDev
 
         public void OpenGacha()
         {
+            for (int i = abilities.Count - 1; i >= 0; i--)
+            {
+                if (abilityController.HasAbility(abilities[i]) && !abilities[i].IsObtainable)
+                    abilities.RemoveAt(i);
+            }
             gameObject.SetActive(true);
             Time.timeScale = 0f;
             var gachaButtons = storage.GetComponentsInChildren<Button>(true);
@@ -38,6 +43,7 @@ namespace Com2usGameDev
         {
             var temp = new List<AbilitySO>(abilities);
             var result = new List<AbilitySO>();
+            count = Mathf.Min(count, temp.Count);
             for (int i = 0; i < count; i++)
             {
                 var index = Random.Range(0, temp.Count);

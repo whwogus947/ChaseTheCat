@@ -15,6 +15,11 @@ namespace Com2usGameDev
         public VFXPool pool;
         public PoolItem hitFX;
 
+        public AbilityController controller;
+        public SlingshotCountSkillSO ammoCountPassive;
+        public SlingshotDamageSkillSO damagePassive;
+        public SlingshotRangeSkillSO rangePassive;
+
         private Queue<SlingshotBullet> objectPool = new();
         private Transform handleStorage;
 
@@ -23,6 +28,10 @@ namespace Com2usGameDev
             handleStorage = GetComponentInParent<WeaponPlacer>().leftHand;
             DrawLines();
             ResetLines();
+
+            controller.AddAbility(ammoCountPassive);
+            controller.AddAbility(damagePassive);
+            controller.AddAbility(rangePassive);
 
             for (int i = 0; i < poolSize; i++)
             {
@@ -77,8 +86,43 @@ namespace Com2usGameDev
 
         public void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
-            var bullet = GetFromPool(handlePrefab.position);
-            bullet.Initialize(bulletSpeed, to, layer, bulletLifetime, ReturnToPool);
+            int count = ammoCountPassive.Count;
+            var directions = GetSpreadVectors(count, count * 5);
+
+            foreach (var direction in directions)
+            {
+                var bullet = GetFromPool(handlePrefab.position);
+                bullet.Initialize(bulletSpeed, direction * to.x, layer, bulletLifetime, ReturnToPool);
+            }
+        }
+
+        public Vector2[] GetSpreadVectors(int count, float spreadAngle)
+        {
+            Vector2[] directions = new Vector2[count];
+
+            if (count <= 1)
+            {
+                directions[0] = Vector2.right;
+                return directions;
+            }
+
+            float totalAngle = spreadAngle;
+            float startAngle = -totalAngle / 2f;
+            float angleStep = totalAngle / (count - 1);
+
+            for (int i = 0; i < count; i++)
+            {
+                float angle = startAngle + (angleStep * i);
+                angle = Random.Range(0, angle);
+                float radian = angle * Mathf.Deg2Rad;
+
+                directions[i] = new Vector2(
+                    Mathf.Cos(radian),
+                    Mathf.Sin(radian)
+                );
+            }
+
+            return directions;
         }
 
         public SlingshotBullet GetFromPool(Vector3 position)

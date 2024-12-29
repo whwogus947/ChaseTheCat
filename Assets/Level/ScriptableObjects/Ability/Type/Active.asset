@@ -9,13 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f70539393352794783c3189e3328b48, type: 3}
-  m_Name: Stick Damage Reinforce
+  m_Script: {fileID: 11500000, guid: 1ce1abe036092664db01e214355f4f2e, type: 3}
+  m_Name: Active
   m_EditorClassIdentifier: 
-  grade: {fileID: 0}
-  foregroundIcon: {fileID: 0}
-  backgroundIcon: {fileID: 0}
-  skillType: {fileID: 0}
-  maxLevel: 0
-  epConsumption: 0
-  coolTime: 0

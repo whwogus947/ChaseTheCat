@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Slingshot Range
   m_EditorClassIdentifier: 
   grade: {fileID: 0}
-  foregroundIcon: {fileID: 0}
-  backgroundIcon: {fileID: 0}
-  skillType: {fileID: 0}
+  colorIcon: {fileID: 0}
+  grayIcon: {fileID: 0}
+  fx: {fileID: 0}
+  skillType: {fileID: 11400000, guid: fc26b1c6d79c81c499344ecbe21a2c71, type: 2}
   maxLevel: 0
   epConsumption: 0
-  coolTime: 0
+  maxCoolTime: 0

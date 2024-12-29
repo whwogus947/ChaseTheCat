@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Dash Skill
   m_EditorClassIdentifier: 
   grade: {fileID: 11400000, guid: 3232cc1d559b7874fad86185334869a8, type: 2}
-  colorIcon: {fileID: 21300000, guid: 42d5b9c2c0546b543bbe4a9c1591529a, type: 3}
+  colorIcon: {fileID: 21300000, guid: 813b3db077d1b5f4198e566ffc59be65, type: 3}
   grayIcon: {fileID: 21300000, guid: 808e6adb51cacaa4a9897d0fd3f7acb3, type: 3}
   fx: {fileID: 3234454932785448605, guid: d552329e697ad084d8154c042e3c3c5d, type: 3}
-  skillType: {fileID: 0}
-  maxLevel: 5
-  epConsumption: 0
+  skillType: {fileID: 11400000, guid: dbb37915e0d362c409e9a7c24010aa14, type: 2}
+  maxLevel: 2
+  epConsumption: 8
   maxCoolTime: 1

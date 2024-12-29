@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f41e1d9aab559048aca8f530b0cf221, type: 3}
-  m_Name: Slingshot Damage Skill
+  m_Script: {fileID: 11500000, guid: 1f70539393352794783c3189e3328b48, type: 3}
+  m_Name: Stick Damage Reinforce
   m_EditorClassIdentifier: 
   grade: {fileID: 0}
-  foregroundIcon: {fileID: 0}
-  backgroundIcon: {fileID: 0}
-  skillType: {fileID: 0}
+  colorIcon: {fileID: 0}
+  grayIcon: {fileID: 0}
+  fx: {fileID: 0}
+  skillType: {fileID: 11400000, guid: fc26b1c6d79c81c499344ecbe21a2c71, type: 2}
   maxLevel: 0
   epConsumption: 0
-  coolTime: 0
+  maxCoolTime: 0

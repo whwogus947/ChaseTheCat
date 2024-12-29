@@ -15,7 +15,8 @@ namespace Com2usGameDev
         public bool IsReady => coolTime <= 0;
         public float CoolTimeRatio => coolTime / maxCoolTime;
 
-        private int level;
+        protected int level;
+        
         private float coolTime;
 
         public override void OnAquire()
@@ -24,6 +25,8 @@ namespace Com2usGameDev
             {
                 Debug.Log("Skill Already Aquired");
                 level++;
+                if (IsMaxLevel())
+                    IsObtainable = false;
                 PowerUp();
             }
         }
@@ -34,8 +37,10 @@ namespace Com2usGameDev
 
         public override void OnDiscover()
         {
-            level = 0;
+            base.OnDiscover();
+            level = 1;
             coolTime = maxCoolTime;
+            Debug.Log("Discover" + name);
         }
 
         public void CoolDown()
@@ -44,7 +49,7 @@ namespace Com2usGameDev
                 coolTime = Mathf.Max(0, coolTime - Time.deltaTime);
         }
 
-        public void Reset()
+        public void ResetCoolTime()
         {
             coolTime = maxCoolTime;
         }

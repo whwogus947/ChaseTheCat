@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e506ac76ad0823a4a808e75e5858fdbb, type: 3}
-  m_Name: Stick Stun
+  m_Script: {fileID: 11500000, guid: 1d04707a6dd87aa4ebd4a3f3a6df0961, type: 3}
+  m_Name: Screaming Echo
   m_EditorClassIdentifier: 
   grade: {fileID: 0}
-  foregroundIcon: {fileID: 0}
-  backgroundIcon: {fileID: 0}
-  skillType: {fileID: 0}
+  colorIcon: {fileID: 0}
+  grayIcon: {fileID: 0}
+  fx: {fileID: 0}
+  skillType: {fileID: 11400000, guid: dbb37915e0d362c409e9a7c24010aa14, type: 2}
   maxLevel: 0
   epConsumption: 0
-  coolTime: 0
+  maxCoolTime: 0

@@ -5,6 +5,7 @@ namespace Com2usGameDev
     public class SkillViewGroup : MonoBehaviour
     {
         public Transform storage;
+        public SkillType skillType;
 
         private SkillSlot slot;
 
@@ -15,6 +16,9 @@ namespace Com2usGameDev
 
         public void AddSkill(SkillAbilitySO skill)
         {
+            if (skill.skillType == null || skill.skillType == skillType.passive)
+                return;
+
             SkillSlot newSlot = null;
             for (int i = 0; i < storage.childCount; i++)
             {
@@ -32,5 +36,12 @@ namespace Com2usGameDev
             newSlot.gameObject.SetActive(true);
             newSlot.SetSkill(skill);
         }
+    }
+
+    [System.Serializable]
+    public class SkillType
+    {
+        public SkillTypeSO passive;
+        public SkillTypeSO active;
     }
 }

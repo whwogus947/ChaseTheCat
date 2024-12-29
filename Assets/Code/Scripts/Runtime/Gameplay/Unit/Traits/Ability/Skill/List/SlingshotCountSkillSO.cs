@@ -6,10 +6,11 @@ namespace Com2usGameDev
     public class SlingshotCountSkillSO : SkillAbilitySO
     {
         public override string AbilityName => nameof(SlingshotCountSkillSO);
+        public int Count => level;
 
         protected override void PowerUp()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

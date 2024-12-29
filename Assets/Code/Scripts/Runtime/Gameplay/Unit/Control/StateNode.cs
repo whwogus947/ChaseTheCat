@@ -172,7 +172,7 @@ namespace Com2usGameDev
 
             OnSkillEnter(player);
             UseEP(player);
-            skillAbility.Reset();
+            skillAbility.ResetCoolTime();
         }
 
         private void UseEP(PlayerBehaviour player)
@@ -210,8 +210,13 @@ namespace Com2usGameDev
         {
             public class Idle : StateNode
             {
+                private PlayerBehaviour playerBehaviour;
+
                 public override void OnEnter(UnitBehaviour unit)
                 {
+                    if (playerBehaviour == null)
+                        playerBehaviour = unit as PlayerBehaviour;
+
                     // Debug.Log("Idle");
                     unit.Controllable = true;
                     unit.SetAnimation("IsWalking", false);
@@ -228,7 +233,7 @@ namespace Com2usGameDev
 
                 public override void OnUpdate(UnitBehaviour unit)
                 {
-
+                    playerBehaviour.EP += Time.deltaTime * 1.5f;
                 }
             }
 
@@ -257,8 +262,13 @@ namespace Com2usGameDev
 
             public class Run : StateNode
             {
+                private PlayerBehaviour playerBehaviour;
+
                 public override void OnEnter(UnitBehaviour unit)
                 {
+                    if (playerBehaviour == null)
+                        playerBehaviour = unit as PlayerBehaviour;
+
                     unit.SetAnimation("IsWalking", false);
                     unit.SetAnimation("IsRunning", true);
                     unit.SetAnimation("IsOnGround", true);
@@ -274,6 +284,7 @@ namespace Com2usGameDev
                 public override void OnUpdate(UnitBehaviour unit)
                 {
                     unit.TranslateX();
+                    playerBehaviour.EP -= Time.deltaTime * 6f;
                 }
             }
 
@@ -323,8 +334,15 @@ namespace Com2usGameDev
 
             public class Jump : StateNode
             {
+                private PlayerBehaviour playerBehaviour;
+
                 public override void OnEnter(UnitBehaviour unit)
                 {
+                    if (playerBehaviour == null)
+                        playerBehaviour = unit as PlayerBehaviour;
+
+                    playerBehaviour.EP -= Time.deltaTime * 5f;
+
                     // Debug.Log("Jump");
                     unit.Jump();
                     unit.SetAnimation("IsOnGround", false);
