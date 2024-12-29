@@ -127,7 +127,7 @@ namespace Com2usGameDev
 
         public SlingshotBullet GetFromPool(Vector3 position)
         {
-            if (objectPool.Count > 0)
+            if (objectPool.Count > 0 && objectPool.Peek() != null)
             {
                 SlingshotBullet obj = objectPool.Dequeue();
                 obj.gameObject.SetActive(true);
@@ -137,6 +137,12 @@ namespace Com2usGameDev
             }
             else
             {
+                for (int i = 0; i < objectPool.Count; i++)
+                {
+                    var bullet = objectPool.Peek();
+                    if (bullet == null)
+                        objectPool.Dequeue();
+                }
                 SlingshotBullet obj = Instantiate(slingshotBullet, position, Quaternion.identity);
                 return obj;
             }

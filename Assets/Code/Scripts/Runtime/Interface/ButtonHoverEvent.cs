@@ -7,7 +7,7 @@ namespace Com2usGameDev
     {
         private Image[] images;
 
-        void Awake()
+        void Start()
         {
             images = GetComponentsInChildren<Image>();
             Off();
@@ -27,6 +27,11 @@ namespace Com2usGameDev
             {
                 item.color = Color.gray;
             }
+        }
+
+        public void SetScale(float scale)
+        {
+            transform.localScale = Vector3.one * scale;
         }
     }
 }

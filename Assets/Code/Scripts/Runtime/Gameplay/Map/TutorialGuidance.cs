@@ -22,7 +22,8 @@ namespace Com2usGameDev
         private async UniTaskVoid SetInactiveAfter(float timer)
         {
             await UniTask.WaitForSeconds(timer);
-            gameObject.SetActive(false);
+            if (gameObject != null)
+                gameObject.SetActive(false);
         }
     }
 }

@@ -92,6 +92,9 @@ namespace Com2usGameDev
                 Transform parent = weapon.isRightHanded ? rightHand : leftHand;
                 weapon.Obtain(parent);
                 weapons.Add(weapon);
+                Debug.Log(onGetWeapon);
+                Debug.Log(weapon);
+                Debug.Log(ability);
                 onGetWeapon(weapon);
             }
         }

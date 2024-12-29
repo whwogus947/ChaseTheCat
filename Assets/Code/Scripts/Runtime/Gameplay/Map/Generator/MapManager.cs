@@ -10,6 +10,7 @@ namespace Com2usGameDev
     {
         public MapNamePopup mapNamePopup;
         public GameObject guide;
+        public VoidChannelSO mapSelectEvent;
 
         private MapPalette palette;
         private MapViewer viewer;
@@ -26,14 +27,12 @@ namespace Com2usGameDev
         {
             AddStageSelectionButtonEvent();
             palette.AddEvent(CloseUI);
+            mapSelectEvent.UniqueEvent(OpenUI);
         }
 
         public void OpenUI()
         {
             palette.gameObject.SetActive(true);
-
-            var rootStage = creator.GetRootStage();
-            // viewer.DrawAllStages(rootStage);
         }
 
         public void CloseUI(Button btn) => palette.gameObject.SetActive(false);
@@ -76,7 +75,8 @@ namespace Com2usGameDev
         {
             var popupClone = Instantiate(mapNamePopup);
             await UniTask.WaitUntil(() => popupClone == null);
-            Instantiate(guide);
+            if (gameObject != null)
+                Instantiate(guide);
         }
     }
 }

@@ -1418,6 +1418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapNamePopup: {fileID: 3087473460779629594, guid: 70af078a5c2ca8642b6dd303311e0ba5, type: 3}
   guide: {fileID: 3443428569877641315, guid: be80e1f9935667d43915c4abead4ba21, type: 3}
+  mapSelectEvent: {fileID: 11400000, guid: 45fd70c18e4f97a4abb1b21cf8babedb, type: 2}
 --- !u!1 &3471499862466560276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2417,7 +2418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5646593158317844156
 RectTransform:
   m_ObjectHideFlags: 0

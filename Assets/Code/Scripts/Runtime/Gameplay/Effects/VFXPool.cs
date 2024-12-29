@@ -32,7 +32,6 @@ namespace Com2usGameDev
         {
             frontman = new GameObject("Pool Frontman");
             pools = new();
-            DontDestroyOnLoad(frontman);
         }
 
         private void AddNewPool(PoolItem key)

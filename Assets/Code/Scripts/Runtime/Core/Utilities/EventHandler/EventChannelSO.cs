@@ -12,5 +12,7 @@ namespace Com2usGameDev
         public void AddEvent(UnityAction<T> evt) => @event += evt;
 
         public void RemoveEvent(UnityAction<T> evt) => @event -= evt;
+
+        public void UniqueEvent(UnityAction<T> evt) => @event = evt;
     }
 }

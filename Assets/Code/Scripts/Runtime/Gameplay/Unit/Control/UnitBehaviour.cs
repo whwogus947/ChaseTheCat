@@ -48,13 +48,13 @@ namespace Com2usGameDev
         {
             ani = GetComponentInChildren<Animator>();
             rb = GetComponent<Rigidbody2D>();
+            Initialize();
         }
 
         private void Start()
         {
             timer = new(0);
             unitImage = transform.GetChild(0);
-            Initialize();
             HP = hp;
         }
 

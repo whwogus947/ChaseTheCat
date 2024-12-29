@@ -5,12 +5,12 @@ namespace Com2usGameDev
     public class PlayerVisionController : MonoBehaviour
     {
         public Vector2 offset;
-        public Transform background;
+        public Transform Background { get; set; }
 
         private Camera mainCam;
         private float ySize;
-        private float xSize ;
-        
+        private float xSize;
+
         void Start()
         {
             mainCam = Camera.main;
@@ -20,13 +20,19 @@ namespace Com2usGameDev
 
         void Update()
         {
-            var originPos = transform.position;
+            if (Background == null)
+                return;
+            if (mainCam == null)
+                mainCam = Camera.main;
+
+            var originPos = mainCam.transform.position;
             Vector3 playerPos = new(Mathf.FloorToInt(originPos.x / xSize + 0.5f) * xSize + offset.x, Mathf.FloorToInt(originPos.y / ySize + 0.5f) * ySize + offset.y, 0)
             {
                 z = -10
             };
             mainCam.transform.position = playerPos;
-            background.localPosition = playerPos.y * 0.33f * Vector3.up;
+
+            Background.localPosition = playerPos.y * 0.33f * Vector3.up;
         }
     }
 }

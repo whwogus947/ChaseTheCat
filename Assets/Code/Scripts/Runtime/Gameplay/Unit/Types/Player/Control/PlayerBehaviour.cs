@@ -20,6 +20,7 @@ namespace Com2usGameDev
         public VanishImage epSlider;
         public List<SkillAbilitySO> initialSkills;
         public Transform fxStorage;
+        public TransformChannelSO playerLocator;
 
         private float maxHeight;
         private readonly float threshold = -7.5f;
@@ -100,6 +101,8 @@ namespace Com2usGameDev
 
         protected override void Initialize()
         {
+            playerLocator.UniqueEvent(PlacePlayerToStartLocation);
+
             controllable.Value = true;
             var vanishImage = hpSlider;
             vanishImage.MaxValue = HP;
@@ -114,6 +117,13 @@ namespace Com2usGameDev
             weaponPlacer.fxEvent += UseVFX;
             weaponPlacer.onGetWeapon += OnGetWeapon;
             maxHeight = transform.position.y;
+        }
+
+        private void PlacePlayerToStartLocation(Transform placer)
+        {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            transform.position = placer.position;
+            rb.linearVelocity = Vector2.zero;
         }
 
         private void UpdateFallHeight()
