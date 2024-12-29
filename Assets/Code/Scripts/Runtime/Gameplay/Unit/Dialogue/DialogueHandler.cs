@@ -13,7 +13,7 @@ namespace Com2usGameDev
     {
         public DialogueHandler handler;
         public DialogueDataSO data;
-        public UnityAction onLastDialogueEnd = delegate {};
+        public UnityAction onLastDialogueEnd = delegate { };
         public NPCTypeSO NPC => data.NextNpc;
 
         private bool isFirstMessage = true;
@@ -25,7 +25,7 @@ namespace Com2usGameDev
             handler.Reset();
         }
 
-        public void NextMessage(TMP_Text label, bool interruption = false)
+        public DialogueText NextMessage(TMP_Text label, bool interruption = false)
         {
             if (isFirstMessage)
             {
@@ -38,7 +38,7 @@ namespace Com2usGameDev
                 if (data.TryNext())
                 {
                     handler.StartDialogue(label, data.CurrentMessage);
-                    return;
+                    return data.CurrentDialogue;
                 }
                 if (!isEventInvoked)
                     onLastDialogueEnd?.Invoke();
@@ -47,6 +47,7 @@ namespace Com2usGameDev
             {
                 handler.StopDialogue();
             }
+            return data.CurrentDialogue;
         }
     }
 
@@ -101,13 +102,14 @@ namespace Com2usGameDev
             isCompleted = true;
         }
     }
-}
 
-[System.Serializable]
-public class DialogueText
-{
-    public string subtitle;
-    public NPCTypeSO npc;
-    [TextArea(5, 10)]
-    public string textMessage;
+    [System.Serializable]
+    public class DialogueText
+    {
+        public string subtitle;
+        public NPCTypeSO npc;
+        [TextArea(5, 10)]
+        public string textMessage;
+        public Sprite illust;
+    }
 }

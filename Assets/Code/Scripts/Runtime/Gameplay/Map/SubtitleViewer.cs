@@ -9,6 +9,7 @@ namespace Com2usGameDev
     {
         public UnityEvent loadSceneEvent;
         public Dialogue dialogue;
+        public Image illustPalette;
 
         private TMP_Text viewText;
         private Button button;
@@ -30,7 +31,11 @@ namespace Com2usGameDev
 
         private void NextMessage()
         {
-            dialogue.NextMessage(viewText, true);
+            var context = dialogue.NextMessage(viewText, true);
+            if (illustPalette != null && context.illust != null)
+            {
+                illustPalette.sprite = context.illust;
+            }
         }
     }
 }

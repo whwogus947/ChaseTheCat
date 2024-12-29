@@ -7,6 +7,7 @@ namespace Com2usGameDev
     {
         public DialogueText[] dialogueTexts;
         public string CurrentMessage => dialogueTexts[index].textMessage;
+        public DialogueText CurrentDialogue => dialogueTexts[index];
         public NPCTypeSO NextNpc => dialogueTexts[Mathf.Min(index + 1, dialogueTexts.Length - 1)].npc;
 
         private int index = -1;
