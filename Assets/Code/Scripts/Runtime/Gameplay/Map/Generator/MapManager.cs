@@ -13,25 +13,27 @@ namespace Com2usGameDev
         public VoidChannelSO mapSelectEvent;
 
         private MapPalette palette;
-        private MapViewer viewer;
         private MapCreator creator;
 
         protected override void Initialize()
         {
-            viewer = GetComponentInChildren<MapViewer>(true);
             creator = GetComponentInChildren<MapCreator>(true);
             palette = GetComponentInChildren<MapPalette>(true);
         }
 
         void Start()
         {
-            AddStageSelectionButtonEvent();
             palette.AddEvent(CloseUI);
             mapSelectEvent.UniqueEvent(OpenUI);
         }
 
+        private void OnDestroy() {
+            mapSelectEvent.RemoveEvent(OpenUI);
+        }
+
         public void OpenUI()
         {
+            Debug.Log("Open");
             palette.gameObject.SetActive(true);
         }
 
@@ -40,16 +42,6 @@ namespace Com2usGameDev
         public void LoadScene(SceneHandlerSO scene)
         {
             LoadSceneUniTask(scene.SceneName).Forget();
-        }
-
-        private void AddStageSelectionButtonEvent()
-        {
-            viewer.AddOnClickButton(LoadScene);
-        }
-
-        private void LoadScene(StageData data)
-        {
-            LoadSceneUniTask(data.SceneName).Forget();
         }
 
         private async UniTaskVoid LoadSceneUniTask(string sceneName)

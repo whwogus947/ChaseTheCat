@@ -121,6 +121,7 @@ namespace Com2usGameDev
 
         private void PlacePlayerToStartLocation(Transform placer)
         {
+            ResetMaxHeight();
             rb.bodyType = RigidbodyType2D.Dynamic;
             transform.position = placer.position;
             rb.linearVelocity = Vector2.zero;
