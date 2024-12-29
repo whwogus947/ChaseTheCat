@@ -25,7 +25,8 @@ namespace Com2usGameDev
             if (mainCam == null)
                 mainCam = Camera.main;
 
-            var originPos = mainCam.transform.position;
+
+            var originPos = transform.position;
             Vector3 playerPos = new(Mathf.FloorToInt(originPos.x / xSize + 0.5f) * xSize + offset.x, Mathf.FloorToInt(originPos.y / ySize + 0.5f) * ySize + offset.y, 0)
             {
                 z = -10

@@ -191,12 +191,12 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    // Debug.Log("Empty");
+                    
                 }
 
                 public override void OnExit(UnitBehaviour unit)
                 {
-                    // Debug.Log("Exit Empty");
+                    
                 }
 
                 public override void OnUpdate(UnitBehaviour unit)
@@ -241,7 +241,6 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    // Debug.Log("Walk");
                     unit.SetAnimation("IsWalking", true);
                     unit.SetAnimation("IsRunning", false);
                     unit.SetAnimation("IsOnGround", true);
@@ -343,7 +342,6 @@ namespace Com2usGameDev
 
                     playerBehaviour.EP -= Time.deltaTime * 5f;
 
-                    // Debug.Log("Jump");
                     unit.Jump();
                     unit.SetAnimation("IsOnGround", false);
                     unit.CaptureDirection(unit.jumpX);
@@ -378,7 +376,6 @@ namespace Com2usGameDev
 
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
-                    // Debug.Log("DOUBLE JUMP");
                     player.Jump();
                     player.SetAnimation("IsOnGround", false);
                     player.CaptureDirection(player.jumpX);
@@ -495,7 +492,6 @@ namespace Com2usGameDev
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    Debug.Log("idle entered");
                     unit.SetTransitionPower(0);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.TranslateX();
@@ -523,7 +519,6 @@ namespace Com2usGameDev
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    Debug.Log("roam entered");
                     unit.SetTransitionPower(unit.walk);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     roamTimer = UnityEngine.Random.Range(2, 5);
@@ -548,7 +543,6 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    Debug.Log("chase entered");
                     unit.SetTransitionPower(unit.walk * 1.4f);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                 }
@@ -616,7 +610,6 @@ namespace Com2usGameDev
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    Debug.Log("sprint entered");
                     unit.SetTransitionPower(unit.walk * 3f);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     if (IsReady)

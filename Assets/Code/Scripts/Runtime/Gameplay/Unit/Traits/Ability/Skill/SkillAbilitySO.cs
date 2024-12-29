@@ -40,7 +40,6 @@ namespace Com2usGameDev
             base.OnDiscover();
             level = 1;
             coolTime = maxCoolTime;
-            Debug.Log("Discover" + name);
         }
 
         public void CoolDown()
