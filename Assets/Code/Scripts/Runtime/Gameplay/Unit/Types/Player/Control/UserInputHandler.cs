@@ -34,13 +34,7 @@ namespace Com2usGameDev
             input.Player.Attack.performed += OnPressAttack;
             input.Player.StaticFlight.performed += OnPressStaticFlight;
             input.Player.Interaction.performed += OnInteraction;
-            // input.Player.Rope.performed += OnPressRope;
         }
-
-        // private void OnPressRope(InputAction.CallbackContext context)
-        // {
-        //     timer.StartTimer<Nodes.Player.Rope>(1f);
-        // }
 
         private void OnInteraction(InputAction.CallbackContext context)
         {
@@ -126,8 +120,6 @@ namespace Com2usGameDev
             NodeTransition attackToEmpty = new(emptyAction, new(() => input.Player.Attack.phase == InputActionPhase.Waiting && timer.HasTimerExpired<Nodes.Player.AttackNormal>()));
             NodeTransition toStaticFlight = new(staticFlight, new(() => staticFlight.IsUsable(abilityController) && input.Player.StaticFlight.phase == InputActionPhase.Performed && !groundChecker.Value));
             NodeTransition staticFlightToEmptyAction = new(emptyAction, new(() => timer.HasTimerExpired<Nodes.Player.StaticFlight>()));
-            // NodeTransition toRope = new(rope, new(() => (GetWeapon(nameof(HookSO)) as HookSO).IsUsing));
-            // NodeTransition ropeToIdle = new(emptyAction, new(() => !(GetWeapon(nameof(HookSO)) as HookSO).IsUsing));
 
             // Movement
             StateNode.Creator<Nodes.Common.Empty>.Using(emptyMovement).

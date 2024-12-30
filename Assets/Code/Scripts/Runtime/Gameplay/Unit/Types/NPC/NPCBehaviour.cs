@@ -8,14 +8,17 @@ namespace Com2usGameDev
         [SerializeField] private Dialogue dialogue;
         private SocialInteraction social;
         private UnityAction onInteract;
+        private SinewaveTranslator questionMark;
 
         void Start()
         {
             social = FindAnyObjectByType<SocialInteraction>();
+            questionMark = GetComponentInChildren<SinewaveTranslator>();
         }
 
         public void OpenDialogue()
         {
+            Destroy(questionMark.gameObject);
             onInteract?.Invoke();
             social.Open(dialogue);
         }

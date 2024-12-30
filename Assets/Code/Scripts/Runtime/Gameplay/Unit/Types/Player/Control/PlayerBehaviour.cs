@@ -53,6 +53,11 @@ namespace Com2usGameDev
         {
             rb.gravityScale = 1f;
         }
+
+        public void ResetVelocity()
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
         
         public override void UseVFX(PoolItem fx)
         {

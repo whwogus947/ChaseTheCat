@@ -88,7 +88,9 @@ namespace Com2usGameDev
             rb.linearVelocityX = capturedDirection * transitionPower;
         }
 
-        public void Jump() => rb.AddForceY(jump * Mathf.Clamp(chargePower, 0, 1));
+        public void Jump() => rb.AddForceY(jump * Mathf.Clamp(chargePower, 0.4f, 1));
+
+        public void Jump(float power) => rb.AddForceY(jump * power);
 
         public void PlayAnimation(int animHash, float transitionRate = 0f)
         {

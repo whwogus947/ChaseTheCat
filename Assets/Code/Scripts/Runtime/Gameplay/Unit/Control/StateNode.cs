@@ -376,7 +376,8 @@ namespace Com2usGameDev
 
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
-                    player.Jump();
+                    player.ResetVelocity();
+                    player.Jump(0.7f);
                     player.SetAnimation("IsOnGround", false);
                     player.CaptureDirection(player.jumpX);
                     player.Controllable = false;
@@ -545,6 +546,7 @@ namespace Com2usGameDev
                 {
                     unit.SetTransitionPower(unit.walk * 1.4f);
                     unit.PlayAnimation(AnimationHash, 0.2f);
+                    (unit as MonsterBehaviour).OnFindPlayer();
                 }
 
                 public override void OnExit(UnitBehaviour unit)

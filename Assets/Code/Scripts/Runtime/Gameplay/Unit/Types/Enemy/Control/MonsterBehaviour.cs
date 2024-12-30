@@ -15,7 +15,7 @@ namespace Com2usGameDev
         private Renderer[] renderers;
         private bool isDissolveOn = false;
         private bool isAttacking = false;
-
+        private VibrateEffector onFindPlayerEffect;
 
         public override void UseVFX(PoolItem fx)
         {
@@ -32,11 +32,20 @@ namespace Com2usGameDev
             propertyBlock = new MaterialPropertyBlock();
             renderers = GetComponentsInChildren<Renderer>();
             vanishUI = GetComponentInChildren<VanishSlider>();
+            onFindPlayerEffect = GetComponentInChildren<VibrateEffector>(true);
         }
 
         protected override void CheckPerFrame()
         {
+            
+        }
 
+        public void OnFindPlayer()
+        {
+            if (onFindPlayerEffect != null && !onFindPlayerEffect.gameObject.activeSelf)
+            {
+                onFindPlayerEffect.StartEffect();
+            }
         }
 
         public void UpdateAllRendererProperties(float value)
