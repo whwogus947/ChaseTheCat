@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a128302cca8d7304e862dac34d8b92ac, type: 3}
   m_Name: Start Map
   m_EditorClassIdentifier: 
+  mapIcon: {fileID: 21300000, guid: 75a3f3f92bf235c4fa71dad003ff7b81, type: 3}
+  mapName: "\uB3C4\uC804\uC758 \uC601\uC5ED"
   scene:
     asset: {fileID: 102900000, guid: 57113c39f8ab87340ab7d9f9805f804f, type: 3}
     guid: 57113c39f8ab87340ab7d9f9805f804f

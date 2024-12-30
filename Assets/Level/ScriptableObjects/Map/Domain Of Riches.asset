@@ -15,4 +15,4 @@ MonoBehaviour:
   unvisited: {fileID: 21300000, guid: 3238b92072208b44685099114078c232, type: 3}
   visited: {fileID: 21300000, guid: 13c9eb6af2938094d8f5e8e5dd5f39ef, type: 3}
   visitable: {fileID: 21300000, guid: 7d03401a8a80c6a49a2e42cbaf760182, type: 3}
-  scene: {fileID: 11400000, guid: a41920b34386c94498a25f0355c7acde, type: 2}
+  scene: {fileID: 11400000, guid: 1788aa4e3575e284ab650d0719a12159, type: 2}

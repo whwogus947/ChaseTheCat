@@ -14,6 +14,8 @@ namespace Com2usGameDev
         public float bulletLifetime = 1f;
         public VFXPool pool;
         public PoolItem hitFX;
+        public AudioChannelSO sfx;
+        public AudioClip slingshotSX;
 
         public AbilityController controller;
         public SlingshotCountSkillSO ammoCountPassive;
@@ -88,6 +90,7 @@ namespace Com2usGameDev
         {
             int count = ammoCountPassive.Count;
             var directions = GetSpreadVectors(count, count * 5);
+            sfx.Invoke(slingshotSX);
 
             foreach (var direction in directions)
             {

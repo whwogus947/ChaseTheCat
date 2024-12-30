@@ -10,6 +10,7 @@ namespace Com2usGameDev
         public float duration;
         public float power;
         public float coolTime;
+        public AudioClip alertSound;
 
         private Vector3 originalPosition;
         private CancellationTokenSource shakeCts;
@@ -20,11 +21,12 @@ namespace Com2usGameDev
             originalPosition = transform.localPosition;
         }
 
-        public void StartEffect()
+        public void StartEffect(AudioChannelSO audioChannel)
         {
             if (!isPlayable)
                 return;
 
+            audioChannel.Invoke(alertSound);
             gameObject.SetActive(true);
             ShakeAsync(duration, power).Forget();
         }

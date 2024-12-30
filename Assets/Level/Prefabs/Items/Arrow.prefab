@@ -101,3 +101,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  sfx: {fileID: 8300000, guid: 879cb5fee2b996a4587dee4b2a7be8f7, type: 3}

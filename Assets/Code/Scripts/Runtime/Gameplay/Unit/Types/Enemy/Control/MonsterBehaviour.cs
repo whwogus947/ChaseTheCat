@@ -9,8 +9,8 @@ namespace Com2usGameDev
         public OffensiveWeapon weapon;
         private Transform player;
         public float detectRange = 4f;
-
         public override bool Controllable { get => enabled; set => enabled = value; }
+
         private MaterialPropertyBlock propertyBlock;
         private Renderer[] renderers;
         private bool isDissolveOn = false;
@@ -44,7 +44,7 @@ namespace Com2usGameDev
         {
             if (onFindPlayerEffect != null && !onFindPlayerEffect.gameObject.activeSelf)
             {
-                onFindPlayerEffect.StartEffect();
+                onFindPlayerEffect.StartEffect(audioChannel);
             }
         }
 

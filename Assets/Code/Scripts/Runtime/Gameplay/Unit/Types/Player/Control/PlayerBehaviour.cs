@@ -24,6 +24,7 @@ namespace Com2usGameDev
         public TwinklePoolItem monsterCollisionEffect;
         public TwinklePoolItem wallCollisionEffect;
         public Bloodscreen bloodscreen;
+        public PlayerSFX playerSFX;
 
         private float maxHeight;
         private readonly float threshold = -7.5f;
@@ -96,7 +97,7 @@ namespace Com2usGameDev
             }
         }
 
-        public void ResetMaxHeight() => maxHeight = transform.position.y;
+        public void ResetMaxHeight() => maxHeight = float.MinValue;
 
         public void CalculateFallDamage()
         {
@@ -261,5 +262,14 @@ namespace Com2usGameDev
                 bloodscreen.gameObject.SetActive(false);
             }
         }
+    }
+
+    [System.Serializable]
+    public class PlayerSFX
+    {
+        public AudioClip dash;
+        public AudioClip staticFlight;
+        public AudioClip jump;
+        public AudioClip doubleJump;
     }
 }

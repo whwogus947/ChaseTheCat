@@ -10,6 +10,7 @@ namespace Com2usGameDev
 
         public override void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
+            sfxChannel?.Invoke(sfx);
             var rayHit = Physics2D.BoxCast(from, Vector2.one, 0, to, attackRange, layer.value);
             if (rayHit.collider != null && rayHit.collider.TryGetComponent(out PlayerBehaviour behaviour))
             {

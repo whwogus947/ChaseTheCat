@@ -6,6 +6,8 @@ namespace Com2usGameDev
     public class SlingshotBullet : MonoBehaviour, IOffensiveWeapon
     {
         public int damage = 40;
+        public AudioChannelSO audioChannel;
+        public AudioClip sfx;
 
         private float speed;
         private Vector2 flyDirection;
@@ -19,6 +21,7 @@ namespace Com2usGameDev
             var rayHit = Physics2D.CircleCast(from, 0.5f, to, 0.25f, layer.value);
             if (rayHit.collider != null && rayHit.collider.TryGetComponent(out UnitBehaviour behaviour))
             {
+                audioChannel.Invoke(sfx);
                 behaviour.HP -= damage + defaultDamage;
                 onReturnPool(this);
                 onHit();

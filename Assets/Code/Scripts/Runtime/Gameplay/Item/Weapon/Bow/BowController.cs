@@ -43,6 +43,7 @@ namespace Com2usGameDev
                 {
                     ResetLines();
                     var bullet = GetFromPool(handlePrefab.position);
+                    sfxChannel?.Invoke(sfx);
                     bullet.Initialize(bulletSpeed, direction, layer, bulletLifetime, ReturnToPool);
                 }
             }

@@ -367,4 +367,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   maxRopeLength: 12
-  controllable: {fileID: 11400000, guid: 5982c9772d088ed48911175980be3398, type: 2}
+  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  sfx: {fileID: 8300000, guid: de0a0d1a18706e14f8e192700562b802, type: 3}

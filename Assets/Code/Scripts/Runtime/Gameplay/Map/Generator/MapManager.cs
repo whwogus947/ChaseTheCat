@@ -35,6 +35,7 @@ namespace Com2usGameDev
 
         public void OpenUI()
         {
+            Time.timeScale = 0f;
             palette.gameObject.SetActive(true);
         }
 
@@ -42,12 +43,14 @@ namespace Com2usGameDev
 
         public void LoadScene(SceneHandlerSO scene)
         {
+            mapNamePopup.Setup(scene.mapName, scene.mapIcon);
             LoadSceneUniTask(scene.SceneName).Forget();
             showTutorial = false;
         }
 
         public void LoadSceneWithTutorial(SceneHandlerSO scene)
         {
+            mapNamePopup.Setup(scene.mapName, scene.mapIcon);
             LoadSceneUniTask(scene.SceneName).Forget();
             showTutorial = true;
         }
@@ -68,6 +71,7 @@ namespace Com2usGameDev
 
         private void OnLoadComplete(AsyncOperation operation)
         {
+            FindAnyObjectByType<PlayerBehaviour>().ResetMaxHeight();
             OnLoadProcess().Forget();
         }
 

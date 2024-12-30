@@ -103,3 +103,4 @@ MonoBehaviour:
   duration: 1
   power: 0.4
   coolTime: 12
+  alertSound: {fileID: 8300000, guid: 1845b2ae90d61df44a15eae251dba1bf, type: 3}

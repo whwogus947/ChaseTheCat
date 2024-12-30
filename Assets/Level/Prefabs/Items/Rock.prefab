@@ -200,6 +200,8 @@ MonoBehaviour:
   delay: 0.1
   attackRange: 3
   animationName: mob_attack2
+  sfxChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  sfx: {fileID: 8300000, guid: 50452d7dce9d60e4cbab672f5f9b8dfa, type: 3}
   damage: 5
   attackLayer:
     serializedVersion: 2

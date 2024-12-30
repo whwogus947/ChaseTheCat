@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a128302cca8d7304e862dac34d8b92ac, type: 3}
   m_Name: Stage 3
   m_EditorClassIdentifier: 
+  mapIcon: {fileID: 21300000, guid: 632fec09ff03d3d4f8b8a9dbc8fea9fe, type: 3}
+  mapName: "\uD3C9\uD654\uC758 \uC601\uC5ED"
   scene:
     asset: {fileID: 102900000, guid: 3eb08536d25f39d4a881ddde541c49b9, type: 3}
     guid: 3eb08536d25f39d4a881ddde541c49b9

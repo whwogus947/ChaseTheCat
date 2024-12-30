@@ -102,6 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99880244d7dd7054896c768134b65209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 0.3
+  attackRange: 2.2
+  animationName: 
+  sfxChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  sfx: {fileID: 8300000, guid: a4d732cb83425d24bb9d7377abcd1497, type: 3}
   attackLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -109,6 +114,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   throwPower: {x: 300, y: 100}
+  onHitSfx: {fileID: 8300000, guid: aaf6cc1656ae7144daee31d62cff5ad0, type: 3}
 --- !u!50 &6544676105603978770
 Rigidbody2D:
   serializedVersion: 5

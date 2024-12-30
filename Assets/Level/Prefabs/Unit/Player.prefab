@@ -1569,6 +1569,11 @@ MonoBehaviour:
   monsterCollisionEffect: {fileID: 7832551532813131670, guid: b3ccf6eae136f8d489f918668976b6fb, type: 3}
   wallCollisionEffect: {fileID: 7832551532813131670, guid: ea1689aebbd5eb24c80ea054c1e30565, type: 3}
   bloodscreen: {fileID: 1344874159556128854}
+  playerSFX:
+    dash: {fileID: 8300000, guid: 76470f3ff8eafc74ea8092cfe53f111b, type: 3}
+    staticFlight: {fileID: 8300000, guid: 29cff9960019c0e49af20cdead6a7d3f, type: 3}
+    jump: {fileID: 8300000, guid: bd47681b349e7c74bb7bf4130d1eabeb, type: 3}
+    doubleJump: {fileID: 8300000, guid: 80b3a1fb8d20ab1479a71afe06208ac0, type: 3}
   ep: 0
 --- !u!114 &3512959000231787659
 MonoBehaviour:
@@ -1617,7 +1622,7 @@ MonoBehaviour:
   initialWeapons:
   - {fileID: 11400000, guid: 8346e7f72b7952c42a36fe3d53c393a7, type: 2}
   - {fileID: 11400000, guid: 7edcadfd83fad084ca33b4a5b38061c9, type: 2}
-  - {fileID: 11400000, guid: a60a7df0c97d3bb4dbc2a9d60e4f8986, type: 2}
+  - {fileID: 11400000, guid: f98dbf1a83a59d549832baeb8eca0134, type: 2}
   weaponViewGroup: {fileID: 7440661420630425873}
   ability: {fileID: 11400000, guid: ef9e67b76261c6b45b131587b360c7a2, type: 2}
 --- !u!114 &4729679662583706423

@@ -598,6 +598,7 @@ MonoBehaviour:
     m_Bits: 256
   weapon: {fileID: 7120299532666675811}
   detectRange: 4
+  alertSound: {fileID: 8300000, guid: 1845b2ae90d61df44a15eae251dba1bf, type: 3}
 --- !u!114 &2923813234334973283
 MonoBehaviour:
   m_ObjectHideFlags: 0

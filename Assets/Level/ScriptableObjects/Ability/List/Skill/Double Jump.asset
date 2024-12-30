@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Double Jump
   m_EditorClassIdentifier: 
   grade: {fileID: 11400000, guid: 3232cc1d559b7874fad86185334869a8, type: 2}
-  colorIcon: {fileID: 21300000, guid: 0ccbe49634ffa7b48979b4f0ec0e5950, type: 3}
+  colorIcon: {fileID: 21300000, guid: 35661f23eb1f2234797c215f4647a73d, type: 3}
   grayIcon: {fileID: 21300000, guid: be280ca3346d0004fa568a790d1f7cc1, type: 3}
   fx: {fileID: -4939460898549485, guid: 04f5986ac27c3fe429034a0b03386c0b, type: 3}
   skillType: {fileID: 11400000, guid: dbb37915e0d362c409e9a7c24010aa14, type: 2}

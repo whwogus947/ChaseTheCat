@@ -7,12 +7,14 @@ namespace Com2usGameDev
         public LayerMask attackLayer;
         public LayerMask groundLayer;
         public Vector2Int throwPower;
+        public AudioClip onHitSfx;
 
         private Rigidbody2D rb;
         private CircleCollider2D circleCollider;
 
         public override void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
+            sfxChannel?.Invoke(sfx);
             var clone = Instantiate(this, transform.position, transform.rotation);
             clone.transform.SetParent(null, true);
             clone.transform.localScale = Vector3.one;
@@ -41,6 +43,7 @@ namespace Com2usGameDev
             var col = Physics2D.OverlapCircle(transform.position, 1f, attackLayer.value);
             if (col != null && col.TryGetComponent(out UnitBehaviour behaviour))
             {
+                sfxChannel.Invoke(onHitSfx);
                 behaviour.HP -= 30;
                 Destroy(gameObject);
             }

@@ -10,6 +10,8 @@ namespace Com2usGameDev
         public GachaHolder selectionUI;
         public GameObject particle;
         public Transform brightFX;
+        public AudioChannelSO audioChannel;
+        public AudioClip openSfx;
 
         private MaterialPropertyBlock propertyBlock;
         private Renderer render;
@@ -26,6 +28,7 @@ namespace Com2usGameDev
 
         public void Open()
         {
+            audioChannel.Invoke(openSfx);
             OpenHairBallProcess().Forget();
         }
 

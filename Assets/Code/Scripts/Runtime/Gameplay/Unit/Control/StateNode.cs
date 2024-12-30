@@ -346,6 +346,7 @@ namespace Com2usGameDev
                     unit.SetAnimation("IsOnGround", false);
                     unit.CaptureDirection(unit.jumpX);
                     unit.Controllable = false;
+                    unit.PlaySound(playerBehaviour.playerSFX.jump);
                 }
 
                 public override void OnExit(UnitBehaviour unit)
@@ -376,6 +377,7 @@ namespace Com2usGameDev
 
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
+                    player.PlaySound(player.playerSFX.doubleJump);
                     player.ResetVelocity();
                     player.Jump(0.75f);
                     player.SetAnimation("IsOnGround", false);
@@ -405,6 +407,7 @@ namespace Com2usGameDev
 
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
+                    player.PlaySound(player.playerSFX.staticFlight);
                     player.ResetMaxHeight();
 
                     player.UseVFX(skillAbility.fx);
@@ -431,6 +434,7 @@ namespace Com2usGameDev
 
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
+                    player.PlaySound(player.playerSFX.dash);
                     player.PlayAnimation(AnimationHash, 0.2f);
                     player.SetTransitionPower(player.dash);
                     player.CaptureDirection();
@@ -449,7 +453,6 @@ namespace Com2usGameDev
                 public override void OnEnter(UnitBehaviour unit)
                 {
                     unit.Attack();
-                    unit.PlaySound(unit.attackSound);
                 }
 
                 public override void OnExit(UnitBehaviour unit)

@@ -135,6 +135,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0.3
+  attackRange: 2.2
+  animationName: 
+  sfxChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  sfx: {fileID: 8300000, guid: e05d8772ce35fde44b3f1c50d933d660, type: 3}
+  damage: 30
   attackLayer:
     serializedVersion: 2
     m_Bits: 512

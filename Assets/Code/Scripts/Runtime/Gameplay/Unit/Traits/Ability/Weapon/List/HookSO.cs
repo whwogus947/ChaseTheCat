@@ -18,6 +18,11 @@ namespace Com2usGameDev
             Count = initialCount;
         }
 
+        public override void OnDiscover()
+        {
+            Count = initialCount;
+        }
+
         public override void UseWeapon()
         {
             if (hookController == null)

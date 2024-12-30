@@ -10,6 +10,8 @@ namespace Com2usGameDev
         public Transform hook;
         public LayerMask groundLayer;
         public int maxRopeLength = 15;
+        public AudioChannelSO audioChannel;
+        public AudioClip sfx;
 
         private bool isHooked;
         private bool isUnhooked = false;
@@ -73,6 +75,7 @@ namespace Com2usGameDev
                 isUnhooked = true;
                 isUpperDirection = true;
             }
+            audioChannel?.Invoke(sfx);
         }
 
         private void ResetHook()

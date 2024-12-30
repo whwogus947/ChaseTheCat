@@ -47,5 +47,7 @@ MonoBehaviour:
   delay: 0.1
   attackRange: 2.2
   animationName: mob_attack
+  sfxChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  sfx: {fileID: 8300000, guid: 73b3baaff25f619488979423212eeda2, type: 3}
   fXPool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
   attackFx: {fileID: -3694694298195838430, guid: 95f7d0629a27d5e48ad2faa58fbb0f15, type: 3}

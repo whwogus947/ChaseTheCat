@@ -100,3 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46db01489a8dc34498aa0aa33784377c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 40
+  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  sfx: {fileID: 8300000, guid: 4d3e3a3c22175ab4bad0dd9b99a692db, type: 3}

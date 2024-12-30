@@ -29,7 +29,9 @@ namespace Com2usGameDev
             AllocateStages();
             foreach (var button in buttons)
             {
-                button.GetButton().onClick.AddListener(() => @event.Invoke(button.GetButton()));
+                button.GetButton().onClick.AddListener(() => { 
+                    
+                     Time.timeScale = 1f; @event.Invoke(button.GetButton()); });
             }
         }
 
@@ -46,6 +48,11 @@ namespace Com2usGameDev
             var clone = Instantiate(xMark, button.transform);
             clone.SetActive(true);
             clone.transform.localPosition = Vector3.zero;
+        }
+
+        private void OnEnable()
+        {
+            Time.timeScale = 0f;
         }
     }
 }

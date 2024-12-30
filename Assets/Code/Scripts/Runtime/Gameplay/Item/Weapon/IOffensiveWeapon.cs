@@ -13,5 +13,7 @@ namespace Com2usGameDev
         public float attackRange = 2.2f;
         public abstract void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage);
         public string animationName;
+        public AudioChannelSO sfxChannel;
+        public AudioClip sfx;
     }
 }

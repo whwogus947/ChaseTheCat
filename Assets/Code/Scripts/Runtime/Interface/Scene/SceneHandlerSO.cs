@@ -8,6 +8,8 @@ namespace Com2usGameDev
     public class SceneHandlerSO : ScriptableObject
     {
         public string SceneName => scene.Name;
+        public Sprite mapIcon;
+        public string mapName;
         
         [SerializeField] private SceneReference scene;
         

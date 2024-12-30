@@ -21,6 +21,9 @@ namespace Com2usGameDev
 
         public void Setup(string name, Sprite icon)
         {
+            if (name == "" || icon == null)
+                return;
+                
             mapName.text = name;
             mapIcon.sprite = icon;
         }

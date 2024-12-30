@@ -496,8 +496,8 @@ MonoBehaviour:
   abilityController: {fileID: 11400000, guid: ef9e67b76261c6b45b131587b360c7a2, type: 2}
   abilities:
   - {fileID: 11400000, guid: af8d7c72e13243c489372d7da1219f01, type: 2}
-  - {fileID: 11400000, guid: efc7d613d635b4e42a26060fa1518e93, type: 2}
-  - {fileID: 11400000, guid: 5f1fa1a6825fac34d8043676db0b9c95, type: 2}
+  - {fileID: 11400000, guid: 9ed9977305866d44699584a60f26eb24, type: 2}
+  - {fileID: 11400000, guid: 9c337de9539992443a6826debc168dda, type: 2}
   storage: {fileID: 1772680472986294929}
 --- !u!1 &3041927612452039212
 GameObject:

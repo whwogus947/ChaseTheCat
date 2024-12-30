@@ -18,6 +18,7 @@ namespace Com2usGameDev
 
         public override void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
+            sfxChannel?.Invoke(sfx);
             var clone = Instantiate(this, transform.position, transform.rotation);
             clone.transform.SetParent(null, true);
             clone.transform.localScale = Vector3.one;
