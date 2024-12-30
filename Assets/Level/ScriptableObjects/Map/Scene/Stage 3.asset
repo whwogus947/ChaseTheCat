@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a128302cca8d7304e862dac34d8b92ac, type: 3}
-  m_Name: Start Map
+  m_Name: Stage 3
   m_EditorClassIdentifier: 
   scene:
-    asset: {fileID: 102900000, guid: 57113c39f8ab87340ab7d9f9805f804f, type: 3}
-    guid: 57113c39f8ab87340ab7d9f9805f804f
+    asset: {fileID: 102900000, guid: 3eb08536d25f39d4a881ddde541c49b9, type: 3}
+    guid: 3eb08536d25f39d4a881ddde541c49b9

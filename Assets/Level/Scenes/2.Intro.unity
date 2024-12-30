@@ -396,7 +396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
       propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadScene
+      value: LoadSceneWithTutorial
       objectReference: {fileID: 0}
     - target: {fileID: 3608456998430395487, guid: b9c1de5f76e730743b6ea7f12f8ed87b, type: 3}
       propertyPath: loadSceneEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

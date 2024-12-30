@@ -44,12 +44,18 @@ namespace Com2usGameDev
             LoadSceneUniTask(scene.SceneName).Forget();
         }
 
-        private async UniTaskVoid LoadSceneUniTask(string sceneName)
+        public void LoadSceneWithTutorial(SceneHandlerSO scene)
+        {
+            LoadSceneUniTask(scene.SceneName, true).Forget();
+        }
+
+        private async UniTaskVoid LoadSceneUniTask(string sceneName, bool showTutorial = false)
         {
             try
             {
                 AsyncOperation load = SceneManager.LoadSceneAsync(sceneName);
-                load.completed += OnLoadComplete;
+                if (showTutorial)
+                    load.completed += OnLoadComplete;
                 await load.ToUniTask(Progress.Create<float>(x => Debug.Log(x)));
             }
             catch (System.Exception e)
