@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9bd03b511df184db35f4363fd8f778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.3
+  delay: 0.1
+  attackRange: 2.2
+  animationName: mob_attack
   fXPool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
   attackFx: {fileID: -3694694298195838430, guid: 95f7d0629a27d5e48ad2faa58fbb0f15, type: 3}

@@ -5,6 +5,8 @@ namespace Com2usGameDev
 {
     public class SlingshotBullet : MonoBehaviour, IOffensiveWeapon
     {
+        public int damage = 40;
+
         private float speed;
         private Vector2 flyDirection;
         private LayerMask enemyLayer;
@@ -15,9 +17,9 @@ namespace Com2usGameDev
         public void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
             var rayHit = Physics2D.CircleCast(from, 0.5f, to, 0.25f, layer.value);
-            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out MonsterBehaviour behaviour))
+            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out UnitBehaviour behaviour))
             {
-                behaviour.HP -= 40 + defaultDamage;
+                behaviour.HP -= damage + defaultDamage;
                 onReturnPool(this);
                 onHit();
             }

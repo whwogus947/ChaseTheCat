@@ -96,7 +96,7 @@ namespace Com2usGameDev
             }
         }
 
-        public Vector2[] GetSpreadVectors(int count, float spreadAngle)
+        private Vector2[] GetSpreadVectors(int count, float spreadAngle)
         {
             Vector2[] directions = new Vector2[count];
 
@@ -125,7 +125,7 @@ namespace Com2usGameDev
             return directions;
         }
 
-        public SlingshotBullet GetFromPool(Vector3 position)
+        private SlingshotBullet GetFromPool(Vector3 position)
         {
             if (objectPool.Count > 0 && objectPool.Peek() != null)
             {
@@ -148,7 +148,7 @@ namespace Com2usGameDev
             }
         }
 
-        public void ReturnToPool(SlingshotBullet obj)
+        private void ReturnToPool(SlingshotBullet obj)
         {
             obj.AddHitEvent(() =>
             {

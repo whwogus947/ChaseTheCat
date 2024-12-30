@@ -73,6 +73,7 @@ namespace Com2usGameDev
                 UnityEngine.Debug.Log("Delete" + target);
                 
                 states[currentState].RemoveTransition(target);
+                ChangeState(currentState);
                 return false;
             }
 

@@ -12,5 +12,6 @@ namespace Com2usGameDev
         public float delay = 0.3f;
         public float attackRange = 2.2f;
         public abstract void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage);
+        public string animationName;
     }
 }

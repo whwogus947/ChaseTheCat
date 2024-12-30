@@ -4,6 +4,7 @@ namespace Com2usGameDev
 {
     public class ToyMouse : OffensiveWeapon
     {
+        public int damage = 30;
         public LayerMask attackLayer;
         public LayerMask groundLayer;
         public Vector2Int throwPower;
@@ -49,10 +50,10 @@ namespace Com2usGameDev
             if (spin)
                 spinTransform.Rotate(Vector3.forward, spinSpeed * direction * Time.deltaTime);
 
-            var col = Physics2D.OverlapCircle(transform.position, 1f, attackLayer.value);
+            var col = Physics2D.OverlapCircle(transform.position, 0.1f, attackLayer.value);
             if (col != null && col.TryGetComponent(out UnitBehaviour behaviour))
             {
-                behaviour.HP -= 30;
+                behaviour.HP -= damage;
                 Destroy(gameObject);
             }
 

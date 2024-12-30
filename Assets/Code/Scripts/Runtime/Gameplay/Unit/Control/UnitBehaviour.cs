@@ -25,6 +25,7 @@ namespace Com2usGameDev
             {
                 hp = value;
                 vanishUI.SetValue(hp);
+                OnLowHP();
                 if (hp <= 0)
                 {
                     Dead();
@@ -64,6 +65,11 @@ namespace Com2usGameDev
         }
 
         public abstract void Attack();
+
+        protected virtual void OnLowHP()
+        {
+
+        }
 
         protected abstract void Dead();
 

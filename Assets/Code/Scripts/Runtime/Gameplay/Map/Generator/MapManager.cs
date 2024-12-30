@@ -14,6 +14,7 @@ namespace Com2usGameDev
 
         private MapPalette palette;
         private MapCreator creator;
+        private bool showTutorial = false;
 
         protected override void Initialize()
         {
@@ -27,13 +28,13 @@ namespace Com2usGameDev
             mapSelectEvent.UniqueEvent(OpenUI);
         }
 
-        private void OnDestroy() {
+        private void OnDestroy()
+        {
             mapSelectEvent.RemoveEvent(OpenUI);
         }
 
         public void OpenUI()
         {
-            Debug.Log("Open");
             palette.gameObject.SetActive(true);
         }
 
@@ -42,20 +43,21 @@ namespace Com2usGameDev
         public void LoadScene(SceneHandlerSO scene)
         {
             LoadSceneUniTask(scene.SceneName).Forget();
+            showTutorial = false;
         }
 
         public void LoadSceneWithTutorial(SceneHandlerSO scene)
         {
-            LoadSceneUniTask(scene.SceneName, true).Forget();
+            LoadSceneUniTask(scene.SceneName).Forget();
+            showTutorial = true;
         }
 
-        private async UniTaskVoid LoadSceneUniTask(string sceneName, bool showTutorial = false)
+        private async UniTaskVoid LoadSceneUniTask(string sceneName)
         {
             try
             {
                 AsyncOperation load = SceneManager.LoadSceneAsync(sceneName);
-                if (showTutorial)
-                    load.completed += OnLoadComplete;
+                load.completed += OnLoadComplete;
                 await load.ToUniTask(Progress.Create<float>(x => Debug.Log(x)));
             }
             catch (System.Exception e)
@@ -72,6 +74,9 @@ namespace Com2usGameDev
         private async UniTaskVoid OnLoadProcess()
         {
             var popupClone = Instantiate(mapNamePopup);
+            if (!showTutorial)
+                return;
+
             await UniTask.WaitUntil(() => popupClone == null);
             if (gameObject != null)
                 Instantiate(guide);

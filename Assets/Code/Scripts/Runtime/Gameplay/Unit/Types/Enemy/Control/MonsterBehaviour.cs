@@ -147,6 +147,8 @@ namespace Com2usGameDev
             await UniTask.WaitForSeconds(weapon.delay);
             if (this == null)
                 return;
+            
+            PlayAnimation(weapon.animationName, 0.2f);
             weapon.Attack(transform.position, FacingDirection * Vector2.right, playerLayer, 0);
             isAttacking = false;
         }

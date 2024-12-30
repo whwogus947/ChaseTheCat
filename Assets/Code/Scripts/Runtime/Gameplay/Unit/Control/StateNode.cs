@@ -377,9 +377,10 @@ namespace Com2usGameDev
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
                     player.ResetVelocity();
-                    player.Jump(0.7f);
+                    player.Jump(0.75f);
                     player.SetAnimation("IsOnGround", false);
                     player.CaptureDirection(player.jumpX);
+                    player.UseVFX(skillAbility.fx);
                     player.Controllable = false;
                 }
 
@@ -405,6 +406,8 @@ namespace Com2usGameDev
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
                     player.ResetMaxHeight();
+
+                    player.UseVFX(skillAbility.fx);
 
                     player.PlayAnimation(AnimationHash, 0.2f);
                     player.InvalidateRigidbody();
@@ -567,7 +570,7 @@ namespace Com2usGameDev
                     unit.timer = new(0.94f);
                     unit.SetTransitionPower(0);
                     unit.TranslateX();
-                    unit.PlayAnimation(AnimationHash, 0.2f);
+                    // unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.Attack();
                 }
 
@@ -582,14 +585,37 @@ namespace Com2usGameDev
                 }
             }
 
-            public class RangedAttack : StateNode
+            public class ThrowAttack : StateNode
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
                     unit.timer = new(0.5f);
                     unit.SetTransitionPower(0);
                     unit.TranslateX();
-                    unit.PlayAnimation(AnimationHash, 0.2f);
+                    // unit.PlayAnimation(AnimationHash, 0.2f);
+                    unit.Attack();
+                }
+
+                public override void OnExit(UnitBehaviour unit)
+                {
+
+                }
+
+                public override void OnUpdate(UnitBehaviour unit)
+                {
+                    unit.timer.Tick();
+                }
+            }
+
+            public class BowAttack : StateNode
+            {
+                public override void OnEnter(UnitBehaviour unit)
+                {
+                    Debug.Log("bow attack!");
+                    unit.timer = new(0.5f);
+                    unit.SetTransitionPower(0);
+                    unit.TranslateX();
+                    // unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.Attack();
                 }
 

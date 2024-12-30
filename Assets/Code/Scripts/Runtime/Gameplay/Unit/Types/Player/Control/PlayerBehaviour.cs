@@ -21,6 +21,9 @@ namespace Com2usGameDev
         public List<SkillAbilitySO> initialSkills;
         public Transform fxStorage;
         public TransformChannelSO playerLocator;
+        public TwinklePoolItem monsterCollisionEffect;
+        public TwinklePoolItem wallCollisionEffect;
+        public Bloodscreen bloodscreen;
 
         private float maxHeight;
         private readonly float threshold = -7.5f;
@@ -58,7 +61,7 @@ namespace Com2usGameDev
         {
             rb.linearVelocity = Vector2.zero;
         }
-        
+
         public override void UseVFX(PoolItem fx)
         {
             if (fx == null)
@@ -73,7 +76,10 @@ namespace Com2usGameDev
             {
                 bool isFlip = GetFaceDirection() == 1;
                 poolObj.transform.position = transform.position - fx.transform.position * GetFaceDirection();
-                poolObj.GetComponent<SpriteRenderer>().flipX = isFlip;
+                if (poolObj.TryGetComponent(out SpriteRenderer sprite))
+                {
+                    sprite.flipX = isFlip;
+                }
             }
         }
 
@@ -173,7 +179,7 @@ namespace Com2usGameDev
 
         protected override void Dead()
         {
-            
+
         }
 
         protected override int GetVelocityDirection()
@@ -212,6 +218,17 @@ namespace Com2usGameDev
             if (rayHit.collider != null)
             {
                 distance = rayHit.distance;
+
+                var fx = pool.GetPooledObject(wallCollisionEffect);
+                fx.transform.position = rayHit.point;
+                if (fx is TwinklePoolItem item)
+                {
+                    item.StartTwinkle();
+                }
+                else
+                {
+                    fx.gameObject.SetActive(false);
+                }
             }
             return distance < 0.025f;
         }
@@ -229,6 +246,19 @@ namespace Com2usGameDev
             if (weaponPlacer.IsOffenseWeapon(out IOffensiveWeapon weapon))
             {
                 weapon.Attack((Vector2)transform.position, FacingDirection * 1f * Vector2.right, enemyLayer, 0);
+            }
+        }
+
+        protected override void OnLowHP()
+        {
+            base.OnLowHP();
+            if (HP <= 25 && !bloodscreen.gameObject.activeSelf)
+            {
+                bloodscreen.gameObject.SetActive(true);
+            }
+            else if (HP > 25 && bloodscreen.gameObject.activeSelf)
+            {
+                bloodscreen.gameObject.SetActive(false);
             }
         }
     }
