@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
-    public class MapManager : UniqueSingleton<MapManager>
+    public class MapManager : Manager
     {
         public MapNamePopup mapNamePopup;
         public GameObject guide;
@@ -16,8 +16,7 @@ namespace Com2usGameDev
         private MapCreator creator;
         private bool showTutorial = false;
 
-        protected override void Initialize()
-        {
+        private void Awake() {
             creator = GetComponentInChildren<MapCreator>(true);
             palette = GetComponentInChildren<MapPalette>(true);
         }

@@ -9,7 +9,7 @@ namespace Com2usGameDev
         public override string AbilityName => nameof(ToyMouseSO);
         public int initialCount;
 
-        private ToyMouse toyMouse;
+        private Throwable toyMouse;
 
         public override void OnAquire()
         {
@@ -19,7 +19,7 @@ namespace Com2usGameDev
         public override void UseWeapon()
         {
             if (toyMouse == null)
-                toyMouse = weaponOnHand.GetComponent<ToyMouse>();
+                toyMouse = weaponOnHand.GetComponent<Throwable>();
             
             TakeOne();
         }

@@ -14,7 +14,7 @@ namespace Com2usGameDev
 
         public override void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
-            sfxChannel?.Invoke(sfx);
+            audioChannel.Invoke(attackSound);
             var clone = Instantiate(this, transform.position, transform.rotation);
             clone.transform.SetParent(null, true);
             clone.transform.localScale = Vector3.one;
@@ -43,7 +43,7 @@ namespace Com2usGameDev
             var col = Physics2D.OverlapCircle(transform.position, 1f, attackLayer.value);
             if (col != null && col.TryGetComponent(out UnitBehaviour behaviour))
             {
-                sfxChannel.Invoke(onHitSfx);
+                audioChannel.Invoke(onHitSfx);
                 behaviour.HP -= 30;
                 Destroy(gameObject);
             }

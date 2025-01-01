@@ -3,15 +3,13 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class SoundManager : UniqueSingleton<SoundManager>
+    public class SoundManager : Manager
     {
         public AudioBroadcaster BGM;
         public AudioBroadcaster SFX;
 
         private void Start()
         {
-            DontDestroyOnLoad(gameObject);
-
             BGM.channel.AddEvent(PlayBGM);
             SFX.channel.AddEvent(PlaySFX);
             BGM.volumeHandler.onVolumeChange += BGM.ChangeVolume;

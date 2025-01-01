@@ -3,18 +3,17 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class SlingshotController : MonoBehaviour, IOffensiveWeapon
+    public class SlingshotController : OffensiveWeapon
     {
         public LineRenderer[] lines;
         public Transform handlePrefab;
         public float LineDrawingTimer { get; set; } = 0f;
-        public SlingshotBullet slingshotBullet;
+        public Projectile slingshotBullet;
         public int poolSize = 10;
         public float bulletSpeed = 10;
         public float bulletLifetime = 1f;
         public VFXPool pool;
         public PoolItem hitFX;
-        public AudioChannelSO sfx;
         public AudioClip slingshotSX;
 
         public AbilityController controller;
@@ -22,7 +21,7 @@ namespace Com2usGameDev
         public SlingshotDamageSkillSO damagePassive;
         public SlingshotRangeSkillSO rangePassive;
 
-        private Queue<SlingshotBullet> objectPool = new();
+        private Queue<Projectile> objectPool = new();
         private Transform handleStorage;
 
         void Start()
@@ -37,7 +36,7 @@ namespace Com2usGameDev
 
             for (int i = 0; i < poolSize; i++)
             {
-                SlingshotBullet obj = Instantiate(slingshotBullet);
+                Projectile obj = Instantiate(slingshotBullet);
                 obj.gameObject.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -86,11 +85,11 @@ namespace Com2usGameDev
             handlePrefab.position = (lines[0].transform.position + lines[1].transform.position) / 2f;
         }
 
-        public void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
+        public override void Attack(Vector2 from, Vector2 to, LayerMask layer, int defaultDamage)
         {
             int count = ammoCountPassive.Count;
             var directions = GetSpreadVectors(count, count * 5);
-            sfx.Invoke(slingshotSX);
+            audioChannel.Invoke(slingshotSX);
 
             foreach (var direction in directions)
             {
@@ -128,11 +127,11 @@ namespace Com2usGameDev
             return directions;
         }
 
-        private SlingshotBullet GetFromPool(Vector3 position)
+        private Projectile GetFromPool(Vector3 position)
         {
             if (objectPool.Count > 0 && objectPool.Peek() != null)
             {
-                SlingshotBullet obj = objectPool.Dequeue();
+                Projectile obj = objectPool.Dequeue();
                 obj.gameObject.SetActive(true);
                 obj.transform.position = position;
                 obj.transform.rotation = Quaternion.identity;
@@ -146,12 +145,12 @@ namespace Com2usGameDev
                     if (bullet == null)
                         objectPool.Dequeue();
                 }
-                SlingshotBullet obj = Instantiate(slingshotBullet, position, Quaternion.identity);
+                Projectile obj = Instantiate(slingshotBullet, position, Quaternion.identity);
                 return obj;
             }
         }
 
-        private void ReturnToPool(SlingshotBullet obj)
+        private void ReturnToPool(Projectile obj)
         {
             obj.AddHitEvent(() =>
             {

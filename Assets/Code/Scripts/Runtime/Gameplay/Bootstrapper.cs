@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com2usGameDev
@@ -12,6 +11,13 @@ namespace Com2usGameDev
             foreach (var so in initializeableSO)
             {
                 so.Initialize();
+            }
+
+            var managers = Resources.LoadAll<Manager>("");
+            foreach (var manager in managers)
+            {
+                var clone = Object.Instantiate(manager);
+                Object.DontDestroyOnLoad(clone);
             }
         }
     }

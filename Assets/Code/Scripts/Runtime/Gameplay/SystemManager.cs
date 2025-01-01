@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class SystemManager : MonoBehaviour
+    public class SystemManager : Manager
     {
         public int targetFramerate;
 

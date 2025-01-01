@@ -1,8 +1,0 @@
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Art/UI/USS/HpBar.uss?fileID=7433441132597879392&amp;guid=b8fb4fd60b6507d4bbcf38993987fafd&amp;type=3#HpBar" />
-    <engine:ProgressBar value="22" name="hp-bar" style="flex-grow: 1; flex-shrink: 1; width: 200px; height: 100px;">
-        <Bindings>
-            <engine:DataBinding property="value" data-source-path="hp" binding-mode="ToTarget" />
-        </Bindings>
-    </engine:ProgressBar>
-</engine:UXML>

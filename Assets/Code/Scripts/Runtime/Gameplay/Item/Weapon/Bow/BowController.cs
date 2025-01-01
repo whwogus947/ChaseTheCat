@@ -8,13 +8,13 @@ namespace Com2usGameDev
         public LineRenderer[] lines;
         public Transform handlePrefab;
         public float lineDrawingTimer = 0f;
-        public SlingshotBullet arrow;
+        public Projectile arrow;
         public float bulletSpeed = 10;
         public float bulletLifetime = 1f;
         public VFXPool pool;
         public PoolItem hitFX;
 
-        private Queue<SlingshotBullet> objectPool = new();
+        private Queue<Projectile> objectPool = new();
         public Transform handleStorage;
 
         private Vector2 direction;
@@ -24,13 +24,6 @@ namespace Com2usGameDev
         {
             DrawLines();
             ResetLines();
-
-            // for (int i = 0; i < poolSize; i++)
-            // {
-            //     SlingshotBullet obj = Instantiate(slingshotBullet);
-            //     obj.gameObject.SetActive(false);
-            //     objectPool.Enqueue(obj);
-            // }
         }
 
         void Update()
@@ -43,7 +36,7 @@ namespace Com2usGameDev
                 {
                     ResetLines();
                     var bullet = GetFromPool(handlePrefab.position);
-                    sfxChannel?.Invoke(sfx);
+                    audioChannel?.Invoke(attackSound);
                     bullet.Initialize(bulletSpeed, direction, layer, bulletLifetime, ReturnToPool);
                 }
             }
@@ -86,11 +79,11 @@ namespace Com2usGameDev
             direction = to;
         }
 
-        private SlingshotBullet GetFromPool(Vector3 position)
+        private Projectile GetFromPool(Vector3 position)
         {
             if (objectPool.Count > 0 && objectPool.Peek() != null)
             {
-                SlingshotBullet obj = objectPool.Dequeue();
+                Projectile obj = objectPool.Dequeue();
                 obj.gameObject.SetActive(true);
                 obj.transform.position = position;
                 obj.transform.rotation = Quaternion.identity;
@@ -104,12 +97,12 @@ namespace Com2usGameDev
                     if (bullet == null)
                         objectPool.Dequeue();
                 }
-                SlingshotBullet obj = Instantiate(arrow, position, Quaternion.identity);
+                Projectile obj = Instantiate(arrow, position, Quaternion.identity);
                 return obj;
             }
         }
 
-        private void ReturnToPool(SlingshotBullet obj)
+        private void ReturnToPool(Projectile obj)
         {
             obj.AddHitEvent(() =>
             {

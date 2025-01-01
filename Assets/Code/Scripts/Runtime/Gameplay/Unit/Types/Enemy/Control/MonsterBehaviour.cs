@@ -148,7 +148,7 @@ namespace Com2usGameDev
             if (this == null)
                 return;
             
-            PlayAnimation(weapon.animationName, 0.2f);
+            PlayAnimation(weapon.AnimationHash, 0.2f);
             weapon.Attack(transform.position, FacingDirection * Vector2.right, playerLayer, 0);
             isAttacking = false;
         }
