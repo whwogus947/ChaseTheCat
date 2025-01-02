@@ -5,19 +5,20 @@ namespace Com2usGameDev
 {
     public static class EditorUtility
     {
-        public static AudioChannelSO FindAudioChannel()
+        public static T FindSO<T>(string _name) where T : ScriptableObject
         {
-            string typeName = nameof(AudioChannelSO);
-            string[] guids = AssetDatabase.FindAssets($"SFX Channel t:{typeName}");
+            string typeName = typeof(T).ToString();
+            string[] guids = AssetDatabase.FindAssets($"{_name} t:{typeName}");
             foreach (string guid in guids)
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
-                AudioChannelSO asset = AssetDatabase.LoadAssetAtPath<AudioChannelSO>(path);
+                T asset = AssetDatabase.LoadAssetAtPath<T>(path);
                 if (asset != null)
                 {
                     return asset;
                 }
             }
+            Debug.Log("Failed.");
             return null;
         }
     }

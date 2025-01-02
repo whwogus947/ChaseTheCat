@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7170335511772331840}
-  - component: {fileID: 7888265356912740964}
   - component: {fileID: 3354078584517200605}
+  - component: {fileID: 7888265356912740964}
   - component: {fileID: 6544676105603978770}
   - component: {fileID: 8671365451419125866}
   m_Layer: 11
@@ -35,6 +35,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3354078584517200605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7465909904799511595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99880244d7dd7054896c768134b65209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  damage: 15
+  delay: 0.3
+  range: 2.2
+  animationClipName: {fileID: 11400000, guid: 4773778cebe94444dbbfc0f73422e5d6, type: 2}
+  throwPower: {x: 300, y: 100}
+  onHitSfx: {fileID: 8300000, guid: aaf6cc1656ae7144daee31d62cff5ad0, type: 3}
 --- !u!212 &7888265356912740964
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -90,31 +109,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3354078584517200605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7465909904799511595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99880244d7dd7054896c768134b65209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 0.3
-  attackRange: 2.2
-  animationName: 
-  sfxChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
-  sfx: {fileID: 8300000, guid: a4d732cb83425d24bb9d7377abcd1497, type: 3}
-  attackLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  throwPower: {x: 300, y: 100}
-  onHitSfx: {fileID: 8300000, guid: aaf6cc1656ae7144daee31d62cff5ad0, type: 3}
 --- !u!50 &6544676105603978770
 Rigidbody2D:
   serializedVersion: 5

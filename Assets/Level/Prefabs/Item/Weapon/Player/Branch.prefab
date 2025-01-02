@@ -102,4 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
-  sfx: {fileID: 8300000, guid: ab93cb121603b4b439d0b169d5696e6c, type: 3}
+  damage: 20
+  delay: 0.3
+  range: 2.2
+  animationClipName: {fileID: 11400000, guid: 4773778cebe94444dbbfc0f73422e5d6, type: 2}

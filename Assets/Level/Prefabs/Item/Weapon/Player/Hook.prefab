@@ -267,8 +267,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4565493916235687447}
-  - component: {fileID: 8552350106152019594}
   - component: {fileID: 1722797487691991067}
+  - component: {fileID: 8552350106152019594}
   m_Layer: 0
   m_Name: Hook
   m_TagString: Untagged
@@ -293,6 +293,27 @@ Transform:
   - {fileID: 7154687891007995070}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 175.212}
+--- !u!114 &1722797487691991067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5915254348658230180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64329896dc75e434bb032f3b36cf2339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  line: {fileID: 2064751397013729474}
+  paintSpeed: 24
+  hook: {fileID: 7154687891007995070}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  maxRopeLength: 12
+  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  sfx: {fileID: 8300000, guid: de0a0d1a18706e14f8e192700562b802, type: 3}
 --- !u!212 &8552350106152019594
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -348,24 +369,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1722797487691991067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5915254348658230180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64329896dc75e434bb032f3b36cf2339, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  line: {fileID: 2064751397013729474}
-  paintSpeed: 24
-  hook: {fileID: 7154687891007995070}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  maxRopeLength: 12
-  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
-  sfx: {fileID: 8300000, guid: de0a0d1a18706e14f8e192700562b802, type: 3}

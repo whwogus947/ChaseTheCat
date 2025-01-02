@@ -22,8 +22,8 @@ namespace Com2usGameDev
             if (slingshotController == null)
                 slingshotController = weaponOnHand.GetComponent<SlingshotController>();
 
-            fxDelay = fireTiming;
-            slingshotController.LineDrawingTimer = fireTiming;
+            // fxDelay = fireTiming;
+            // slingshotController.LineDrawingTimer = fireTiming;
         }
     }
 }

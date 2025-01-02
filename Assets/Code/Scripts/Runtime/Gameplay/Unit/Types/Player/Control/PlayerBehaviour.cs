@@ -242,12 +242,13 @@ namespace Com2usGameDev
 
         public override async void Attack()
         {
-            weaponPlacer.AnimatorEvent(PlayAnimation);
-            await weaponPlacer.Use();
-            if (weaponPlacer.IsOffenseWeapon(out IOffensiveWeapon weapon))
+            PlayAnimation(weaponPlacer.AnimationHash, 0.2f);
+            // weaponPlacer.AnimatorEvent(PlayAnimation);
+            if (weaponPlacer.IsOffenseWeapon(out OffensiveWeapon weapon))
             {
-                weapon.Attack((Vector2)transform.position, FacingDirection * 1f * Vector2.right, enemyLayer, 0);
+                weapon.Use((Vector2)transform.position, FacingDirection * 1f * Vector2.right, layerData, 0);
             }
+            await weaponPlacer.Use();
         }
 
         protected override void OnLowHP()

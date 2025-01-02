@@ -69,9 +69,9 @@ namespace Com2usGameDev
             }
         }
 
-        public bool IsOffenseWeapon(out IOffensiveWeapon offensiveWeapon)
+        public bool IsOffenseWeapon(out OffensiveWeapon offensiveWeapon)
         {
-            if (currentWeapon.Entity.TryGetComponent(out IOffensiveWeapon weapon))
+            if (currentWeapon.Entity.TryGetComponent(out OffensiveWeapon weapon))
             {
                 offensiveWeapon = weapon;
                 return true;
@@ -80,10 +80,12 @@ namespace Com2usGameDev
             return false;
         }
 
-        public void AnimatorEvent(UnityAction<int, float> animationHash)
-        {
-            animationHash?.Invoke(currentWeapon.AnimationHash, 0.2f);
-        }
+        // public void AnimatorEvent(UnityAction<int, float> animationHash)
+        // {
+        //     animationHash?.Invoke(currentWeapon.AnimationHash, 0.2f);
+        // }
+
+        public int AnimationHash => currentWeapon.AnimationHash;
 
         public void AddWeapon(WeaponAbilitySO weapon)
         {

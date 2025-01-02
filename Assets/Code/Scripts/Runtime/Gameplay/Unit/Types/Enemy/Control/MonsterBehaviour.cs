@@ -144,12 +144,12 @@ namespace Com2usGameDev
                 return;
 
             isAttacking = true;
+            PlayAnimation(weapon.AnimationHash, 0.2f);
+            weapon.Use(transform.position, FacingDirection * Vector2.right, layerData, 0);
             await UniTask.WaitForSeconds(weapon.delay);
             if (this == null)
                 return;
             
-            PlayAnimation(weapon.AnimationHash, 0.2f);
-            weapon.Attack(transform.position, FacingDirection * Vector2.right, playerLayer, 0);
             isAttacking = false;
         }
     }

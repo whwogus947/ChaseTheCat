@@ -15,8 +15,9 @@ MonoBehaviour:
   grade: {fileID: 11400000, guid: 3232cc1d559b7874fad86185334869a8, type: 2}
   colorIcon: {fileID: 21300000, guid: 4b1e8bbab5be63d44b797356fa1557e9, type: 3}
   fx: {fileID: 0}
-  fxDelay: 0.7
+  fxDelay: 0
   isRightHanded: 1
   frame: {fileID: 21300000, guid: 76e986388305ae54f9ea6ea8d94423d8, type: 3}
+  isLimited: 0
   weaponPrefab: {fileID: 2417765233820116300, guid: 2ca88ada98656ea4b9aec710f1e1a18f, type: 3}
-  fireTiming: 0.688
+  fireTiming: 0.01

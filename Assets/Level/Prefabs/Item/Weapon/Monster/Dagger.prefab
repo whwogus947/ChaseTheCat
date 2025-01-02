@@ -197,18 +197,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab5d72639653a44d82248d40ef2a9a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.3
-  attackRange: 3
-  animationName: mob_attack2
-  sfxChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
-  sfx: {fileID: 8300000, guid: 51b47ed6e24b1e2458bcb3bc92a8caf7, type: 3}
+  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
   damage: 5
-  attackLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  delay: 0.3
+  range: 2.2
+  animationClipName: {fileID: 11400000, guid: 5888680b43ef95340a3f351707e38a3b, type: 2}
   throwPower: {x: 500, y: 50}
+  onHitSfx: {fileID: 0}
   spin: 1
   spinSpeed: 900

@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8829809274505497626
 Transform:
   m_ObjectHideFlags: 0
@@ -100,6 +100,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46db01489a8dc34498aa0aa33784377c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
-  sfx: {fileID: 8300000, guid: 879cb5fee2b996a4587dee4b2a7be8f7, type: 3}
+  isFixed: 0
+  hitSound: {fileID: 0}

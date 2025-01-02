@@ -103,18 +103,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2922231ada00c96408c8b487d5442299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lines:
-  - {fileID: 5864228756022881956}
-  - {fileID: 5195995885468072842}
-  handlePrefab: {fileID: 338269237607716451}
-  slingshotBullet: {fileID: -6597234266567329502, guid: 328db4f1d1ba61043b7b217a235ba53a, type: 3}
-  poolSize: 10
-  bulletSpeed: 25
-  bulletLifetime: 0.35
-  pool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
+  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  fXPool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
+  damage: 40
+  delay: 0.01
+  range: 2.2
+  animationClipName: {fileID: 11400000, guid: f13a307d27a485b4995d5533ce49ecec, type: 2}
+  weaponSound: {fileID: 8300000, guid: 76470f3ff8eafc74ea8092cfe53f111b, type: 3}
+  projectile:
+    prefab: {fileID: -6597234266567329502, guid: 328db4f1d1ba61043b7b217a235ba53a, type: 3}
+    damage: 30
+    flySpeed: 20
+    lifeTime: 0.9
+  handle: {fileID: 338269237607716451}
   hitFX: {fileID: 6623290591316154811, guid: bf9b6cc2b8e2f874daf92450ec6d5269, type: 3}
-  sfx: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
-  slingshotSX: {fileID: 8300000, guid: 4a0186c9ac4df2b46a7532c61e4183ee, type: 3}
+  poolSize: 10
   controller: {fileID: 11400000, guid: ef9e67b76261c6b45b131587b360c7a2, type: 2}
   ammoCountPassive: {fileID: 11400000, guid: 5f1fa1a6825fac34d8043676db0b9c95, type: 2}
   damagePassive: {fileID: 11400000, guid: a2cead69c4552494d88ef45b102cdc52, type: 2}

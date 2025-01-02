@@ -89,12 +89,15 @@ MonoBehaviour:
   chargePower: 0
   hp: 100
   attackSound: {fileID: 0}
+  layerData: {fileID: 11400000, guid: 19061922f2f87e047b5d43144b211a9e, type: 2}
+  hands:
+    right: {fileID: 1378737524330740650}
+    left: {fileID: 7114802601597349860}
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
   weapon: {fileID: 7932503956513922615}
   detectRange: 8.5
-  alertSound: {fileID: 8300000, guid: 1845b2ae90d61df44a15eae251dba1bf, type: 3}
 --- !u!114 &8235019539717669444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,5 +1147,10 @@ Transform:
 --- !u!4 &4379319786291513714 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5977488545140258023, guid: 83005e8ed121a894ead368a575c98a35, type: 3}
+  m_PrefabInstance: {fileID: 7940468526726512021}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7114802601597349860 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 904921472107008625, guid: 83005e8ed121a894ead368a575c98a35, type: 3}
   m_PrefabInstance: {fileID: 7940468526726512021}
   m_PrefabAsset: {fileID: 0}

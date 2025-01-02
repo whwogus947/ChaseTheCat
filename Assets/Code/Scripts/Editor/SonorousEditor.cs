@@ -11,7 +11,7 @@ namespace Com2usGameDev
         {
             sonorous = (Sonorous)target;
             if (sonorous.audioChannel == null)
-                sonorous.audioChannel = EditorUtility.FindAudioChannel();
+                sonorous.audioChannel = EditorUtility.FindSO<AudioChannelSO>("SFX Channel");
         }
     }
 }

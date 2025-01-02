@@ -63,7 +63,7 @@ namespace Com2usGameDev
 
         private void OnPressAttack(InputAction.CallbackContext context)
         {
-            timer.StartTimer<Nodes.Player.AttackNormal>(0.8f);
+            timer.StartTimer<Nodes.Player.AttackNormal>(0.02f);
         }
 
         private void OnReleaseJump(InputAction.CallbackContext context)

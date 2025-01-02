@@ -16,6 +16,9 @@ namespace Com2usGameDev
         public CountdownTimer timer;
         public float hp;
         public AudioClip attackSound;
+        public LayersSO layerData;
+        public Hands hands;
+
 
         protected IVanishable vanishUI;
         public float HP
