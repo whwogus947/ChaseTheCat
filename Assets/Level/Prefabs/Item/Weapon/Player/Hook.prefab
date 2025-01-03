@@ -305,15 +305,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64329896dc75e434bb032f3b36cf2339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  line: {fileID: 2064751397013729474}
+  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  fXPool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
+  damage: 0
+  delay: 0.3
+  range: 2.2
+  animationClipName: {fileID: 11400000, guid: 1d509c123babd264f84014b64807b006, type: 2}
+  weaponSound: {fileID: 8300000, guid: 76470f3ff8eafc74ea8092cfe53f111b, type: 3}
   paintSpeed: 24
   hook: {fileID: 7154687891007995070}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
   maxRopeLength: 12
-  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
-  sfx: {fileID: 8300000, guid: de0a0d1a18706e14f8e192700562b802, type: 3}
 --- !u!212 &8552350106152019594
 SpriteRenderer:
   m_ObjectHideFlags: 0

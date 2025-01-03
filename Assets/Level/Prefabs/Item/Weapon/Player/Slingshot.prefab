@@ -106,7 +106,7 @@ MonoBehaviour:
   audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
   fXPool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
   damage: 40
-  delay: 0.01
+  delay: 0.6
   range: 2.2
   animationClipName: {fileID: 11400000, guid: f13a307d27a485b4995d5533ce49ecec, type: 2}
   weaponSound: {fileID: 8300000, guid: 76470f3ff8eafc74ea8092cfe53f111b, type: 3}

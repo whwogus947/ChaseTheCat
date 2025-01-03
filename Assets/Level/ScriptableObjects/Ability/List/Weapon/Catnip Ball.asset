@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grade: {fileID: 11400000, guid: 3232cc1d559b7874fad86185334869a8, type: 2}
   colorIcon: {fileID: 21300000, guid: bfb73176c178e394eba28d007f48c069, type: 3}
-  fx: {fileID: 0}
-  fxDelay: 0.3
   isRightHanded: 0
   frame: {fileID: 21300000, guid: d14de2f83a31cf34bbf999ab4dd4f97d, type: 3}
   isLimited: 1
-  weaponPrefab: {fileID: 7465909904799511595, guid: bce34c2e9e07a9d4880e9a400192c2ec, type: 3}
+  weaponPrefab: {fileID: 3354078584517200605, guid: bce34c2e9e07a9d4880e9a400192c2ec, type: 3}
   initialCount: 3

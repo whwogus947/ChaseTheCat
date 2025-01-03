@@ -7,14 +7,13 @@ namespace Com2usGameDev
     public class WoodStickSO : WeaponAbilitySO
     {
         public override string AbilityName => nameof(WoodStickSO);
-        public override int AnimationHash => Animator.StringToHash("main-attack");
 
         public override void OnAquire()
         {
             
         }
 
-        public override void UseWeapon()
+        public override void OnUseWeapon()
         {
             
         }

@@ -3,25 +3,20 @@ using UnityEngine;
 namespace Com2usGameDev
 {
     [CreateAssetMenu(fileName = "Catnip Ball", menuName = "Cum2usGameDev/Ability/Weapon/List/CatnipBall")]
-    public class CatnipBallSO : WeaponAbilitySO
+    public class CatnipBallSO : WeaponAbilitySO, ICountable
     {
-        public override int AnimationHash => Animator.StringToHash("main-attack");
         public override string AbilityName => nameof(CatnipBallSO);
-        public int initialCount;
+        public int InitialCount { get => initialCount; }
 
-        private CatnipBall catnipBall;
+        [SerializeField] private int initialCount = 1;
 
         public override void OnAquire()
         {
-            Count = initialCount;
+            
         }
 
-        public override void UseWeapon()
+        public override void OnUseWeapon()
         {
-            if (catnipBall == null)
-                catnipBall = weaponOnHand.GetComponent<CatnipBall>();
-            
-            TakeOne();
         }
     }
 }

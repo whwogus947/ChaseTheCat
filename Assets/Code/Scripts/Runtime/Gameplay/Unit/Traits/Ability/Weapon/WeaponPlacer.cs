@@ -17,6 +17,7 @@ namespace Com2usGameDev
         public UnityAction<WeaponAbilitySO> onGetWeapon;
         public WeaponViewGroup weaponViewGroup;
         public AbilityController ability;
+        public float WeaponDelay => currentWeapon.Entity.delay;
 
         private PCInput input;
 
@@ -85,7 +86,7 @@ namespace Com2usGameDev
         //     animationHash?.Invoke(currentWeapon.AnimationHash, 0.2f);
         // }
 
-        public int AnimationHash => currentWeapon.AnimationHash;
+        public int AnimationHash => currentWeapon.Entity.AnimationHash;
 
         public void AddWeapon(WeaponAbilitySO weapon)
         {
@@ -119,9 +120,9 @@ namespace Com2usGameDev
             if (swap && weapons.Count > 1)
             {
                 int idx = weapons.FindIndex(x => x == currentWeapon);
-                int length = weapons.Count - 1;
                 weapons.RemoveAt(idx);
-                Equip(weapons[idx & length]);
+                int length = weapons.Count - 1;
+                Equip(weapons[Mathf.Clamp(idx, 0, length)]);
             }
         }
 
@@ -131,17 +132,18 @@ namespace Com2usGameDev
             weapon.Equip();
         }
 
-        public async UniTask Use()
+        public void Use()
         {
             if (currentWeapon == null)
                 return;
+                
+            Debug.Log("USE WEAPN!");
+            currentWeapon.Use();
+            // if (currentWeapon.fxDelay > 0)
+            // await UniTask.WaitForSeconds(WeaponDelay);
 
-            currentWeapon.UseWeapon();
-            if (currentWeapon.fxDelay > 0)
-                await UniTask.WaitForSeconds(currentWeapon.fxDelay);
-
-            if (currentWeapon.fx != null)
-                fxEvent?.Invoke(currentWeapon.fx);
+            // if (currentWeapon.fx != null)
+            // fxEvent?.Invoke(currentWeapon.fx);
         }
     }
 }

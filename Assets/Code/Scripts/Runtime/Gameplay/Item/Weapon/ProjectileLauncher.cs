@@ -29,7 +29,8 @@ namespace Com2usGameDev
 
         private void Start()
         {
-            handleStorage = GetComponentInParent<UnitBehaviour>().hands.left;
+            var behaviour = GetComponentInParent<UnitBehaviour>();
+            handleStorage = transform.parent == behaviour.hands.left ? behaviour.hands.right : behaviour.hands.left;
             DrawLines();
             OnStart();
         }
@@ -70,7 +71,10 @@ namespace Com2usGameDev
                 await UniTask.Yield(cancellationToken: _cts.Token);
                 timer -= Time.deltaTime;
             }
-            CreateProjectile(from, to, layer, defaultDamage);
+
+            int directionX = transform.position.x - handleStorage.position.x > 0 ? 1: -1;
+            var direction = new Vector2(directionX, 0);
+            CreateProjectile(from, direction, layer, defaultDamage);
 
             ResetLines();
         }
@@ -93,10 +97,7 @@ namespace Com2usGameDev
         protected Projectile GetFromPool()
         {
             var p = fXPool.GetPooledObject(projectile.prefab);
-            // Debug.Log(p);
             var bullet = p as Projectile;
-            // Debug.Log(bullet);
-            // Debug.Log(transform);
             bullet.transform.position = transform.position;
             // if (hitFX != null)
             //     bullet.onReturnToPool += CreateHitVFX;

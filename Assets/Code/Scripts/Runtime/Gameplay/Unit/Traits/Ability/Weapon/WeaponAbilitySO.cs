@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,62 +7,70 @@ namespace Com2usGameDev
     public abstract class WeaponAbilitySO : AbilitySO, IWeapon
     {
         public override string AbilityType => nameof(WeaponAbilitySO);
-        public abstract int AnimationHash { get; }
-        public PoolItem fx;
-        public float fxDelay = 0.3f;
         public bool isRightHanded;
-        public GameObject Entity => weaponOnHand;
+        public OffensiveWeapon Entity => weaponOnHand;
         public Sprite frame;
         public bool isLimited;
         public UnityAction<int> onCountChanged;
         public int Count
         {
-            get => _count;
+            get => _count ?? 0;
             set
             {
                 _count = value;
-                onCountChanged(_count);
+                if (_count.HasValue)
+                {
+                    Debug.Log(_count);
+                    onCountChanged((int)_count);
+                }
             }
         }
 
-        [SerializeField] private GameObject weaponPrefab;
-        protected GameObject weaponOnHand;
+        [SerializeField] private OffensiveWeapon weaponPrefab;
+        protected OffensiveWeapon weaponOnHand;
 
-        private int _count;
+        private int? _count = null;
 
-        public void Obtain(Transform _hand, int count = 1)
+        public void Obtain(Transform _hand)
         {
+            _count = null;
             onCountChanged = delegate { };
             weaponOnHand = Instantiate(weaponPrefab);
             weaponOnHand.transform.SetParent(_hand, false);
-            weaponOnHand.SetActive(false);
-            if (isLimited)
-                this._count = count;
+            weaponOnHand.gameObject.SetActive(false);
+            if (this is ICountable countable)
+            {
+                Debug.Log("Obtained " + weaponOnHand.name);
+                _count = (int)countable.InitialCount;
+                Debug.Log(weaponOnHand.name + ": " + _count);
+                Debug.Log(weaponOnHand.name + ": " + _count.HasValue);
+            }
             OnAquire();
         }
 
         public void Equip()
         {
-            weaponOnHand.SetActive(true);
+            weaponOnHand.gameObject.SetActive(true);
         }
 
         protected void TakeOne()
         {
-            Count -= 1;
+            if (_count.HasValue)
+                Count -= 1;
         }
 
         public void Unequip()
         {
-            weaponOnHand.SetActive(false);
+            weaponOnHand.gameObject.SetActive(false);
         }
 
-        public abstract void UseWeapon();
-// 
-        // protected int Direction()
-        // {
-        //     Transform root = weaponOnHand.transform.root;
-        //     var direction = (root.position - weaponOnHand.transform.position).x;
-        //     return direction > 0 ? 1 : -1;
-        // }
+        public async UniTaskVoid Use()
+        {
+            await UniTask.WaitForSeconds(Entity.delay);
+            TakeOne();
+            OnUseWeapon();
+        }
+
+        public abstract void OnUseWeapon();
     }
 }

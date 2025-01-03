@@ -25,6 +25,7 @@ namespace Com2usGameDev
         public TwinklePoolItem wallCollisionEffect;
         public Bloodscreen bloodscreen;
         public PlayerSFX playerSFX;
+        
 
         private float maxHeight;
         private readonly float threshold = -7.5f;
@@ -248,7 +249,7 @@ namespace Com2usGameDev
             {
                 weapon.Use((Vector2)transform.position, FacingDirection * 1f * Vector2.right, layerData, 0);
             }
-            await weaponPlacer.Use();
+            weaponPlacer.Use();
         }
 
         protected override void OnLowHP()

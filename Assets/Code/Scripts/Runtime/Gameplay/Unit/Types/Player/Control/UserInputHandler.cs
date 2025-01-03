@@ -12,6 +12,8 @@ namespace Com2usGameDev
         public BoolValueSO controllable;
         public AbilityController abilityController;
 
+        private WeaponPlacer weaponPlacer;
+
         private PCInput input;
         private readonly Timer timer = new();
         private bool isDashPressed;
@@ -19,6 +21,7 @@ namespace Com2usGameDev
         private void Awake()
         {
             input = inputController.GetOrCreate();
+            weaponPlacer = GetComponent<WeaponPlacer>();
         }
 
         private void Start()
@@ -63,7 +66,7 @@ namespace Com2usGameDev
 
         private void OnPressAttack(InputAction.CallbackContext context)
         {
-            timer.StartTimer<Nodes.Player.AttackNormal>(0.02f);
+            timer.StartTimer<Nodes.Player.AttackNormal>(weaponPlacer.WeaponDelay);
         }
 
         private void OnReleaseJump(InputAction.CallbackContext context)
