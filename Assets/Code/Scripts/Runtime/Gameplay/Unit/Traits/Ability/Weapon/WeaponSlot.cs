@@ -23,7 +23,7 @@ namespace Com2usGameDev
             this.frame.sprite = frame;
             this.colorIcon.sprite = colorIcon;
 
-            bool active = weapon.isLimited;
+            bool active = weapon.IsLimited;
             if (active)
             {
                 leftCount.gameObject.SetActive(true);

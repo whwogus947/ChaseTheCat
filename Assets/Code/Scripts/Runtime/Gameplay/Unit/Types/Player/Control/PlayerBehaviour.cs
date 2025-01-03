@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Com2usGameDev
@@ -241,13 +242,13 @@ namespace Com2usGameDev
             capturedDirection *= -1;
         }
 
-        public override async void Attack()
+        public override void Attack()
         {
             PlayAnimation(weaponPlacer.AnimationHash, 0.2f);
             // weaponPlacer.AnimatorEvent(PlayAnimation);
             if (weaponPlacer.IsOffenseWeapon(out OffensiveWeapon weapon))
             {
-                weapon.Use((Vector2)transform.position, FacingDirection * 1f * Vector2.right, layerData, 0);
+                weapon.TryUse((Vector2)transform.position, FacingDirection * 1f * Vector2.right, layerData, 0).Forget();
             }
             weaponPlacer.Use();
         }

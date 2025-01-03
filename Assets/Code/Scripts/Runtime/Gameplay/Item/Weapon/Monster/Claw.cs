@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Com2usGameDev
@@ -7,7 +8,7 @@ namespace Com2usGameDev
         [Header("FX")]
         public PoolItem attackFx;
 
-        public override void Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
+        public async override UniTask Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
         {
             PlaySound();
             var rayHit = Physics2D.BoxCast(from, Vector2.one, 0, to, range, layer.target.value);

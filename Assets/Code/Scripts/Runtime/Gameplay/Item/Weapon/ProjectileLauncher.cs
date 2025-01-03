@@ -47,9 +47,9 @@ namespace Com2usGameDev
             DrawLines();
         }
 
-        public override void Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
+        public async override UniTask Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
         {
-            Fire(from, to, layer, defaultDamage).Forget();
+            await Fire(from, to, layer, defaultDamage);
         }
 
         protected abstract void CreateProjectile(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage);
@@ -72,7 +72,7 @@ namespace Com2usGameDev
                 timer -= Time.deltaTime;
             }
 
-            int directionX = transform.position.x - handleStorage.position.x > 0 ? 1: -1;
+            int directionX = transform.position.x - handleStorage.position.x > 0 ? 1 : -1;
             var direction = new Vector2(directionX, 0);
             CreateProjectile(from, direction, layer, defaultDamage);
 

@@ -84,7 +84,7 @@ namespace Com2usGameDev
         //     PlaySound();
         // }
 
-        public async UniTaskVoid CastRope()
+        public async UniTask CastRope()
         {
             InitializeHook();
             PlaySound();
@@ -269,10 +269,10 @@ namespace Com2usGameDev
             return false;
         }
 
-        public override void Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
+        public async override UniTask Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
         {
             groundLayer = layer.ground.value;
-            CastRope().Forget();
+            await CastRope();
         }
     }
 }

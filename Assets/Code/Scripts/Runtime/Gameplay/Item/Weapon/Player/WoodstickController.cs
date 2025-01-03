@@ -1,10 +1,11 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Com2usGameDev
 {
     public class WoodstickController : OffensiveWeapon
     {
-        public override void Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
+        public async override UniTask Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
         {
             PlaySound();
             
@@ -13,6 +14,7 @@ namespace Com2usGameDev
             {
                 behaviour.HP -= damage;
             }
+            await UniTask.WaitForSeconds(0.2f);
         }
     }
 }

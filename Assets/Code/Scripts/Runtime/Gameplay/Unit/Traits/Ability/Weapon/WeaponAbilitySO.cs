@@ -8,9 +8,9 @@ namespace Com2usGameDev
     {
         public override string AbilityType => nameof(WeaponAbilitySO);
         public bool isRightHanded;
-        public OffensiveWeapon Entity => weaponOnHand;
         public Sprite frame;
-        public bool isLimited;
+        public OffensiveWeapon Entity => weaponOnHand;
+        public bool IsLimited => _count.HasValue;
         public UnityAction<int> onCountChanged;
         public int Count
         {
@@ -38,12 +38,10 @@ namespace Com2usGameDev
             weaponOnHand = Instantiate(weaponPrefab);
             weaponOnHand.transform.SetParent(_hand, false);
             weaponOnHand.gameObject.SetActive(false);
+
             if (this is ICountable countable)
             {
-                Debug.Log("Obtained " + weaponOnHand.name);
-                _count = (int)countable.InitialCount;
-                Debug.Log(weaponOnHand.name + ": " + _count);
-                Debug.Log(weaponOnHand.name + ": " + _count.HasValue);
+                _count = countable.InitialCount;
             }
             OnAquire();
         }
@@ -67,9 +65,12 @@ namespace Com2usGameDev
         public async UniTaskVoid Use()
         {
             await UniTask.WaitForSeconds(Entity.delay);
+            await UniTask.WaitUntil(IsWeaponReadyToUse);
             TakeOne();
             OnUseWeapon();
         }
+
+        private bool IsWeaponReadyToUse() => Entity.IsReady;
 
         public abstract void OnUseWeapon();
     }

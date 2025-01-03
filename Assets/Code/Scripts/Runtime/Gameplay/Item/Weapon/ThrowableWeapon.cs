@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Com2usGameDev
@@ -16,13 +17,14 @@ namespace Com2usGameDev
 
         private int playerDamage;
 
-        public override void Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
+        public async override UniTask Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
         {
             PlaySound();
             var clone = Instantiate(this, transform.position, transform.rotation);
             clone.playerDamage = defaultDamage;
             clone.direction = to.x > 0 ? -1 : 1;
             Initiate(clone, to);
+            await UniTask.WaitForSeconds(0.2f);
         }
 
         private void Awake()

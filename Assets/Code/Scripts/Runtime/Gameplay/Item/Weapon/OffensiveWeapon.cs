@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Com2usGameDev
@@ -16,7 +17,20 @@ namespace Com2usGameDev
         [SerializeField] private AudioClip weaponSound;
 
         public int AnimationHash => animationClipName.Hash;
-        public abstract void Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage);
+        public bool IsReady { get; private set; } = true;
+
+        public async UniTask<bool> TryUse(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
+        {
+            if (!IsReady)
+                return false;
+            
+            IsReady = false;
+            await Use(from, to, layer, defaultDamage);
+            IsReady = true;
+            return true;
+        }
+
+        public abstract UniTask Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage);
 
         protected void PlaySound(AudioClip clip = null)
         {

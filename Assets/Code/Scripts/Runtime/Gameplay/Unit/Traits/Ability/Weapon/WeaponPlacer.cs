@@ -60,7 +60,7 @@ namespace Com2usGameDev
         private void OnAddWeapon(WeaponAbilitySO weapon)
         {
             weaponViewGroup.AddWeapon(weapon);
-            if (weapon.isLimited)
+            if (weapon.IsLimited)
             {
                 weapon.onCountChanged += (int count) =>
                 {
