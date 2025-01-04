@@ -4,7 +4,6 @@ namespace Com2usGameDev
 {
     public abstract class UnitBehaviour : Sonorous
     {
-        public LayerMask groundLayer;
         public float walk;
         public float run;
         public float jump;
@@ -18,7 +17,6 @@ namespace Com2usGameDev
         public AudioClip attackSound;
         public LayersSO layerData;
         public Hands hands;
-
 
         protected IVanishable vanishUI;
         public float HP
@@ -76,7 +74,7 @@ namespace Com2usGameDev
 
         protected abstract void Dead();
 
-        public abstract void UseVFX(PoolItem fx);
+        public abstract void VisualizeFX(PoolItem fx);
 
         protected abstract void Initialize();
 

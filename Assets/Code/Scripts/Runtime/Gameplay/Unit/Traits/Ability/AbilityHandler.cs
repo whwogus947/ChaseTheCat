@@ -1,0 +1,32 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Com2usGameDev
+{
+    public abstract class AbilityHandler<T> where T : AbilitySO
+    {
+        protected AbilityController controller;
+        protected readonly List<T> abilities;
+        protected T currentAbility;
+        protected readonly string abilityType = typeof(T).Name;
+        protected AbilityContainer<T> Ability => controller.GetContainer<T>(abilityType);
+        protected AbilityViewGroup<T> viewGroup;
+
+        protected abstract void AddInitialAbilities(List<T> initialItems);
+
+        public AbilityHandler(IAbilityBundle<T> bundle)
+        {
+            controller = bundle.Controller;
+            viewGroup = bundle.ViewGroup;
+            AddInitialAbilities(bundle.Holder.initialItems);
+            // viewGroup = abilityContainer.GetComponentInEntire<AbilityViewGroup<T>>();
+            // var holder = abilityContainer.GetComponentInEntire<AbilityHolder<T>>();
+            // AddInitialAbilities(holder.initialItems);
+        }
+
+        public class AbilityBuilder
+        {
+
+        }
+    }
+}

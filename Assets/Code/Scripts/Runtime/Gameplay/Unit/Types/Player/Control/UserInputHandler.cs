@@ -12,7 +12,7 @@ namespace Com2usGameDev
         public BoolValueSO controllable;
         public AbilityController abilityController;
 
-        private WeaponPlacer weaponPlacer;
+        private WeaponHandler weaponPlacer;
 
         private PCInput input;
         private readonly Timer timer = new();
@@ -21,7 +21,7 @@ namespace Com2usGameDev
         private void Awake()
         {
             input = inputController.GetOrCreate();
-            weaponPlacer = GetComponent<WeaponPlacer>();
+            weaponPlacer = GetComponent<WeaponHandler>();
         }
 
         private void Start()
@@ -43,7 +43,7 @@ namespace Com2usGameDev
         {
             if (gameObject.TryGetComponent(out PlayerBehaviour behaviour))
             {
-                behaviour.MeetupNPC();
+                behaviour.Interaction();
             }
         }
 

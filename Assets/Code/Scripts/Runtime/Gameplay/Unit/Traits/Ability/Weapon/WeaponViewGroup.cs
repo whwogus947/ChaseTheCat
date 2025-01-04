@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class WeaponViewGroup : MonoBehaviour
+    public class WeaponViewGroup : AbilityViewGroup<WeaponAbilitySO>
     {
         public Transform storage;
 
@@ -13,7 +13,7 @@ namespace Com2usGameDev
             slot = storage.GetComponentInChildren<WeaponSlot>(true);
         }
 
-        public void AddWeapon(WeaponAbilitySO skill)
+        public override void AddAbility(WeaponAbilitySO skill)
         {
             WeaponSlot newSlot = null;
             for (int i = 0; i < storage.childCount; i++)

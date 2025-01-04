@@ -1,32 +1,29 @@
-using System;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class PlayerBehaviour : UnitBehaviour
+    public class PlayerBehaviour : UnitBehaviour, IAbilityBundle<SkillAbilitySO>, IAbilityBundle<WeaponAbilitySO>
     {
         public FloatValueSO direction;
         public BoolValueSO groundChecker;
         public BoolValueSO controllable;
         public VFXPool pool;
-        public LayerMask enemyLayer;
-        public LayerMask npcLayer;
         public VanishSlider jumpGauge;
-        public AbilityController ability;
+        public AbilityController abilityController; 
         public SkillViewGroup skillViewGroup;
         public PlayerStatSO playerStat;
         public VanishImage hpSlider;
         public VanishImage epSlider;
         public List<SkillAbilitySO> initialSkills;
-        public Transform fxStorage;
         public TransformChannelSO playerLocator;
         public TwinklePoolItem monsterCollisionEffect;
         public TwinklePoolItem wallCollisionEffect;
         public Bloodscreen bloodscreen;
         public PlayerSFX playerSFX;
-        
+        [Header("Storage")]
+        public Transform fxStorage;
+
 
         private float maxHeight;
         private readonly float threshold = -7.5f;
@@ -46,8 +43,27 @@ namespace Com2usGameDev
         public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
 
         private const string skillType = nameof(SkillAbilitySO);
-        private AbilityContainer<SkillAbilitySO> Skills => ability.GetContainer<SkillAbilitySO>(skillType);
-        private WeaponPlacer weaponPlacer;
+        private AbilityContainer<SkillAbilitySO> Skills => abilityController.GetContainer<SkillAbilitySO>(skillType);
+        private WeaponHandler weaponHandler;
+        private SkillHandler skillHandler;
+
+        //************************************************************************************************************
+
+        public InputControllerSO inputController;
+
+        public AbilityController Controller => abilityController;
+
+        AbilityViewGroup<WeaponAbilitySO> IAbilityBundle<WeaponAbilitySO>.ViewGroup 
+            => gameObject.GetComponentInEntire<WeaponViewGroup>();
+
+        AbilityHolder<WeaponAbilitySO> IAbilityBundle<WeaponAbilitySO>.Holder 
+            => gameObject.GetComponentInEntire<WeaponHolder>();
+
+        AbilityViewGroup<SkillAbilitySO> IAbilityBundle<SkillAbilitySO>.ViewGroup 
+            => gameObject.GetComponentInEntire<SkillViewGroup>();
+
+        AbilityHolder<SkillAbilitySO> IAbilityBundle<SkillAbilitySO>.Holder 
+            => gameObject.GetComponentInEntire<SkillHolder>();
 
         public void InvalidateRigidbody()
         {
@@ -55,47 +71,18 @@ namespace Com2usGameDev
             rb.linearVelocity = Vector2.zero;
         }
 
-        public void RegenerateRigidbody()
-        {
-            rb.gravityScale = 1f;
-        }
+        public void RestartRigidbody() => rb.gravityScale = 1f;
 
-        public void ResetVelocity()
-        {
-            rb.linearVelocity = Vector2.zero;
-        }
+        public void ResetVelocity() => rb.linearVelocity = Vector2.zero;
 
-        public override void UseVFX(PoolItem fx)
-        {
-            if (fx == null)
-                return;
+        public override void VisualizeFX(PoolItem fx) => pool.Visualize(fx, fxStorage, GetFaceDirection());
 
-            var poolObj = pool.GetPooledObject(fx);
-            if (poolObj.isFixed)
-            {
-                poolObj.transform.SetParent(fxStorage, false);
-            }
-            else
-            {
-                bool isFlip = GetFaceDirection() == 1;
-                poolObj.transform.position = transform.position - fx.transform.position * GetFaceDirection();
-                if (poolObj.TryGetComponent(out SpriteRenderer sprite))
-                {
-                    sprite.flipX = isFlip;
-                }
-            }
-        }
-
-        public void MeetupNPC()
+        public void Interaction()
         {
-            var rayHit = Physics2D.BoxCast((Vector2)transform.position, Vector2.one, 0, FacingDirection * 1f * Vector2.right, 2, npcLayer.value);
-            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out NPCBehaviour behaviour))
+            var rayHit = Physics2D.BoxCast((Vector2)transform.position, Vector2.one, 0, FacingDirection * 1f * Vector2.right, 2, layerData.npc.value);
+            if (rayHit.collider != null && rayHit.collider.TryGetComponent(out IInteractable interactee))
             {
-                behaviour.OpenDialogue();
-            }
-            else if (rayHit.collider != null && rayHit.collider.TryGetComponent(out CatHairBall ball))
-            {
-                ball.InteractWithBall();
+                interactee.Interact();
             }
         }
 
@@ -127,9 +114,14 @@ namespace Com2usGameDev
             Skills.AddListener(AddSkill);
 
             initialSkills.ForEach(x => Skills.Add(x));
-            weaponPlacer = GetComponent<WeaponPlacer>();
-            weaponPlacer.fxEvent += UseVFX;
-            weaponPlacer.onGetWeapon += OnGetWeapon;
+
+            var input = inputController.GetOrCreate();
+            
+            weaponHandler = new WeaponHandler(this, input, hands);
+            weaponHandler.fxEvent += VisualizeFX;
+
+            skillHandler = new SkillHandler(this);
+            
             maxHeight = transform.position.y;
         }
 
@@ -145,11 +137,6 @@ namespace Com2usGameDev
         {
             if (transform.position.y > maxHeight)
                 maxHeight = transform.position.y;
-        }
-
-        private void OnGetWeapon(WeaponAbilitySO weapon)
-        {
-            ability.AddAbility(weapon);
         }
 
         protected override void CheckPerFrame()
@@ -177,7 +164,7 @@ namespace Com2usGameDev
 
         private void AddSkill(SkillAbilitySO skill)
         {
-            skillViewGroup.AddSkill(skill);
+            skillViewGroup.AddAbility(skill);
         }
 
         protected override void Dead()
@@ -203,7 +190,7 @@ namespace Com2usGameDev
 
         private void GroundCheck()
         {
-            var rayHit = Physics2D.BoxCast(transform.position, Vector2.one * 0.92f, 0, Vector2.down, 20f, groundLayer.value);
+            var rayHit = Physics2D.BoxCast(transform.position, Vector2.one * 0.92f, 0, Vector2.down, 20f, layerData.ground.value);
             float distance = float.MaxValue;
             if (rayHit.collider != null)
             {
@@ -216,7 +203,7 @@ namespace Com2usGameDev
         {
             if (groundChecker.Value)
                 return false;
-            var rayHit = Physics2D.BoxCast((Vector2)transform.position + FacingDirection * 0.55f * Vector2.right, new Vector2(0.1f, 0.9f), 0, Vector2.zero, 0, groundLayer.value);
+            var rayHit = Physics2D.BoxCast((Vector2)transform.position + FacingDirection * 0.55f * Vector2.right, new Vector2(0.1f, 0.9f), 0, Vector2.zero, 0, layerData.ground.value);
             float distance = float.MaxValue;
             if (rayHit.collider != null)
             {
@@ -244,14 +231,14 @@ namespace Com2usGameDev
 
         public override void Attack()
         {
-            PlayAnimation(weaponPlacer.AnimationHash, 0.2f);
-            // weaponPlacer.AnimatorEvent(PlayAnimation);
-            if (weaponPlacer.IsOffenseWeapon(out OffensiveWeapon weapon))
-            {
-                weapon.TryUse((Vector2)transform.position, FacingDirection * 1f * Vector2.right, layerData, 0).Forget();
-            }
-            weaponPlacer.Use();
+            weaponHandler.Activate(WeaponInfo, PlayAnimation);
         }
+
+        private WeaponPerformInfo WeaponInfo => new(
+            (Vector2)transform.position,
+            FacingDirection * 1f * Vector2.right,
+            layerData,
+            0);
 
         protected override void OnLowHP()
         {

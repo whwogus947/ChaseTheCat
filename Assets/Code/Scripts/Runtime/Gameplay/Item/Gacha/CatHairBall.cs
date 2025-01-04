@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class CatHairBall : MonoBehaviour
+    public class CatHairBall : MonoBehaviour, IInteractable
     {
         public float maxBrightness = 20;
         public float brightnessPower = 1f;
@@ -30,11 +30,6 @@ namespace Com2usGameDev
         {
             audioChannel.Invoke(openSfx);
             OpenHairBallProcess().Forget();
-        }
-
-        public void InteractWithBall()
-        {
-            animator.Play("HairBall");
         }
 
         private async UniTaskVoid OpenHairBallProcess()
@@ -71,6 +66,16 @@ namespace Com2usGameDev
             angle.z += Time.deltaTime * 60f;
             brightFX.eulerAngles = angle;
             brightFX.localScale += 28f * Time.deltaTime * Vector3.one;
+        }
+
+        private void StartBallOpening()
+        {
+            animator.Play("HairBall");
+        }
+
+        public void Interact()
+        {
+            StartBallOpening();
         }
     }
 }

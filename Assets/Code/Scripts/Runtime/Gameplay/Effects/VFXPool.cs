@@ -18,6 +18,27 @@ namespace Com2usGameDev
             return OnGetFromPool(target);
         }
 
+        public void Visualize(PoolItem fx, Transform storage, int direction)
+        {
+            if (fx == null)
+                return;
+
+            var poolObj = GetPooledObject(fx);
+            if (poolObj.isFixed)
+            {
+                poolObj.transform.SetParent(storage, false);
+            }
+            else
+            {
+                bool isFlip = direction == 1;
+                poolObj.transform.position = storage.position - fx.transform.position * direction;
+                if (poolObj.TryGetComponent(out SpriteRenderer sprite))
+                {
+                    sprite.flipX = isFlip;
+                }
+            }
+        }
+
         private void Clear()
         {
             if (pools == null || pools.Count <= 0)

@@ -168,7 +168,7 @@ namespace Com2usGameDev
         {
             var player = unit as PlayerBehaviour;
             if (skillAbility == null)
-                skillAbility = player.ability.GetAbility<SkillAbilitySO>(abilityType, SkillName);
+                skillAbility = player.abilityController.GetAbility<SkillAbilitySO>(abilityType, SkillName);
 
             OnSkillEnter(player);
             UseEP(player);
@@ -382,7 +382,7 @@ namespace Com2usGameDev
                     player.Jump(0.75f);
                     player.SetAnimation("IsOnGround", false);
                     player.CaptureDirection(player.jumpX);
-                    player.UseVFX(skillAbility.fx);
+                    player.VisualizeFX(skillAbility.fx);
                     player.Controllable = false;
                 }
 
@@ -400,7 +400,7 @@ namespace Com2usGameDev
                 {
                     if (unit is PlayerBehaviour behaviour)
                     {
-                        behaviour.RegenerateRigidbody();
+                        behaviour.RestartRigidbody();
                         unit.SetAnimation("IsHolding", false);
                     }
                 }
@@ -410,7 +410,7 @@ namespace Com2usGameDev
                     player.PlaySound(player.playerSFX.staticFlight);
                     player.ResetMaxHeight();
 
-                    player.UseVFX(skillAbility.fx);
+                    player.VisualizeFX(skillAbility.fx);
 
                     player.PlayAnimation(AnimationHash, 0.2f);
                     player.InvalidateRigidbody();
@@ -438,7 +438,7 @@ namespace Com2usGameDev
                     player.PlayAnimation(AnimationHash, 0.2f);
                     player.SetTransitionPower(player.dash);
                     player.CaptureDirection();
-                    player.UseVFX(skillAbility.fx);
+                    player.VisualizeFX(skillAbility.fx);
                     OnEnterAction();
                 }
 

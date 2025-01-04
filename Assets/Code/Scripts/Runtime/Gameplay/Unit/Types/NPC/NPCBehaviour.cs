@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Com2usGameDev
 {
-    public class NPCBehaviour : MonoBehaviour
+    public class NPCBehaviour : MonoBehaviour, IInteractable
     {
         [SerializeField] private Dialogue dialogue;
         private SocialInteraction social;
@@ -26,6 +26,11 @@ namespace Com2usGameDev
         public void AddEvent(UnityAction @event)
         {
             onInteract += @event;
+        }
+
+        public void Interact()
+        {
+            OpenDialogue();
         }
     }
 }

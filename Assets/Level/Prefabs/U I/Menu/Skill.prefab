@@ -1130,6 +1130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2355262718184691606}
   - component: {fileID: 7543475972134116983}
+  - component: {fileID: 2798090334007381251}
   m_Layer: 0
   m_Name: Skill
   m_TagString: Untagged
@@ -1169,6 +1170,19 @@ MonoBehaviour:
   skillType:
     passive: {fileID: 11400000, guid: fc26b1c6d79c81c499344ecbe21a2c71, type: 2}
     active: {fileID: 11400000, guid: dbb37915e0d362c409e9a7c24010aa14, type: 2}
+--- !u!114 &2798090334007381251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8873500141862337655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c46715317df8bd7438cd59ee8a80b7b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialItems: []
 --- !u!1 &9162421729581907884
 GameObject:
   m_ObjectHideFlags: 0

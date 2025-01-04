@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class SkillViewGroup : MonoBehaviour
+    public class SkillViewGroup : AbilityViewGroup<SkillAbilitySO>
     {
         public Transform storage;
         public SkillType skillType;
@@ -14,7 +14,7 @@ namespace Com2usGameDev
             slot = storage.GetComponentInChildren<SkillSlot>(true);
         }
 
-        public void AddSkill(SkillAbilitySO skill)
+        public override void AddAbility(SkillAbilitySO skill)
         {
             if (skill.skillType == null || skill.skillType == skillType.passive)
                 return;

@@ -17,7 +17,7 @@ namespace Com2usGameDev
         private bool isAttacking = false;
         private VibrateEffector onFindPlayerEffect;
 
-        public override void UseVFX(PoolItem fx)
+        public override void VisualizeFX(PoolItem fx)
         {
 
         }
@@ -108,7 +108,7 @@ namespace Com2usGameDev
 
         private bool IsGround(Vector3 relativePos)
         {
-            var cols = Physics2D.OverlapBox(transform.position + Vector3.down * 0.5f + relativePos, Vector2.one * 0.3f, 0f, groundLayer.value);
+            var cols = Physics2D.OverlapBox(transform.position + Vector3.down * 0.5f + relativePos, Vector2.one * 0.3f, 0f, layerData.ground.value);
             return cols != null;
         }
 
