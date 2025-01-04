@@ -145,7 +145,7 @@ namespace Com2usGameDev
 
             isAttacking = true;
             PlayAnimation(weapon.AnimationHash, 0.2f);
-            weapon.Use(transform.position, FacingDirection * Vector2.right, layerData, 0);
+            weapon.Use(transform.position, FacingDirection * Vector2.right, layerData, 0).Forget();
             await UniTask.WaitForSeconds(weapon.delay);
             if (this == null)
                 return;

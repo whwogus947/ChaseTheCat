@@ -198,11 +198,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  fXPool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
   damage: 5
   delay: 0.3
   range: 2.2
   animationClipName: {fileID: 11400000, guid: 5888680b43ef95340a3f351707e38a3b, type: 2}
+  weaponSound: {fileID: 8300000, guid: 50452d7dce9d60e4cbab672f5f9b8dfa, type: 3}
+  hitSound: {fileID: 8300000, guid: 76470f3ff8eafc74ea8092cfe53f111b, type: 3}
   throwPower: {x: 500, y: 50}
-  onHitSfx: {fileID: 0}
   spin: 1
   spinSpeed: 900

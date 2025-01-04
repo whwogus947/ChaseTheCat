@@ -21,17 +21,17 @@ namespace Com2usGameDev
             AddInitialAbilities(bundle.Holder.initialItems);
         }
 
-        public void Activate(WeaponPerformInfo info, UnityAction<int, float> animation)
+        public async void Activate(WeaponPerformInfo info, UnityAction<int, float> animation)
         {
             if (currentAbility == null)
                 return;
 
             animation(AnimationHash, 0.2f);
+            currentAbility.Use().Forget();
             if (IsOffenseWeapon(out OffensiveWeapon weapon))
             {
-                weapon.TryUse(info.from, info.to, info.layers, info.damage);
+                bool result = await weapon.TryUse(info.from, info.to, info.layers, info.damage);
             }
-            currentAbility.Use();
             // if (currentWeapon.fxDelay > 0)
             // await UniTask.WaitForSeconds(WeaponDelay);
 
