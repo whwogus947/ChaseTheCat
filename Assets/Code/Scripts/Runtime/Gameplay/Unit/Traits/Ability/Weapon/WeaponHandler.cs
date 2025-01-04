@@ -8,23 +8,24 @@ namespace Com2usGameDev
     public class WeaponHandler : AbilityHandler<WeaponAbilitySO>
     {
         public UnityAction<PoolItem> fxEvent;
-        
+
         public float WeaponDelay => currentAbility.Entity.delay;
         private readonly Hands hands;
 
-        public WeaponHandler(IAbilityBundle<WeaponAbilitySO> bundle, PCInput inputActions, Hands handData) : base (bundle)
+        public WeaponHandler(IAbilityBundle<WeaponAbilitySO> bundle, PCInput inputActions, Hands handData) : base(bundle)
         {
+            hands = handData;
             inputActions.Player.NextWeapon.performed += OnNextWeaponClicked;
             inputActions.Player.BeforeWeapon.performed += OnBeforeWeaponClicked;
             Ability.AddListener(OnAddWeapon);
-            hands = handData;
+            AddInitialAbilities(bundle.Holder.initialItems);
         }
-        
+
         public void Activate(WeaponPerformInfo info, UnityAction<int, float> animation)
         {
             if (currentAbility == null)
                 return;
-            
+
             animation(AnimationHash, 0.2f);
             if (IsOffenseWeapon(out OffensiveWeapon weapon))
             {

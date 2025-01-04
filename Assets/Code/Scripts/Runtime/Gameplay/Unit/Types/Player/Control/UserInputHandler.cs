@@ -12,7 +12,7 @@ namespace Com2usGameDev
         public BoolValueSO controllable;
         public AbilityController abilityController;
 
-        private WeaponHandler weaponPlacer;
+        private PlayerBehaviour player;
 
         private PCInput input;
         private readonly Timer timer = new();
@@ -21,7 +21,7 @@ namespace Com2usGameDev
         private void Awake()
         {
             input = inputController.GetOrCreate();
-            weaponPlacer = GetComponent<WeaponHandler>();
+            player = gameObject.GetComponentInEntire<PlayerBehaviour>();
         }
 
         private void Start()
@@ -66,7 +66,7 @@ namespace Com2usGameDev
 
         private void OnPressAttack(InputAction.CallbackContext context)
         {
-            timer.StartTimer<Nodes.Player.AttackNormal>(weaponPlacer.WeaponDelay);
+            timer.StartTimer<Nodes.Player.AttackNormal>(player.Delay);
         }
 
         private void OnReleaseJump(InputAction.CallbackContext context)

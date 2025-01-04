@@ -1130,7 +1130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2355262718184691606}
   - component: {fileID: 7543475972134116983}
-  - component: {fileID: 2798090334007381251}
+  - component: {fileID: 4340988029834252427}
   m_Layer: 0
   m_Name: Skill
   m_TagString: Untagged
@@ -1170,7 +1170,7 @@ MonoBehaviour:
   skillType:
     passive: {fileID: 11400000, guid: fc26b1c6d79c81c499344ecbe21a2c71, type: 2}
     active: {fileID: 11400000, guid: dbb37915e0d362c409e9a7c24010aa14, type: 2}
---- !u!114 &2798090334007381251
+--- !u!114 &4340988029834252427
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

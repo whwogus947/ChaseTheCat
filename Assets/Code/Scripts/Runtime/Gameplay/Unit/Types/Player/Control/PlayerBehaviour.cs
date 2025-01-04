@@ -11,11 +11,11 @@ namespace Com2usGameDev
         public VFXPool pool;
         public VanishSlider jumpGauge;
         public AbilityController abilityController; 
-        public SkillViewGroup skillViewGroup;
+        // public SkillViewGroup skillViewGroup;
         public PlayerStatSO playerStat;
         public VanishImage hpSlider;
         public VanishImage epSlider;
-        public List<SkillAbilitySO> initialSkills;
+        // public List<SkillAbilitySO> initialSkills;
         public TransformChannelSO playerLocator;
         public TwinklePoolItem monsterCollisionEffect;
         public TwinklePoolItem wallCollisionEffect;
@@ -42,15 +42,15 @@ namespace Com2usGameDev
 
         public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
 
-        private const string skillType = nameof(SkillAbilitySO);
-        private AbilityContainer<SkillAbilitySO> Skills => abilityController.GetContainer<SkillAbilitySO>(skillType);
+        // private const string skillType = nameof(SkillAbilitySO);
+        // private AbilityContainer<SkillAbilitySO> Skills => abilityController.GetContainer<SkillAbilitySO>(skillType);
         private WeaponHandler weaponHandler;
         private SkillHandler skillHandler;
 
         //************************************************************************************************************
 
         public InputControllerSO inputController;
-
+        
         public AbilityController Controller => abilityController;
 
         AbilityViewGroup<WeaponAbilitySO> IAbilityBundle<WeaponAbilitySO>.ViewGroup 
@@ -70,6 +70,8 @@ namespace Com2usGameDev
             rb.gravityScale = 0f;
             rb.linearVelocity = Vector2.zero;
         }
+
+        public float Delay => weaponHandler.WeaponDelay;
 
         public void RestartRigidbody() => rb.gravityScale = 1f;
 
@@ -111,9 +113,10 @@ namespace Com2usGameDev
             epSlider.MaxValue = playerStat.maxEP;
             EP = 100;
 
-            Skills.AddListener(AddSkill);
+            maxHeight = transform.position.y;
+            // Skills.AddListener(AddSkill);
 
-            initialSkills.ForEach(x => Skills.Add(x));
+            // initialSkills.ForEach(x => Skills.Add(x));
 
             var input = inputController.GetOrCreate();
             
@@ -121,8 +124,6 @@ namespace Com2usGameDev
             weaponHandler.fxEvent += VisualizeFX;
 
             skillHandler = new SkillHandler(this);
-            
-            maxHeight = transform.position.y;
         }
 
         private void PlacePlayerToStartLocation(Transform placer)
@@ -147,25 +148,25 @@ namespace Com2usGameDev
                 ToOppositeDirection();
             }
 
-            UpdateAllSkills();
+            skillHandler.UpdateAllSkills();
             EP += Time.deltaTime * playerStat.epRecoverySpeed;
             UpdateFallHeight();
         }
 
-        private void UpdateAllSkills()
-        {
-            Skills?.Foreach(x => SkillUpdate(x));
-        }
+        // public void UpdateAllSkills()
+        // {
+        //     Skills?.Foreach(x => SkillUpdate(x));
+        // }
 
-        private void SkillUpdate(SkillAbilitySO skill)
-        {
-            skill.CoolDown();
-        }
+        // private void SkillUpdate(SkillAbilitySO skill)
+        // {
+        //     skill.CoolDown();
+        // }
 
-        private void AddSkill(SkillAbilitySO skill)
-        {
-            skillViewGroup.AddAbility(skill);
-        }
+        // private void AddSkill(SkillAbilitySO skill)
+        // {
+        //     skillViewGroup.AddAbility(skill);
+        // }
 
         protected override void Dead()
         {

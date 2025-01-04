@@ -6,7 +6,7 @@ namespace Com2usGameDev
     public abstract class AbilityHandler<T> where T : AbilitySO
     {
         protected AbilityController controller;
-        protected readonly List<T> abilities;
+        protected readonly List<T> abilities = new();
         protected T currentAbility;
         protected readonly string abilityType = typeof(T).Name;
         protected AbilityContainer<T> Ability => controller.GetContainer<T>(abilityType);
@@ -18,7 +18,6 @@ namespace Com2usGameDev
         {
             controller = bundle.Controller;
             viewGroup = bundle.ViewGroup;
-            AddInitialAbilities(bundle.Holder.initialItems);
             // viewGroup = abilityContainer.GetComponentInEntire<AbilityViewGroup<T>>();
             // var holder = abilityContainer.GetComponentInEntire<AbilityHolder<T>>();
             // AddInitialAbilities(holder.initialItems);

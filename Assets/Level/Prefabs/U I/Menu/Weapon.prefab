@@ -75,7 +75,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4284805887
-  m_fontColor: {r: 1, g: 0.9503374, b: 0.3915094, a: 1}
+  m_fontColor: {r: 0.1509434, g: 0.13828363, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4284805887
-  m_fontColor: {r: 1, g: 0.9503374, b: 0.3915094, a: 1}
+  m_fontColor: {r: 0.1509434, g: 0.13828363, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -559,7 +559,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7140846201484687865}
   - component: {fileID: 8069112189778378331}
-  - component: {fileID: 2291432664276559739}
+  - component: {fileID: 3308269209059741337}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storage: {fileID: 2549077365307521399}
---- !u!114 &2291432664276559739
+--- !u!114 &3308269209059741337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -605,7 +605,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4949204394575791802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c46715317df8bd7438cd59ee8a80b7b6, type: 3}
+  m_Script: {fileID: 11500000, guid: c26eacfe92b62b64f8a38923a3de2f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   initialItems: []
@@ -684,7 +684,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4284805887
-  m_fontColor: {r: 1, g: 0.9503374, b: 0.3915094, a: 1}
+  m_fontColor: {r: 0.1509434, g: 0.13828363, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

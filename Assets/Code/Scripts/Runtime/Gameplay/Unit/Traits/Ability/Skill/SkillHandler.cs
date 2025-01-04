@@ -7,7 +7,13 @@ namespace Com2usGameDev
     {
         public SkillHandler(IAbilityBundle<SkillAbilitySO> bundle) : base(bundle)
         {
+            Ability.AddListener(AddSkill);
+            AddInitialAbilities(bundle.Holder.initialItems);
+        }
 
+        public void UpdateAllSkills()
+        {
+            Ability?.Foreach(x => SkillUpdate(x));
         }
 
         private void SkillUpdate(SkillAbilitySO skill)
@@ -17,12 +23,12 @@ namespace Com2usGameDev
 
         private void AddSkill(SkillAbilitySO skill)
         {
-            
+            viewGroup.AddAbility(skill);
         }
 
         protected override void AddInitialAbilities(List<SkillAbilitySO> initialItems)
         {
-            // skillViewGroup.AddAbility(skill);
+            initialItems.ForEach(x => Ability.Add(x));
         }
     }
 }
