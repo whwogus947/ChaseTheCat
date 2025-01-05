@@ -1,27 +1,25 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com2usGameDev
 {
     public class PlayerBehaviour : UnitBehaviour, IAbilityBundle<SkillAbilitySO>, IAbilityBundle<WeaponAbilitySO>
     {
-        public FloatValueSO direction;
-        public BoolValueSO groundChecker;
-        public BoolValueSO controllable;
-        public VFXPool pool;
-        public VanishSlider jumpGauge;
-        public AbilityController abilityController; 
-        public PlayerStatSO playerStat;
-        public VanishImage hpSlider;
-        public VanishImage epSlider;
         public TransformChannelSO playerLocator;
-        public TwinklePoolItem monsterCollisionEffect;
-        public TwinklePoolItem wallCollisionEffect;
+        public AbilityController abilityController;
+
+        [Header("Stats")]
+        public PlayerStatSO playerStat;
+
+        [Header("VFX")]
+        public VFXPool pool;
+        public PlayerVFX VFXList;
         public Bloodscreen bloodscreen;
-        public PlayerSFX playerSFX;
-        [Header("Storage")]
         public Transform fxStorage;
 
+        [Header("SFX")]
+        public PlayerSFX SFXList;
+        public float ChargePower { get; set; }
+        public readonly ControlData controlData = new();
 
         private float maxHeight;
         private readonly float threshold = -7.5f;
@@ -38,7 +36,11 @@ namespace Com2usGameDev
         }
         private float ep;
 
-        public override bool Controllable { get => controllable.Value; set => controllable.Value = value; }
+        public override bool Controllable { get => controlData.controllable; set => controlData.controllable = value; }
+
+        public VanishSlider jumpGauge => playerView.jumpGauge;
+        public VanishImage hpSlider => playerView.hpSlider;
+        public VanishImage epSlider => playerView.epSlider;
 
         private WeaponHandler weaponHandler;
         private SkillHandler skillHandler;
@@ -46,19 +48,19 @@ namespace Com2usGameDev
         //************************************************************************************************************
 
         public InputControllerSO inputController;
-        
+
         public AbilityController Controller => abilityController;
 
-        AbilityViewGroup<WeaponAbilitySO> IAbilityBundle<WeaponAbilitySO>.ViewGroup 
+        AbilityViewGroup<WeaponAbilitySO> IAbilityBundle<WeaponAbilitySO>.ViewGroup
             => gameObject.GetComponentInEntire<WeaponViewGroup>();
 
-        AbilityHolder<WeaponAbilitySO> IAbilityBundle<WeaponAbilitySO>.Holder 
+        AbilityHolder<WeaponAbilitySO> IAbilityBundle<WeaponAbilitySO>.Holder
             => gameObject.GetComponentInEntire<WeaponHolder>();
 
-        AbilityViewGroup<SkillAbilitySO> IAbilityBundle<SkillAbilitySO>.ViewGroup 
+        AbilityViewGroup<SkillAbilitySO> IAbilityBundle<SkillAbilitySO>.ViewGroup
             => gameObject.GetComponentInEntire<SkillViewGroup>();
 
-        AbilityHolder<SkillAbilitySO> IAbilityBundle<SkillAbilitySO>.Holder 
+        AbilityHolder<SkillAbilitySO> IAbilityBundle<SkillAbilitySO>.Holder
             => gameObject.GetComponentInEntire<SkillHolder>();
 
         public void InvalidateRigidbody()
@@ -69,9 +71,15 @@ namespace Com2usGameDev
 
         public float Delay => weaponHandler.WeaponDelay;
 
+        public override UnitStatSO Stat => playerStat;
+
         public void RestartRigidbody() => rb.gravityScale = 1f;
 
         public void ResetVelocity() => rb.linearVelocity = Vector2.zero;
+
+        protected override UnitView View { get => playerView; set => playerView = value as PlayerView; }
+
+        private PlayerView playerView;
 
         public override void VisualizeFX(PoolItem fx) => pool.Visualize(fx, fxStorage, GetFaceDirection());
 
@@ -90,7 +98,7 @@ namespace Com2usGameDev
         {
             var endHeight = transform.position.y;
             var gap = endHeight - maxHeight;
-            if (gap < threshold && groundChecker.Value)
+            if (gap < threshold && controlData.groundValue)
             {
                 PlayAnimation("main-hit", 0.2f);
                 HP += (int)gap * power;
@@ -100,11 +108,12 @@ namespace Com2usGameDev
 
         protected override void Initialize()
         {
+            View = gameObject.GetComponentInEntire<PlayerView>();
+
             playerLocator.UniqueEvent(PlacePlayerToStartLocation);
 
-            controllable.Value = true;
             var vanishImage = hpSlider;
-            vanishImage.MaxValue = HP;
+            vanishImage.MaxValue = Stat.maxHP;
             vanishUI = vanishImage;
             epSlider.MaxValue = playerStat.maxEP;
             EP = 100;
@@ -113,8 +122,8 @@ namespace Com2usGameDev
 
 
             var input = inputController.GetOrCreate();
-            
-            weaponHandler = new WeaponHandler(this, input, hands);
+
+            weaponHandler = new WeaponHandler(this, input, Hands);
             weaponHandler.fxEvent += VisualizeFX;
 
             skillHandler = new SkillHandler(this);
@@ -154,9 +163,9 @@ namespace Com2usGameDev
 
         protected override int GetVelocityDirection()
         {
-            var velocity = direction.Value;
+            var velocity = controlData.velocityDirection;
             int velocityDirection = velocity > 0 ? 1 : velocity < 0 ? -1 : 0;
-            if (IsOppositeDirection(velocityDirection) && controllable.Value)
+            if (IsOppositeDirection(velocityDirection) && controlData.controllable)
             {
                 FacingDirection = velocityDirection;
             }
@@ -176,12 +185,12 @@ namespace Com2usGameDev
             {
                 distance = rayHit.distance;
             }
-            controllable.Value = groundChecker.Value = distance < 0.05f;
+            controlData.controllable = controlData.groundValue = distance < 0.05f;
         }
 
         private bool IsCollideWithWall()
         {
-            if (groundChecker.Value)
+            if (controlData.groundValue)
                 return false;
             var rayHit = Physics2D.BoxCast((Vector2)transform.position + FacingDirection * 0.55f * Vector2.right, new Vector2(0.1f, 0.9f), 0, Vector2.zero, 0, layerData.ground.value);
             float distance = float.MaxValue;
@@ -189,7 +198,7 @@ namespace Com2usGameDev
             {
                 distance = rayHit.distance;
 
-                var fx = pool.GetPooledObject(wallCollisionEffect);
+                var fx = pool.GetPooledObject(VFXList.wall);
                 fx.transform.position = rayHit.point;
                 if (fx is TwinklePoolItem item)
                 {
@@ -232,6 +241,10 @@ namespace Com2usGameDev
                 bloodscreen.gameObject.SetActive(false);
             }
         }
+
+        public void Jump() => rb.AddForceY(playerStat.jumpPower.y * Mathf.Clamp(ChargePower, 0.4f, 1));
+
+        public void Jump(float power) => rb.AddForceY(playerStat.jumpPower.y * power);
     }
 
     [System.Serializable]
@@ -241,5 +254,13 @@ namespace Com2usGameDev
         public AudioClip staticFlight;
         public AudioClip jump;
         public AudioClip doubleJump;
+    }
+
+    [System.Serializable]
+    public class PlayerVFX
+    {
+        [Header("Collision")]
+        public TwinklePoolItem monster;
+        public TwinklePoolItem wall;
     }
 }

@@ -9,7 +9,7 @@ namespace Com2usGameDev
         
         void Start()
         {
-            controller = GetComponent<PlayerController>();
+            controller = gameObject.GetComponentInEntire<PlayerController>();
             behaviour = GetComponent<PlayerBehaviour>();
         }
 
@@ -19,7 +19,7 @@ namespace Com2usGameDev
             {
                 controller.enabled = false;
                 behaviour.GetComponent<Rigidbody2D>().AddForce((transform.position - other.transform.position).normalized * 100f + Vector3.up * 200f);
-                var fx = behaviour.pool.GetPooledObject(behaviour.monsterCollisionEffect);
+                var fx = behaviour.pool.GetPooledObject(behaviour.VFXList.monster);
                 if (other.contactCount > 0)
                 {
                     fx.transform.position = other.GetContact(0).point;

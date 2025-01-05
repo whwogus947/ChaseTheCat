@@ -8,6 +8,6 @@ namespace Com2usGameDev
         public int maxEP;
         public float epRecoverySpeed;
         public Vector2 jumpPower;
-        public float jumpCharge;
+        public float walkOnjumpCharge;
     }
 }

@@ -7,11 +7,9 @@ namespace Com2usGameDev
     public class UserInputHandler : MonoBehaviour
     {
         public InputControllerSO inputController;
-        public FloatValueSO velocityDirection;
-        public BoolValueSO groundChecker;
-        public BoolValueSO controllable;
-        public AbilityController abilityController;
 
+        private AbilityController abilityController;
+        private ControlData controlData;
         private PlayerBehaviour player;
 
         private PCInput input;
@@ -89,8 +87,13 @@ namespace Com2usGameDev
             return abilityController.GetAbility<WeaponAbilitySO>(nameof(WeaponAbilitySO), weaponName);
         }
 
-        public void BindInputToController(StateController controller)
+        private bool IsMovableGround => controlData.controllable && controlData.groundValue;
+
+        public void BindInputToController(StateController controller, ControlData controlData, AbilityController abilityController)
         {
+            this.controlData = controlData;
+            this.abilityController = abilityController;
+
             var emptyMovement = StateNode.Creator<Nodes.Common.Empty>.CreateType(State.Movement).InProgress();
             var idle = StateNode.Creator<Nodes.Player.Idle>.CreateType(State.Movement).InProgress();
             var walk = StateNode.Creator<Nodes.Player.Walk>.CreateType(State.Movement).InProgress();
@@ -107,21 +110,21 @@ namespace Com2usGameDev
             // var rope = StateNode.Creator<Nodes.Player.Rope>.CreateType(State.Action).InProgress();
 
             NodeTransition toIdle = new(idle, new(() => IsVelocityZero()));
-            NodeTransition toEmptyMovement = new(emptyMovement, new(() => !controllable.Value));
+            NodeTransition toEmptyMovement = new(emptyMovement, new(() => !controlData.controllable));
             NodeTransition toWalk = new(walk, new(() => !IsVelocityZero() && input.Player.Run.phase == InputActionPhase.Waiting));
             NodeTransition toRun = new(run, new(() => !IsVelocityZero() && input.Player.Run.phase == InputActionPhase.Performed));
             NodeTransition toDash = new(dash, new(() => dash.IsUsable(abilityController) && !IsVelocityZero() && isDashPressed && (input.Player.Dash.phase == InputActionPhase.Performed)));
-            NodeTransition emptymovementToIdle = new(idle, new(() => controllable.Value && groundChecker.Value));
-            NodeTransition dashToIdle = new(idle, new(() => timer.HasTimerExpired<Nodes.Player.Dash>() && groundChecker.Value));
+            NodeTransition emptymovementToIdle = new(idle, new(() => IsMovableGround));
+            NodeTransition dashToIdle = new(idle, new(() => timer.HasTimerExpired<Nodes.Player.Dash>() && controlData.groundValue));
 
-            NodeTransition toJumpCharging = new(jumpCharging, new(() => input.Player.Jump.phase == InputActionPhase.Performed && groundChecker.Value && !timer.HasTimerExpired<Nodes.Player.JumpCharging>()));
+            NodeTransition toJumpCharging = new(jumpCharging, new(() => input.Player.Jump.phase == InputActionPhase.Performed && controlData.groundValue && !timer.HasTimerExpired<Nodes.Player.JumpCharging>()));
             NodeTransition toJump = new(jump, new(() => input.Player.Jump.phase == InputActionPhase.Waiting));
             NodeTransition toDoubleJump = new(doubleJump, new(() => doubleJump.IsUsable(abilityController) && input.Player.Jump.phase == InputActionPhase.Performed));
-            NodeTransition toOnAir = new(onAir, new(() => !groundChecker.Value));
-            NodeTransition toEmptyAction = new(emptyAction, new(() => groundChecker.Value && timer.HasTimerExpired<Nodes.Player.Jump>()));
+            NodeTransition toOnAir = new(onAir, new(() => !controlData.groundValue));
+            NodeTransition toEmptyAction = new(emptyAction, new(() => controlData.groundValue && timer.HasTimerExpired<Nodes.Player.Jump>()));
             NodeTransition toAttack = new(attackNormal, new(() => input.Player.Attack.phase == InputActionPhase.Performed));
             NodeTransition attackToEmpty = new(emptyAction, new(() => input.Player.Attack.phase == InputActionPhase.Waiting && timer.HasTimerExpired<Nodes.Player.AttackNormal>()));
-            NodeTransition toStaticFlight = new(staticFlight, new(() => staticFlight.IsUsable(abilityController) && input.Player.StaticFlight.phase == InputActionPhase.Performed && !groundChecker.Value));
+            NodeTransition toStaticFlight = new(staticFlight, new(() => staticFlight.IsUsable(abilityController) && input.Player.StaticFlight.phase == InputActionPhase.Performed && !controlData.groundValue));
             NodeTransition staticFlightToEmptyAction = new(emptyAction, new(() => timer.HasTimerExpired<Nodes.Player.StaticFlight>()));
 
             // Movement
@@ -201,13 +204,13 @@ namespace Com2usGameDev
 
         private bool IsVelocityZero()
         {
-            return Mathf.Abs(velocityDirection.Value) == 0;
+            return Mathf.Abs(controlData.velocityDirection) == 0;
         }
 
         public void UpdateInput()
         {
             var velocity = input.Player.Transit.ReadValue<Vector2>();
-            velocityDirection.Value = velocity.x > 0 ? 1 : velocity.x < 0 ? -1 : 0;
+            controlData.velocityDirection = velocity.x > 0 ? 1 : velocity.x < 0 ? -1 : 0;
         }
 
         private void OnDestroy()

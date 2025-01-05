@@ -201,7 +201,7 @@ namespace Com2usGameDev
 
                 public override void OnUpdate(UnitBehaviour unit)
                 {
-
+                    
                 }
             }
         }
@@ -244,7 +244,7 @@ namespace Com2usGameDev
                     unit.SetAnimation("IsWalking", true);
                     unit.SetAnimation("IsRunning", false);
                     unit.SetAnimation("IsOnGround", true);
-                    unit.SetTransitionPower(unit.walk);
+                    unit.SetTransitionPower(unit.Stat.walkSpeed);
                 }
 
                 public override void OnExit(UnitBehaviour unit)
@@ -271,7 +271,7 @@ namespace Com2usGameDev
                     unit.SetAnimation("IsWalking", false);
                     unit.SetAnimation("IsRunning", true);
                     unit.SetAnimation("IsOnGround", true);
-                    unit.SetTransitionPower(unit.run);
+                    unit.SetTransitionPower(unit.Stat.runSpeed);
                 }
 
                 public override void OnExit(UnitBehaviour unit)
@@ -296,7 +296,7 @@ namespace Com2usGameDev
                     playerBehaviour = unit as PlayerBehaviour;
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     unit.SetAnimation("IsOnGround", true);
-                    unit.chargePower = 0;
+                    playerBehaviour.ChargePower = 0;
                 }
 
                 public override void OnExit(UnitBehaviour unit)
@@ -306,10 +306,10 @@ namespace Com2usGameDev
 
                 public override void OnUpdate(UnitBehaviour unit)
                 {
-                    unit.SetTransitionPower(unit.jumpCharging);
+                    unit.SetTransitionPower(playerBehaviour.playerStat.walkOnjumpCharge);
                     unit.TranslateX();
-                    unit.chargePower += Time.deltaTime;
-                    playerBehaviour.jumpGauge.SetValue(unit.chargePower);
+                    playerBehaviour.ChargePower += Time.deltaTime;
+                    playerBehaviour.jumpGauge.SetValue(playerBehaviour.ChargePower);
                 }
             }
 
@@ -342,11 +342,11 @@ namespace Com2usGameDev
 
                     playerBehaviour.EP -= Time.deltaTime * 5f;
 
-                    unit.Jump();
+                    playerBehaviour.Jump();
                     unit.SetAnimation("IsOnGround", false);
-                    unit.CaptureDirection(unit.jumpX);
+                    unit.CaptureDirection(playerBehaviour.playerStat.jumpPower.x);
                     unit.Controllable = false;
-                    unit.PlaySound(playerBehaviour.playerSFX.jump);
+                    unit.PlaySound(playerBehaviour.SFXList.jump);
                 }
 
                 public override void OnExit(UnitBehaviour unit)
@@ -377,11 +377,11 @@ namespace Com2usGameDev
 
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
-                    player.PlaySound(player.playerSFX.doubleJump);
+                    player.PlaySound(player.SFXList.doubleJump);
                     player.ResetVelocity();
                     player.Jump(0.75f);
                     player.SetAnimation("IsOnGround", false);
-                    player.CaptureDirection(player.jumpX);
+                    player.CaptureDirection(player.playerStat.jumpPower.x);
                     player.VisualizeFX(skillAbility.fx);
                     player.Controllable = false;
                 }
@@ -407,7 +407,7 @@ namespace Com2usGameDev
 
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
-                    player.PlaySound(player.playerSFX.staticFlight);
+                    player.PlaySound(player.SFXList.staticFlight);
                     player.ResetMaxHeight();
 
                     player.VisualizeFX(skillAbility.fx);
@@ -434,9 +434,9 @@ namespace Com2usGameDev
 
                 public override void OnSkillEnter(PlayerBehaviour player)
                 {
-                    player.PlaySound(player.playerSFX.dash);
+                    player.PlaySound(player.SFXList.dash);
                     player.PlayAnimation(AnimationHash, 0.2f);
-                    player.SetTransitionPower(player.dash);
+                    player.SetTransitionPower(skillAbility.Power());
                     player.CaptureDirection();
                     player.VisualizeFX(skillAbility.fx);
                     OnEnterAction();
@@ -526,7 +526,7 @@ namespace Com2usGameDev
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    unit.SetTransitionPower(unit.walk);
+                    unit.SetTransitionPower(unit.Stat.walkSpeed);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     roamTimer = UnityEngine.Random.Range(2, 5);
                     (unit as MonsterBehaviour).ResetVelocityDirection();
@@ -550,7 +550,7 @@ namespace Com2usGameDev
             {
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    unit.SetTransitionPower(unit.walk * 1.4f);
+                    unit.SetTransitionPower(unit.Stat.walkSpeed * 1.4f);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     (unit as MonsterBehaviour).OnFindPlayer();
                 }
@@ -596,7 +596,7 @@ namespace Com2usGameDev
 
                 public override void OnEnter(UnitBehaviour unit)
                 {
-                    unit.SetTransitionPower(unit.walk * 3f);
+                    unit.SetTransitionPower(unit.Stat.walkSpeed * 3f);
                     unit.PlayAnimation(AnimationHash, 0.2f);
                     if (IsReady)
                         Countdown(10f).Forget();

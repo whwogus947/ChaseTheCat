@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    [RequireComponent(typeof(PlayerBehaviour), typeof(UserInputHandler))]
-    public class PlayerController : MonoBehaviour
+    [RequireComponent(typeof(UserInputHandler))]
+    public class PlayerController : UnitControl
     {
         private StateController controller;
         private PlayerBehaviour behaviour;
@@ -11,14 +11,14 @@ namespace Com2usGameDev
 
         private void Awake()
         {
-            behaviour = GetComponent<PlayerBehaviour>();
-            userInput = GetComponent<UserInputHandler>();
+            behaviour = gameObject.GetComponentInEntire<PlayerBehaviour>();
+            userInput = gameObject.GetComponent<UserInputHandler>();
         }
 
         void Start()
         {
             controller = new StateController(behaviour);
-            userInput.BindInputToController(controller);
+            userInput.BindInputToController(controller, behaviour.controlData, behaviour.abilityController);
         }
         
         void Update()

@@ -20,3 +20,4 @@ MonoBehaviour:
   maxLevel: 2
   epConsumption: 8
   maxCoolTime: 1
+  originPower: 8

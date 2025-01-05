@@ -10,6 +10,8 @@ namespace Com2usGameDev
         private Transform player;
         public float detectRange = 4f;
         public override bool Controllable { get => enabled; set => enabled = value; }
+        public EnemyStatSO enemyStat;
+        public override UnitStatSO Stat => enemyStat;
 
         private MaterialPropertyBlock propertyBlock;
         private Renderer[] renderers;

@@ -17,6 +17,7 @@ namespace Com2usGameDev
 
         protected int level;
         
+        [SerializeField] private int originPower;
         private float coolTime;
 
         public override void OnAquire()
@@ -34,6 +35,11 @@ namespace Com2usGameDev
         public bool IsMaxLevel() => level == maxLevel;
 
         protected abstract void PowerUp();
+
+        public virtual int Power()
+        {
+            return originPower;
+        }
 
         public override void OnDiscover()
         {

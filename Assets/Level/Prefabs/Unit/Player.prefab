@@ -281,6 +281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1637303557871838026}
+  - component: {fileID: 8018866657252922442}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -305,6 +306,21 @@ Transform:
   - {fileID: 3309193696213987999}
   m_Father: {fileID: 3325466313733133615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8018866657252922442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842365113986228705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f78b25b6350074f86d93f38904124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hands:
+    right: {fileID: 302319802709804063}
+    left: {fileID: 115735362070806738}
 --- !u!1 &1947366121031003488
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,8 +331,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3325466313733133615}
   - component: {fileID: 7944373802997194916}
-  - component: {fileID: 7441612987091645567}
-  - component: {fileID: 8468480282845089767}
   - component: {fileID: 5634238420381398088}
   - component: {fileID: 3448716492152566219}
   - component: {fileID: 7899111101275630845}
@@ -359,69 +373,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
-  walk: 3
-  run: 5
-  jump: 600
-  jumpX: 3
-  dash: 9
-  jumpCharging: 1
-  chargePower: 0
-  hp: 100
-  attackSound: {fileID: 8300000, guid: cc617a34542e983448eac8c8601b707d, type: 3}
   layerData: {fileID: 11400000, guid: ef9ea59dc8f2d014ba9c1e895d57ecb7, type: 2}
-  hands:
-    right: {fileID: 302319802709804063}
-    left: {fileID: 115735362070806738}
-  direction: {fileID: 11400000, guid: 71b972786f551224ca4bc35621873e8d, type: 2}
-  groundChecker: {fileID: 11400000, guid: 1f552f4d0137ace428507734bcd9c659, type: 2}
-  controllable: {fileID: 11400000, guid: 5982c9772d088ed48911175980be3398, type: 2}
-  pool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
-  jumpGauge: {fileID: 2469956262683590060}
+  playerLocator: {fileID: 11400000, guid: b0e6333503445254d9ab382c71d767fe, type: 2}
   abilityController: {fileID: 11400000, guid: ef9e67b76261c6b45b131587b360c7a2, type: 2}
   playerStat: {fileID: 11400000, guid: 44c9d9829535a8d46889049c36777cd6, type: 2}
-  hpSlider: {fileID: 6179112637356293261}
-  epSlider: {fileID: 1808297356732859537}
-  playerLocator: {fileID: 11400000, guid: b0e6333503445254d9ab382c71d767fe, type: 2}
-  monsterCollisionEffect: {fileID: 7832551532813131670, guid: b3ccf6eae136f8d489f918668976b6fb, type: 3}
-  wallCollisionEffect: {fileID: 7832551532813131670, guid: ea1689aebbd5eb24c80ea054c1e30565, type: 3}
+  pool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
+  VFXList:
+    monster: {fileID: 7832551532813131670, guid: b3ccf6eae136f8d489f918668976b6fb, type: 3}
+    wall: {fileID: 7832551532813131670, guid: ea1689aebbd5eb24c80ea054c1e30565, type: 3}
   bloodscreen: {fileID: 5133504705289620032}
-  playerSFX:
+  fxStorage: {fileID: 3309193696213987999}
+  SFXList:
     dash: {fileID: 8300000, guid: 76470f3ff8eafc74ea8092cfe53f111b, type: 3}
-    staticFlight: {fileID: 8300000, guid: 29cff9960019c0e49af20cdead6a7d3f, type: 3}
+    staticFlight: {fileID: 8300000, guid: 8da3898234fca7e439fc1cc2e662ad48, type: 3}
     jump: {fileID: 8300000, guid: bd47681b349e7c74bb7bf4130d1eabeb, type: 3}
     doubleJump: {fileID: 8300000, guid: 80b3a1fb8d20ab1479a71afe06208ac0, type: 3}
-  fxStorage: {fileID: 3309193696213987999}
-  ep: 0
   inputController: {fileID: 11400000, guid: bd995eda00b010b49b77db0100769583, type: 2}
---- !u!114 &7441612987091645567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947366121031003488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32ca20155451b4e4e9be02add1e509c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputController: {fileID: 11400000, guid: bd995eda00b010b49b77db0100769583, type: 2}
-  velocityDirection: {fileID: 11400000, guid: 71b972786f551224ca4bc35621873e8d, type: 2}
-  groundChecker: {fileID: 11400000, guid: 1f552f4d0137ace428507734bcd9c659, type: 2}
-  controllable: {fileID: 11400000, guid: 5982c9772d088ed48911175980be3398, type: 2}
-  abilityController: {fileID: 11400000, guid: ef9e67b76261c6b45b131587b360c7a2, type: 2}
---- !u!114 &8468480282845089767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947366121031003488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69ce450dde66ace48ba216f88b6e0ce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5634238420381398088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1292,6 +1259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2466504940954876926}
+  - component: {fileID: 8018066526463410419}
   m_Layer: 8
   m_Name: View
   m_TagString: Untagged
@@ -1317,6 +1285,21 @@ Transform:
   - {fileID: 4987107566782964933}
   m_Father: {fileID: 3325466313733133615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8018066526463410419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074509301518636151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018d42062e75f7746a1c1a81673d0bed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpGauge: {fileID: 2469956262683590060}
+  hpSlider: {fileID: 6179112637356293261}
+  epSlider: {fileID: 1808297356732859537}
 --- !u!1 &5186971619298261088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1435,6 +1418,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3870066171246372817}
+  - component: {fileID: 5784575868421973765}
+  - component: {fileID: 4899231219344806355}
   m_Layer: 8
   m_Name: Control
   m_TagString: Untagged
@@ -1459,6 +1444,31 @@ Transform:
   - {fileID: 4332118243695509714}
   m_Father: {fileID: 3325466313733133615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5784575868421973765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5488057152014354205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ca20155451b4e4e9be02add1e509c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputController: {fileID: 11400000, guid: bd995eda00b010b49b77db0100769583, type: 2}
+--- !u!114 &4899231219344806355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5488057152014354205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ce450dde66ace48ba216f88b6e0ce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5491243393707577742
 GameObject:
   m_ObjectHideFlags: 0

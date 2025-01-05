@@ -4,21 +4,9 @@ namespace Com2usGameDev
 {
     public abstract class UnitBehaviour : Sonorous
     {
-        public float walk;
-        public float run;
-        public float jump;
-        public float jumpX;
-        public float dash;
-        public float jumpCharging;
-        public float chargePower;
-        public abstract bool Controllable {get; set;}
         public CountdownTimer timer;
-        public float hp;
-        public AudioClip attackSound;
         public LayersSO layerData;
-        public Hands hands;
 
-        protected IVanishable vanishUI;
         public float HP
         {
             get => hp;
@@ -34,6 +22,10 @@ namespace Com2usGameDev
             }
         }
 
+        public abstract bool Controllable {get; set;}
+        public abstract UnitStatSO Stat {get;}
+
+        protected IVanishable vanishUI;
         protected Transform unitImage;
         protected int capturedDirection;
         protected int FacingDirection
@@ -45,11 +37,19 @@ namespace Com2usGameDev
         private Animator ani;
         private int VelocityDirection => GetVelocityDirection();
         private float transitionPower;
+        private float hp;
+
+        public Hands Hands => Model.hands;
+
+        protected virtual UnitModel Model {get; set;}
+        protected virtual UnitView View { get; set; }
+        protected virtual UnitControl Control { get; set; }
 
         private void Awake()
         {
             ani = GetComponentInChildren<Animator>();
             rb = GetComponent<Rigidbody2D>();
+            Model = gameObject.GetComponentInEntire<UnitModel>();
             Initialize();
         }
 
@@ -57,7 +57,7 @@ namespace Com2usGameDev
         {
             timer = new(0);
             unitImage = transform.GetChild(0);
-            HP = hp;
+            HP = Stat.maxHP;
         }
 
         void Update()
@@ -95,9 +95,6 @@ namespace Com2usGameDev
             rb.linearVelocityX = capturedDirection * transitionPower;
         }
 
-        public void Jump() => rb.AddForceY(jump * Mathf.Clamp(chargePower, 0.4f, 1));
-
-        public void Jump(float power) => rb.AddForceY(jump * power);
 
         public void PlayAnimation(int animHash, float transitionRate = 0f)
         {

@@ -30,7 +30,7 @@ namespace Com2usGameDev
         private void Start()
         {
             var behaviour = GetComponentInParent<UnitBehaviour>();
-            handleStorage = transform.parent == behaviour.hands.left ? behaviour.hands.right : behaviour.hands.left;
+            handleStorage = transform.parent == behaviour.Hands.left ? behaviour.Hands.right : behaviour.Hands.left;
             DrawLines();
             OnStart();
         }

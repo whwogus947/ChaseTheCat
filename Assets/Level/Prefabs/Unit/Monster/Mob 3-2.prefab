@@ -659,18 +659,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  walk: 2
-  run: 0
-  jump: 0
-  jumpX: 0
-  dash: 0
-  jumpCharging: 0
-  chargePower: 0
-  hp: 100
-  attackSound: {fileID: 0}
   layerData: {fileID: 11400000, guid: 19061922f2f87e047b5d43144b211a9e, type: 2}
   hands:
     right: {fileID: 3715128531139204314}
@@ -680,6 +668,7 @@ MonoBehaviour:
     m_Bits: 256
   weapon: {fileID: 2237887791211570007}
   detectRange: 4
+  enemyStat: {fileID: 11400000, guid: 847f93218319ae149a78b3fc0f09bb80, type: 2}
 --- !u!114 &8736422034793030533
 MonoBehaviour:
   m_ObjectHideFlags: 0

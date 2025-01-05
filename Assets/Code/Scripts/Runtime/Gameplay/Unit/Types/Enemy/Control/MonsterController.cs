@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Com2usGameDev
 {
     [RequireComponent(typeof(MonsterBehaviour))]
-    public class MonsterController : MonoBehaviour
+    public class MonsterController : UnitControl
     {
         public List<SpecialSO> specials;
 
