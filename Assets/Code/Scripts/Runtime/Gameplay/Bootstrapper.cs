@@ -7,17 +7,10 @@ namespace Com2usGameDev
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void OnGameStart()
         {
-            var initializeableSO = Resources.LoadAll<ResettableSO>("");
-            foreach (var so in initializeableSO)
+            var systemLaunchers = Resources.LoadAll<SystemLauncherSO>("");
+            foreach (var launcher in systemLaunchers)
             {
-                so.Initialize();
-            }
-
-            var managers = Resources.LoadAll<Manager>("");
-            foreach (var manager in managers)
-            {
-                var clone = Object.Instantiate(manager);
-                Object.DontDestroyOnLoad(clone);
+                launcher.Initiate();
             }
         }
     }

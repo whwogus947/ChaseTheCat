@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d349ba521786544b501d548ef95332, type: 3}
+  m_Name: System Launcher
+  m_EditorClassIdentifier: 
+  managers:
+  - {fileID: -6005012930564104245, guid: cb1c77225f1c5494ea9e00ecaa3f0822, type: 3}
+  - {fileID: 8985686684466127583, guid: 3f21d324306c56c419ce3c0ae9065fc2, type: 3}
+  - {fileID: 241273038916547759, guid: b28b47ef1e423054eb8ff01f545581d9, type: 3}
+  resettables:
+  - {fileID: 11400000, guid: ef9e67b76261c6b45b131587b360c7a2, type: 2}
