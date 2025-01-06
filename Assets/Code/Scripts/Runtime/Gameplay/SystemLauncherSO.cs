@@ -5,21 +5,17 @@ namespace Com2usGameDev
 {
     public class SystemLauncherSO : ScriptableObject
     {
-        public List<Manager> managers;
-        public List<ResettableSO> resettables;
-        
+        [SerializeField] private InterfaceReference<IInitializeComponent>[] configs;
+
         public void Initiate()
         {
-            foreach (var manager in managers)
-            {
-                var clone = Instantiate(manager);
-                DontDestroyOnLoad(clone);
-            }
-
-            foreach (var resettable in resettables)
-            {
-                resettable.Initialize();
-            }
+            foreach (var config in configs)
+                config.Value.Initialize();
         }
+    }
+
+    public interface IInitializeComponent
+    {
+        void Initialize();
     }
 }
