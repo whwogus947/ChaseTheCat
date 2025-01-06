@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputActionPhase;
+using static Com2usGameDev.Nodes.Player;
 
 namespace Com2usGameDev
 {
@@ -15,6 +17,7 @@ namespace Com2usGameDev
         private PCInput input;
         private readonly Timer timer = new();
         private bool isDashPressed;
+        private PCInput.PlayerActions UserInput => input.Player;
 
         private void Awake()
         {
@@ -47,29 +50,29 @@ namespace Com2usGameDev
 
         private void OnPressStaticFlight(InputAction.CallbackContext context)
         {
-            if (timer.HasTimerExpired<Nodes.Player.StaticFlight>())
+            if (timer.HasTimerExpired<StaticFlight>())
             {
-                timer.StartTimer<Nodes.Player.StaticFlight>(2f);
+                timer.StartTimer<StaticFlight>(2f);
             }
             else
             {
-                timer.EndTimer<Nodes.Player.StaticFlight>();
+                timer.EndTimer<StaticFlight>();
             }
         }
 
         private void OnPressJump(InputAction.CallbackContext context)
         {
-            timer.StartTimer<Nodes.Player.JumpCharging>(0.1f);
+            timer.StartTimer<JumpCharging>(0.1f);
         }
 
         private void OnPressAttack(InputAction.CallbackContext context)
         {
-            timer.StartTimer<Nodes.Player.AttackNormal>(player.Delay);
+            timer.StartTimer<AttackNormal>(player.Delay);
         }
 
         private void OnReleaseJump(InputAction.CallbackContext context)
         {
-            timer.StartTimer<Nodes.Player.Jump>(0.1f);
+            timer.StartTimer<Jump>(0.1f);
         }
 
         private void OnPressDash(InputAction.CallbackContext context)
@@ -87,59 +90,99 @@ namespace Com2usGameDev
             return abilityController.GetAbility<WeaponAbilitySO>(nameof(WeaponAbilitySO), weaponName);
         }
 
-        private bool IsMovableGround => controlData.controllable && controlData.groundValue;
+        private bool IsMovableGround() => controlData.controllable && controlData.groundValue;
+
+        private bool IsPerformed(InputAction inputAction, InputActionPhase inputPhase = Performed)
+        {
+            return inputAction.phase == inputPhase;
+        }
+
+        private bool IsOnGround() => controlData.groundValue;
 
         public void BindInputToController(StateController controller, ControlData controlData, AbilityController abilityController)
         {
             this.controlData = controlData;
             this.abilityController = abilityController;
 
+            #region Definition
             var emptyMovement = StateNode.Creator<Nodes.Common.Empty>.CreateType(State.Movement).InProgress();
-            var idle = StateNode.Creator<Nodes.Player.Idle>.CreateType(State.Movement).InProgress();
-            var walk = StateNode.Creator<Nodes.Player.Walk>.CreateType(State.Movement).InProgress();
-            var run = StateNode.Creator<Nodes.Player.Run>.CreateType(State.Movement).InProgress();
-            var dash = StateNode.Creator<Nodes.Player.Dash>.CreateType(State.Movement).InProgress();
+            var idle = StateNode.Creator<Idle>.CreateType(State.Movement).InProgress();
+            var walk = StateNode.Creator<Walk>.CreateType(State.Movement).InProgress();
+            var run = StateNode.Creator<Run>.CreateType(State.Movement).InProgress();
+            var dash = StateNode.Creator<Dash>.CreateType(State.Movement).InProgress();
 
             var emptyAction = StateNode.Creator<Nodes.Common.Empty>.CreateType(State.Action).InProgress();
-            var jumpCharging = StateNode.Creator<Nodes.Player.JumpCharging>.CreateType(State.Action).InProgress();
-            var jump = StateNode.Creator<Nodes.Player.Jump>.CreateType(State.Action).InProgress();
-            var doubleJump = StateNode.Creator<Nodes.Player.DoubleJump>.CreateType(State.Action).InProgress();
-            var attackNormal = StateNode.Creator<Nodes.Player.AttackNormal>.CreateType(State.Action).InProgress();
-            var staticFlight = StateNode.Creator<Nodes.Player.StaticFlight>.CreateType(State.Action).InProgress();
-            var onAir = StateNode.Creator<Nodes.Player.OnAir>.CreateType(State.Action).InProgress();
-            // var rope = StateNode.Creator<Nodes.Player.Rope>.CreateType(State.Action).InProgress();
+            var jumpCharging = StateNode.Creator<JumpCharging>.CreateType(State.Action).InProgress();
+            var jump = StateNode.Creator<Jump>.CreateType(State.Action).InProgress();
+            var doubleJump = StateNode.Creator<DoubleJump>.CreateType(State.Action).InProgress();
+            var attackNormal = StateNode.Creator<AttackNormal>.CreateType(State.Action).InProgress();
+            var staticFlight = StateNode.Creator<StaticFlight>.CreateType(State.Action).InProgress();
+            var onAir = StateNode.Creator<OnAir>.CreateType(State.Action).InProgress();
+            #endregion
 
-            NodeTransition toIdle = new(idle, new(() => IsVelocityZero()));
-            NodeTransition toEmptyMovement = new(emptyMovement, new(() => !controlData.controllable));
-            NodeTransition toWalk = new(walk, new(() => !IsVelocityZero() && input.Player.Run.phase == InputActionPhase.Waiting));
-            NodeTransition toRun = new(run, new(() => !IsVelocityZero() && input.Player.Run.phase == InputActionPhase.Performed));
-            NodeTransition toDash = new(dash, new(() => dash.IsUsable(abilityController) && !IsVelocityZero() && isDashPressed && (input.Player.Dash.phase == InputActionPhase.Performed)));
-            NodeTransition emptymovementToIdle = new(idle, new(() => IsMovableGround));
-            NodeTransition dashToIdle = new(idle, new(() => timer.HasTimerExpired<Nodes.Player.Dash>() && controlData.groundValue));
+            #region Conditions
+            NodeTransition toIdle = new(idle,
+                new(IsStopped));
 
-            NodeTransition toJumpCharging = new(jumpCharging, new(() => input.Player.Jump.phase == InputActionPhase.Performed && controlData.groundValue && !timer.HasTimerExpired<Nodes.Player.JumpCharging>()));
-            NodeTransition toJump = new(jump, new(() => input.Player.Jump.phase == InputActionPhase.Waiting));
-            NodeTransition toDoubleJump = new(doubleJump, new(() => doubleJump.IsUsable(abilityController) && input.Player.Jump.phase == InputActionPhase.Performed));
-            NodeTransition toOnAir = new(onAir, new(() => !controlData.groundValue));
-            NodeTransition toEmptyAction = new(emptyAction, new(() => controlData.groundValue && timer.HasTimerExpired<Nodes.Player.Jump>()));
-            NodeTransition toAttack = new(attackNormal, new(() => input.Player.Attack.phase == InputActionPhase.Performed));
-            NodeTransition attackToEmpty = new(emptyAction, new(() => input.Player.Attack.phase == InputActionPhase.Waiting && timer.HasTimerExpired<Nodes.Player.AttackNormal>()));
-            NodeTransition toStaticFlight = new(staticFlight, new(() => staticFlight.IsUsable(abilityController) && input.Player.StaticFlight.phase == InputActionPhase.Performed && !controlData.groundValue));
-            NodeTransition staticFlightToEmptyAction = new(emptyAction, new(() => timer.HasTimerExpired<Nodes.Player.StaticFlight>()));
+            NodeTransition toEmptyMovement = new(emptyMovement,
+                new(() => !controlData.controllable));
 
-            // Movement
+            NodeTransition toWalk = new(walk,
+                new(() => !IsStopped() && IsPerformed(UserInput.Run, Waiting)));
+
+            NodeTransition toRun = new(run,
+                new(() => !IsStopped() && IsPerformed(UserInput.Run)));
+
+            NodeTransition toDash = new(dash,
+                new(() => dash.IsUsable(abilityController) && !IsStopped() && isDashPressed && IsPerformed(UserInput.Dash)));
+
+            NodeTransition emptymovementToIdle = new(idle,
+                new(() => IsMovableGround()));
+
+            NodeTransition dashToIdle = new(idle,
+                new(() => timer.HasTimerExpired<Dash>() && IsOnGround()));
+
+            NodeTransition toJumpCharging = new(jumpCharging,
+                new(() => IsPerformed(UserInput.Jump) && IsOnGround() && !timer.HasTimerExpired<JumpCharging>()));
+
+            NodeTransition toJump = new(jump,
+                new(() => IsPerformed(UserInput.Jump, Waiting)));
+
+            NodeTransition toDoubleJump = new(doubleJump,
+                new(() => doubleJump.IsUsable(abilityController) && IsPerformed(UserInput.Jump)));
+
+            NodeTransition toOnAir = new(onAir,
+                new(() => !IsOnGround()));
+
+            NodeTransition toEmptyAction = new(emptyAction,
+                new(() => IsOnGround() && timer.HasTimerExpired<Jump>()));
+
+            NodeTransition toAttack = new(attackNormal,
+                new(() => IsPerformed(UserInput.Attack)));
+
+            NodeTransition attackToEmpty = new(emptyAction,
+                new(() => IsPerformed(UserInput.Attack, Waiting) && timer.HasTimerExpired<AttackNormal>()));
+
+            NodeTransition toStaticFlight = new(staticFlight,
+                new(() => staticFlight.IsUsable(abilityController) && IsPerformed(UserInput.StaticFlight) && !IsOnGround()));
+
+            NodeTransition staticFlightToEmptyAction = new(emptyAction,
+                new(() => timer.HasTimerExpired<StaticFlight>()));
+            #endregion
+
+            #region Completion
             StateNode.Creator<Nodes.Common.Empty>.Using(emptyMovement).
                 WithTransition(emptymovementToIdle).
                 Accomplish(controller);
 
-            StateNode.Creator<Nodes.Player.Idle>.Using(idle).
+            StateNode.Creator<Idle>.Using(idle).
                 WithTransition(toWalk).
                 WithTransition(toEmptyMovement).
                 WithTransition(toRun).
                 WithAnimation("main-idle").
                 Accomplish(controller);
 
-            StateNode.Creator<Nodes.Player.Walk>.Using(walk).
+            StateNode.Creator<Walk>.Using(walk).
                 WithTransition(toIdle).
                 WithTransition(toEmptyMovement).
                 WithTransition(toRun).
@@ -147,7 +190,7 @@ namespace Com2usGameDev
                 WithAnimation("main_walk").
                 Accomplish(controller);
 
-            StateNode.Creator<Nodes.Player.Run>.Using(run).
+            StateNode.Creator<Run>.Using(run).
                 WithTransition(toWalk).
                 WithTransition(toEmptyMovement).
                 WithTransition(toIdle).
@@ -155,10 +198,10 @@ namespace Com2usGameDev
                 WithAnimation("main-run").
                 Accomplish(controller);
 
-            StateNode.Creator<Nodes.Player.Dash>.Using(dash).
+            StateNode.Creator<Dash>.Using(dash).
                 WithTransition(dashToIdle).
                 WithAnimation("main-dash").
-                WithAction(() => StartTimer<Nodes.Player.Dash>(0.7f)).
+                WithAction(() => StartTimer<Dash>(0.7f)).
                 Accomplish(controller);
 
             // Action
@@ -168,41 +211,42 @@ namespace Com2usGameDev
                 WithTransition(toOnAir).
                 Accomplish(controller);
 
-            StateNode.Creator<Nodes.Player.JumpCharging>.Using(jumpCharging).
+            StateNode.Creator<JumpCharging>.Using(jumpCharging).
                 WithTransition(toJump).
                 WithTransition(toOnAir).
                 WithAnimation("main-jumpcharging").
                 Accomplish(controller);
 
-            StateNode.Creator<Nodes.Player.Jump>.Using(jump).
+            StateNode.Creator<Jump>.Using(jump).
                 WithTransition(toEmptyAction).
                 WithTransition(toDoubleJump).
                 WithTransition(toStaticFlight).
                 Accomplish(controller);
 
-            StateNode.Creator<Nodes.Player.DoubleJump>.Using(doubleJump).
+            StateNode.Creator<DoubleJump>.Using(doubleJump).
                 WithTransition(toEmptyAction).
                 WithTransition(toStaticFlight).
                 Accomplish(controller);
-                
-            StateNode.Creator<Nodes.Player.StaticFlight>.Using(staticFlight).
+
+            StateNode.Creator<StaticFlight>.Using(staticFlight).
                 WithTransition(staticFlightToEmptyAction).
                 WithAnimation("main-holding").
                 Accomplish(controller);
 
-            StateNode.Creator<Nodes.Player.OnAir>.Using(onAir).
+            StateNode.Creator<OnAir>.Using(onAir).
                 WithTransition(toStaticFlight).
                 WithTransition(toEmptyAction).
                 WithAnimation("main-hit").
                 Accomplish(controller);
 
-            StateNode.Creator<Nodes.Player.AttackNormal>.Using(attackNormal).
+            StateNode.Creator<AttackNormal>.Using(attackNormal).
                 WithAnimation("main-attack").
                 WithTransition(attackToEmpty).
                 Accomplish(controller);
+            #endregion
         }
 
-        private bool IsVelocityZero()
+        private bool IsStopped()
         {
             return Mathf.Abs(controlData.velocityDirection) == 0;
         }
