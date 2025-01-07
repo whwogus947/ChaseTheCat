@@ -6,13 +6,14 @@ namespace Com2usGameDev
     public class NPCBehaviour : MonoBehaviour, IInteractable
     {
         [SerializeField] private Dialogue dialogue;
-        private SocialInteraction social;
+        [SerializeField] private SocialInteraction social;
+        [SerializeField] private Sprite portraitImage;
         private UnityAction onInteract;
         private SinewaveTranslator questionMark;
 
         void Start()
         {
-            social = FindAnyObjectByType<SocialInteraction>();
+            social = Instantiate(social, transform);
             questionMark = GetComponentInChildren<SinewaveTranslator>();
         }
 
@@ -20,7 +21,7 @@ namespace Com2usGameDev
         {
             Destroy(questionMark.gameObject);
             onInteract?.Invoke();
-            social.Open(dialogue);
+            social.Open(dialogue, portraitImage);
         }
 
         public void AddEvent(UnityAction @event)

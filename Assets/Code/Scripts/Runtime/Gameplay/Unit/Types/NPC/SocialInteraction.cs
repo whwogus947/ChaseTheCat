@@ -6,13 +6,10 @@ namespace Com2usGameDev
 {
     public class SocialInteraction : MonoBehaviour
     {
-        public NPCTypeSO playerType;
-        public Button button;
-        public Transform playerUI;
-        public TMP_Text player;
-        public Transform npcUI;
-        public TMP_Text npc;
-
+        [SerializeField] private NPCTypeSO playerType;
+        [SerializeField] private Button nextButton;
+        [SerializeField] private SocialPage player;
+        [SerializeField] private SocialPage npc;
         private Dialogue dialogue;
         private NPCTypeSO prevNPC;
 
@@ -28,37 +25,46 @@ namespace Com2usGameDev
             dialogue.NextMessage(GetCurrentText(), true);
         }
 
-        public void Open(Dialogue dialogue)
+        public void Open(Dialogue dialogue, Sprite npcImage)
         {
+            npc.portrait.sprite = npcImage;
             Time.timeScale = 0f;
-            button.onClick.RemoveAllListeners();
+            nextButton.onClick.RemoveAllListeners();
             dialogue.onLastDialogueEnd = delegate {};
-            npc.text = "";
-            player.text = "";
+            npc.pageMessage.text = "";
+            player.pageMessage.text = "";
 
             this.dialogue = dialogue;
             transform.GetChild(0).gameObject.SetActive(true);
             dialogue.StartNewMessage();
             dialogue.onLastDialogueEnd += () => {transform.GetChild(0).gameObject.SetActive(false); Time.timeScale = 1f;};
-            button.onClick.AddListener(NextMessage);
+            nextButton.onClick.AddListener(NextMessage);
             prevNPC = dialogue.NPC;
             NextMessage();
         }
 
-        private TMP_Text GetCurrentText() => dialogue.NPC == playerType ? player : npc;
+        private TMP_Text GetCurrentText() => dialogue.NPC == playerType ? player.pageMessage : npc.pageMessage;
         
         private void SelectPanel()
         {
             if (dialogue.NPC == playerType)
             {   
-                npcUI.SetSiblingIndex(0);
-                playerUI.SetSiblingIndex(2);
+                npc.storage.SetSiblingIndex(0);
+                player.storage.SetSiblingIndex(2);
             }
             else
             {
-                playerUI.SetSiblingIndex(0);
-                npcUI.SetSiblingIndex(2);
+                player.storage.SetSiblingIndex(0);
+                npc.storage.SetSiblingIndex(2);
             }
         }
+    }
+
+    [System.Serializable]
+    public class SocialPage
+    {
+        public Transform storage;
+        public TMP_Text pageMessage;
+        public Image portrait;
     }
 }
