@@ -134,18 +134,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab5d72639653a44d82248d40ef2a9a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.3
-  attackRange: 2.2
-  animationName: 
-  sfxChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
-  sfx: {fileID: 8300000, guid: e05d8772ce35fde44b3f1c50d933d660, type: 3}
+  audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  fXPool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
   damage: 30
-  attackLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  delay: 0.3
+  range: 2.2
+  animationClipName: {fileID: 11400000, guid: 4773778cebe94444dbbfc0f73422e5d6, type: 2}
+  weaponSound: {fileID: 8300000, guid: 3bbe7efad20bb6c4890f39a5ceb64829, type: 3}
+  hitSound: {fileID: 8300000, guid: 76470f3ff8eafc74ea8092cfe53f111b, type: 3}
   throwPower: {x: 650, y: 160}
   spin: 0
   spinSpeed: 180

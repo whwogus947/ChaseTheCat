@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +8,19 @@ namespace Com2usGameDev
     public class GachaHolder : MonoBehaviour
     {
         public AbilityController abilityController;
-        public List<AbilitySO> abilities;
         public Transform storage;
+        
+        private List<AbilitySO> abilities;
 
-        public void OpenGacha()
+        public void OpenGacha(List<AbilitySO> abilities)
+        {
+            this.abilities = abilities.ToList();
+            Time.timeScale = 0f;
+            Initialize();
+            ResetButtons();
+        }
+
+        private void Initialize()
         {
             for (int i = abilities.Count - 1; i >= 0; i--)
             {
@@ -18,14 +28,17 @@ namespace Com2usGameDev
                     abilities.RemoveAt(i);
             }
             gameObject.SetActive(true);
-            Time.timeScale = 0f;
+        }
+
+        private void ResetButtons()
+        {
             var gachaButtons = storage.GetComponentsInChildren<Button>(true);
             foreach (var gachaButton in gachaButtons)
             {
                 gachaButton.onClick.RemoveAllListeners();
                 gachaButton.gameObject.SetActive(false);
             }
-        
+
             var randomAbilities = GetRandomAbility(3);
             for (int i = 0; i < randomAbilities.Count; i++)
             {
@@ -39,7 +52,7 @@ namespace Com2usGameDev
             }
         }
 
-        public List<AbilitySO> GetRandomAbility(int count)
+        private List<AbilitySO> GetRandomAbility(int count)
         {
             var temp = new List<AbilitySO>(abilities);
             var result = new List<AbilitySO>();
@@ -53,7 +66,7 @@ namespace Com2usGameDev
             return result;
         }
         
-        public void OnClickGacha(AbilitySO ability)
+        private void OnClickGacha(AbilitySO ability)
         {
             Time.timeScale = 1f;
             abilityController.AddAbility(ability);

@@ -18,14 +18,6 @@ namespace Com2usGameDev
         {
             controller = bundle.Controller;
             viewGroup = bundle.ViewGroup;
-            // viewGroup = abilityContainer.GetComponentInEntire<AbilityViewGroup<T>>();
-            // var holder = abilityContainer.GetComponentInEntire<AbilityHolder<T>>();
-            // AddInitialAbilities(holder.initialItems);
-        }
-
-        public class AbilityBuilder
-        {
-
         }
     }
 }

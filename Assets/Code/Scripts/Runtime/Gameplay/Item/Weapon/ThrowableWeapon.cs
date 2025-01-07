@@ -19,6 +19,7 @@ namespace Com2usGameDev
 
         public async override UniTask Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
         {
+            await UniTask.WaitForSeconds(delay);
             PlaySound();
             layers = layer;
             var clone = Instantiate(this, transform.position, transform.rotation);
@@ -26,7 +27,6 @@ namespace Com2usGameDev
             clone.direction = to.x > 0 ? -1 : 1;
             clone.layers = layer;
             Initiate(clone, to);
-            await UniTask.WaitForSeconds(0.2f);
         }
 
         private void Awake()

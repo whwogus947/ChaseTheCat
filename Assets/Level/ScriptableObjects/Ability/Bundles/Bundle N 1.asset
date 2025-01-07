@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c266f33552d8c0b498ffe958af7b418a, type: 3}
+  m_Name: Bundle N 1
+  m_EditorClassIdentifier: 
+  grade: {fileID: 11400000, guid: 3232cc1d559b7874fad86185334869a8, type: 2}
+  abilities:
+  - {fileID: 11400000, guid: 9c337de9539992443a6826debc168dda, type: 2}
+  - {fileID: 11400000, guid: 9ed9977305866d44699584a60f26eb24, type: 2}
+  - {fileID: 11400000, guid: 7edcadfd83fad084ca33b4a5b38061c9, type: 2}

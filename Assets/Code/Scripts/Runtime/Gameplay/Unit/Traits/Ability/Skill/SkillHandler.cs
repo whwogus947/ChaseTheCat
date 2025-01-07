@@ -7,7 +7,7 @@ namespace Com2usGameDev
     {
         public SkillHandler(IAbilityBundle<SkillAbilitySO> bundle) : base(bundle)
         {
-            Ability.AddListener(AddSkill);
+            Ability.AddAquireListener(AddSkill);
             AddInitialAbilities(bundle.Holder.initialItems);
         }
 

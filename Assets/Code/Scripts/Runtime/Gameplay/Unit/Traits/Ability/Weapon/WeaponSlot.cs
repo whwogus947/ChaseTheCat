@@ -9,13 +9,12 @@ namespace Com2usGameDev
         public Image frame;
         public Image colorIcon;
         public TMP_Text leftCount;
-
-        private WeaponAbilitySO weapon;
+        public WeaponAbilitySO Weapon {get; private set;}
 
         public void SetWeapon(WeaponAbilitySO newWeapon)
         {
-            weapon = newWeapon;
-            SetIcon(weapon.frame, weapon.colorIcon);
+            Weapon = newWeapon;
+            SetIcon(Weapon.frame, Weapon.colorIcon);
         }
 
         private void SetIcon(Sprite frame, Sprite colorIcon)
@@ -23,12 +22,12 @@ namespace Com2usGameDev
             this.frame.sprite = frame;
             this.colorIcon.sprite = colorIcon;
 
-            bool active = weapon.IsLimited;
+            bool active = Weapon.IsLimited;
             if (active)
             {
                 leftCount.gameObject.SetActive(true);
-                leftCount.text = weapon.Count.ToString();
-                weapon.onCountChanged += CountDown;
+                leftCount.text = Weapon.Count.ToString();
+                Weapon.onCountChanged += CountDown;
             }
             else
             {

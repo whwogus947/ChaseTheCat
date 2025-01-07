@@ -12,16 +12,10 @@ namespace Com2usGameDev
         public int maxRopeLength = 15;
 
         private LineRenderer line;
-        // private bool isHooked;
-        // private bool isUnhooked = false;
-        // private float ropeLength;
         private Vector3 ropeStartPoint;
         private Transform player;
-        // private bool isTransported = true;
         private Rigidbody2D rb;
         private Vector2 hookLocalPosition;
-        // private bool isUpperDirection = true;
-        // private UnityAction onResetHook;
         private PlayerController controller;
         private LayerMask groundLayer;
         private CancellationTokenSource cts;
@@ -30,8 +24,8 @@ namespace Com2usGameDev
         {
             player = transform.root;
             line = GetComponentInChildren<LineRenderer>();
-            rb = player.GetComponent<Rigidbody2D>();
-            controller = player.GetComponent<PlayerController>();
+            rb = player.GetComponentInChildren<Rigidbody2D>();
+            controller = player.GetComponentInChildren<PlayerController>();
             hookLocalPosition = hook.localPosition;
             line.gameObject.SetActive(false);
         }
@@ -40,49 +34,14 @@ namespace Com2usGameDev
         {
             player = transform.root;
             line = GetComponentInChildren<LineRenderer>(true);
-            rb = player.GetComponent<Rigidbody2D>();
-            controller = player.GetComponent<PlayerController>();
+            rb = player.GetComponentInChildren<Rigidbody2D>();
+            controller = player.GetComponentInChildren<PlayerController>();
             hookLocalPosition = hook.localPosition;
             line.gameObject.SetActive(false);
 
             ResetHook();
             cts?.Cancel();
         }
-
-        // void Update()
-        // {
-        //     if (isHooked)
-        //     {
-        //         DrawRope();
-        //     }
-        //     else if (!isTransported)
-        //     {
-        //         TransportPlayer();
-        //     }
-
-        //     if (isUnhooked)
-        //     {
-        //         DrawUnhookedRope();
-        //     }
-        // }
-
-        // public void CastRope(UnityAction onReset)
-        // public void CastRope()
-        // {
-        //     var start = InitializeHook();
-        //     if (HasHookCollision(start, out Vector2 end))
-        //     {
-        //         isHooked = true;
-        //         ropeLength = Vector2.Distance(start, end);
-        //     }
-        //     else
-        //     {
-        //         ropeLength = maxRopeLength;
-        //         isUnhooked = true;
-        //         isUpperDirection = true;
-        //     }
-        //     PlaySound();
-        // }
 
         public async UniTask CastRope()
         {
@@ -173,77 +132,12 @@ namespace Com2usGameDev
 
         private void ResetHook()
         {
-            // onResetHook();
             hook.SetParent(transform);
             hook.localPosition = hookLocalPosition;
-            // isUpperDirection = true;
             controller.enabled = true;
             line.gameObject.SetActive(false);
             rb.GetComponent<Collider2D>().isTrigger = false;
         }
-
-        // private void DrawRope()
-        // {
-        //     if (ropePainted < ropeLength)
-        //     {
-        //         var speed = Mathf.Min((ropeLength - ropePainted) * 5f + 0.2f * paintSpeed, paintSpeed);
-        //         ropePainted += speed * Time.deltaTime;
-        //         if (ropePainted >= ropeLength)
-        //         {
-        //             isHooked = false;
-        //             ropePainted = ropeLength;
-        //             isTransported = false;
-        //             rb.GetComponent<Collider2D>().isTrigger = true;
-        //             rb.linearVelocity = Vector2.zero;
-        //             // hook.gameObject.SetActive(false);
-        //         }
-        //         hook.position = ropeStartPoint + Vector3.up * ropePainted;
-        //         line.SetPosition(0, hook.position);
-        //         line.SetPosition(1, ropeStartPoint);
-        //     }
-        // }
-
-        // private void DrawUnhookedRope()
-        // {
-        //     var speed = Mathf.Min((ropeLength - ropePainted) * 5f + 0.2f * paintSpeed, paintSpeed);
-        //     if (isUpperDirection)
-        //     {
-        //         ropePainted += speed * Time.deltaTime;
-        //         if (ropePainted >= ropeLength)
-        //         {
-        //             isUpperDirection = false;
-        //         }
-        //     }
-        //     else
-        //     {
-        //         ropePainted -= speed * Time.deltaTime;
-        //         if (ropePainted <= 0)
-        //         {
-        //             ResetHook();
-        //             return;
-        //         }
-        //     }
-        //     hook.position = ropeStartPoint + Vector3.up * ropePainted;
-        //     line.SetPosition(0, hook.position);
-        //     line.SetPosition(1, ropeStartPoint);
-        // }
-
-        // private void TransportPlayer()
-        // {
-        //     var leftDist = ropeLength + 0.5f - Mathf.Abs(player.position.y - ropeStartPoint.y);
-        //     if (leftDist > 0.1f)
-        //     {
-        //         rb.linearVelocityY = Mathf.Clamp(leftDist * 5f, 3f, 15f);
-        //         line.SetPosition(0, ropeStartPoint + (ropeLength - leftDist) * Vector3.up);
-        //         line.SetPosition(1, hook.position);
-        //     }
-        //     else
-        //     {
-        //         isTransported = true;
-        //         rb.GetComponent<Collider2D>().isTrigger = false;
-        //         ResetHook();
-        //     }
-        // }
 
         private bool HasHookCollision(Vector2 startPosition, out Vector2 hookedLocation)
         {

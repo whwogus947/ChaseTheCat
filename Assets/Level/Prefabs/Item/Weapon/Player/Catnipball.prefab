@@ -48,12 +48,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioChannel: {fileID: 11400000, guid: 63bd195a1a134634492f69e3b13372a5, type: 2}
+  fXPool: {fileID: 11400000, guid: 5201210e4cb4a6b41b9e28b3df0457ed, type: 2}
   damage: 15
   delay: 0.3
   range: 2.2
   animationClipName: {fileID: 11400000, guid: 4773778cebe94444dbbfc0f73422e5d6, type: 2}
+  weaponSound: {fileID: 8300000, guid: 29cff9960019c0e49af20cdead6a7d3f, type: 3}
+  hitSound: {fileID: 8300000, guid: 4d3e3a3c22175ab4bad0dd9b99a692db, type: 3}
   throwPower: {x: 300, y: 100}
-  onHitSfx: {fileID: 8300000, guid: aaf6cc1656ae7144daee31d62cff5ad0, type: 3}
 --- !u!212 &7888265356912740964
 SpriteRenderer:
   m_ObjectHideFlags: 0

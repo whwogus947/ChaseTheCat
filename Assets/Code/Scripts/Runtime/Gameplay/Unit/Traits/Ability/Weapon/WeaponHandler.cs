@@ -8,8 +8,9 @@ namespace Com2usGameDev
     public class WeaponHandler : AbilityHandler<WeaponAbilitySO>
     {
         public UnityAction<PoolItem> fxEvent;
+        public float WeaponDelay => CurrentWeapon.delay;
 
-        public float WeaponDelay => currentAbility.Entity.delay;
+        private OffensiveWeapon CurrentWeapon => currentAbility.Entity;
         private readonly Hands hands;
 
         public WeaponHandler(IAbilityBundle<WeaponAbilitySO> bundle, PCInput inputActions, Hands handData) : base(bundle)
@@ -17,11 +18,12 @@ namespace Com2usGameDev
             hands = handData;
             inputActions.Player.NextWeapon.performed += OnNextWeaponClicked;
             inputActions.Player.BeforeWeapon.performed += OnBeforeWeaponClicked;
-            Ability.AddListener(OnAddWeapon);
+            Ability.AddAquireListener(OnGetEvent);
+            Ability.AddRemovalListener(OnRemoveEvent);
             AddInitialAbilities(bundle.Holder.initialItems);
         }
 
-        public async void Activate(WeaponPerformInfo info, UnityAction<int, float> animation)
+        public void Activate(WeaponPerformInfo info, UnityAction<int, float> animation)
         {
             if (currentAbility == null)
                 return;
@@ -30,7 +32,7 @@ namespace Com2usGameDev
             currentAbility.Use().Forget();
             if (IsOffenseWeapon(out OffensiveWeapon weapon))
             {
-                bool result = await weapon.TryUse(info.from, info.to, info.layers, info.damage);
+                weapon.TryUse(info.from, info.to, info.layers, info.damage).Forget();
             }
             // if (currentWeapon.fxDelay > 0)
             // await UniTask.WaitForSeconds(WeaponDelay);
@@ -39,14 +41,19 @@ namespace Com2usGameDev
             // fxEvent?.Invoke(currentWeapon.fx);
         }
 
-        private void OnGetWeapon(WeaponAbilitySO weapon)
+        private void WeaponToAbility(WeaponAbilitySO weapon)
         {
             controller.AddAbility(weapon);
         }
 
+        private void RemoveWeaponFromAbility(WeaponAbilitySO weapon)
+        {
+            controller.RemoveAbility(weapon);
+        }
+
         protected override void AddInitialAbilities(List<WeaponAbilitySO> initialWeapons)
         {
-            initialWeapons.ForEach(AddWeapon);
+            initialWeapons.ForEach(WeaponToAbility);
             if (abilities.Count > 0)
                 Replace(abilities[0]);
         }
@@ -62,22 +69,29 @@ namespace Com2usGameDev
             return abilities[circularIndex];
         }
 
-        private void OnAddWeapon(WeaponAbilitySO weapon)
+        private void OnGetEvent(WeaponAbilitySO weapon)
         {
             viewGroup.AddAbility(weapon);
+            WeaponToInventory(weapon);
             if (weapon.IsLimited)
             {
                 weapon.onCountChanged += (int count) =>
                 {
                     if (count <= 0)
-                        PutDown(true);
+                        RemoveWeaponFromAbility(currentAbility);
                 };
             }
         }
 
+        private void OnRemoveEvent(WeaponAbilitySO weapon)
+        {
+            viewGroup.RemoveAbility(weapon);
+            PutDown(true);
+        }
+
         private bool IsOffenseWeapon(out OffensiveWeapon offensiveWeapon)
         {
-            if (currentAbility.Entity.TryGetComponent(out OffensiveWeapon weapon))
+            if (CurrentWeapon.TryGetComponent(out OffensiveWeapon weapon))
             {
                 offensiveWeapon = weapon;
                 return true;
@@ -86,16 +100,15 @@ namespace Com2usGameDev
             return false;
         }
 
-        private int AnimationHash => currentAbility.Entity.AnimationHash;
+        private int AnimationHash => CurrentWeapon.AnimationHash;
 
-        public void AddWeapon(WeaponAbilitySO weapon)
+        private void WeaponToInventory(WeaponAbilitySO weapon)
         {
             if (!abilities.Contains(weapon))
             {
                 Transform parent = weapon.isRightHanded ? hands.right : hands.left;
                 weapon.Obtain(parent);
                 abilities.Add(weapon);
-                OnGetWeapon(weapon);
             }
         }
 
@@ -103,9 +116,12 @@ namespace Com2usGameDev
         {
             if (!abilities.Contains(weapon))
             {
-                AddWeapon(weapon);
+                WeaponToInventory(weapon);
                 return;
             }
+            if (currentAbility != null && !CurrentWeapon.IsReady)
+                return;
+
             PutDown();
             Equip(weapon);
         }

@@ -19,15 +19,14 @@ namespace Com2usGameDev
         public int AnimationHash => animationClipName.Hash;
         public bool IsReady { get; private set; } = true;
 
-        public async UniTask<bool> TryUse(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
+        public async UniTaskVoid TryUse(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage)
         {
             if (!IsReady)
-                return false;
+                return;
             
             IsReady = false;
             await Use(from, to, layer, defaultDamage);
             IsReady = true;
-            return true;
         }
 
         public abstract UniTask Use(Vector2 from, Vector2 to, LayersSO layer, int defaultDamage);

@@ -13,7 +13,7 @@ namespace Com2usGameDev
             slot = storage.GetComponentInChildren<WeaponSlot>(true);
         }
 
-        public override void AddAbility(WeaponAbilitySO skill)
+        public override void AddAbility(WeaponAbilitySO ability)
         {
             WeaponSlot newSlot = null;
             for (int i = 0; i < storage.childCount; i++)
@@ -30,7 +30,21 @@ namespace Com2usGameDev
                 newSlot = Instantiate(slot, storage);
 
             newSlot.gameObject.SetActive(true);
-            newSlot.SetWeapon(skill);
+            newSlot.SetWeapon(ability);
+        }
+
+        public override void RemoveAbility(WeaponAbilitySO ability)
+        {
+            for (int i = 0; i < storage.childCount; i++)
+            {
+                var targetSlot = storage.GetChild(i);
+                var slot = targetSlot.GetComponent<WeaponSlot>();
+                if (slot.Weapon == ability)
+                {
+                    storage.GetChild(i).gameObject.SetActive(false);
+                    return;
+                }
+            }
         }
     }
 }

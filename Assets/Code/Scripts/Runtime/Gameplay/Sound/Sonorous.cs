@@ -9,7 +9,8 @@ namespace Com2usGameDev
 
         public void PlaySound(AudioClip clip)
         {
-            audioChannel.Invoke(clip);
+            if (clip != null)
+                audioChannel.Invoke(clip);
         }
     }
 }

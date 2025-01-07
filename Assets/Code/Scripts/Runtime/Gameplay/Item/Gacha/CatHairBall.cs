@@ -1,18 +1,26 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class CatHairBall : MonoBehaviour, IInteractable
+    public class CatHairBall : Sonorous, IInteractable
     {
-        public float maxBrightness = 20;
-        public float brightnessPower = 1f;
-        public GachaHolder selectionUI;
-        public GameObject particle;
-        public Transform brightFX;
-        public AudioChannelSO audioChannel;
-        public AudioClip openSfx;
 
+        [Header("SFX")]
+        [SerializeField] private GachaHolder selections;
+        [SerializeField] private GameObject particle;
+        [SerializeField] private Transform brightFX;
+
+        [Header("SFX")]
+        [SerializeField] private AudioClip openSound;
+
+        [Header("Settings")]
+        [SerializeField] private float maxBrightness = 20;
+        [SerializeField] private float brightnessPower = 1f;
+
+        private AbilityBundleSO abilityBundle;
+        private bool isOpen = false;
         private MaterialPropertyBlock propertyBlock;
         private Renderer render;
         private Animator animator;
@@ -24,11 +32,18 @@ namespace Com2usGameDev
             animator = GetComponentInChildren<Animator>();
 
             SetBrightness(1);
+            isOpen = false;
         }
+
+        public void SetAbility(AbilityBundleSO abilityBundle) => this.abilityBundle = abilityBundle;
 
         public void Open()
         {
-            audioChannel.Invoke(openSfx);
+            if (isOpen)
+                return;
+
+            isOpen = true;
+            PlaySound(openSound);
             OpenHairBallProcess().Forget();
         }
 
@@ -46,10 +61,9 @@ namespace Com2usGameDev
                     RotateAndScaleUp();
                     brightFX.gameObject.SetActive(true);
                 }
-                
                 SetBrightness(brightness);
             }
-            Instantiate(selectionUI).OpenGacha();
+            Instantiate(selections).OpenGacha(abilityBundle.abilities);
             Destroy(gameObject);
         }
 
@@ -70,7 +84,7 @@ namespace Com2usGameDev
 
         private void StartBallOpening()
         {
-            animator.Play("HairBall");
+            animator.Play("Open");
         }
 
         public void Interact()

@@ -36,6 +36,11 @@ namespace Com2usGameDev
             newSlot.gameObject.SetActive(true);
             newSlot.SetSkill(skill);
         }
+
+        public override void RemoveAbility(SkillAbilitySO ability)
+        {
+            
+        }
     }
 
     [System.Serializable]

@@ -42,10 +42,7 @@ namespace Com2usGameDev
 
         private void OnInteraction(InputAction.CallbackContext context)
         {
-            if (gameObject.TryGetComponent(out PlayerBehaviour behaviour))
-            {
-                behaviour.Interaction();
-            }
+            gameObject.GetComponentInEntire<PlayerBehaviour>().Interaction();
         }
 
         private void OnPressStaticFlight(InputAction.CallbackContext context)

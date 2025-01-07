@@ -16,6 +16,12 @@ namespace Com2usGameDev
             containers[ability.AbilityType].Add(ability);
         }
 
+        public void RemoveAbility<T>(T ability) where T : AbilitySO
+        {
+            if (containers.ContainsKey(ability.AbilityType))
+                containers[ability.AbilityType].Remove(ability);
+        }
+
         public bool HasAbility<T>(T ability) where T : AbilitySO
             => containers.ContainsKey(ability.AbilityType) && containers[ability.AbilityType].Has(ability);
 
@@ -47,6 +53,7 @@ namespace Com2usGameDev
     public interface IAbilityContainer
     {
         void Add(AbilitySO ability);
+        void Remove(AbilitySO ability);
         bool Has(AbilitySO ability);
         bool Has(string abilityName);
         AbilitySO Find(string abilityName);
@@ -56,17 +63,19 @@ namespace Com2usGameDev
     {
         private readonly List<T> abilities;
         private UnityAction<T> onAddContainer;
+        private UnityAction<T> onRemoveContainer;
 
         public AbilityContainer()
         {
             abilities = new();
             onAddContainer = delegate { };
+            onRemoveContainer = delegate { };
         }
 
         public void Add(AbilitySO ability)
         {
-            T casted = ability as T;
-            if (!abilities.Contains(casted))
+            // T casted = ability as T;
+            if (ability is T casted &&!abilities.Contains(casted))
             {
                 onAddContainer(casted);
                 abilities.Add(casted);
@@ -78,11 +87,26 @@ namespace Com2usGameDev
             }
         }
 
-        public void AddListener(UnityAction<T> action) => onAddContainer += action;
+        public void AddAquireListener(UnityAction<T> action) => onAddContainer += action;
+
+        public void AddRemovalListener(UnityAction<T> action) => onRemoveContainer += action;
 
         public bool Has(AbilitySO ability) => abilities.Contains(ability as T);
 
-        public void Remove(AbilitySO ability) => abilities.Remove(ability as T);
+        public void Remove(AbilitySO ability)
+        {
+            // T casted = ability as T;
+            // if (!abilities.Contains(casted))
+            // {
+            //     onRemoveContainer(casted);
+            //     abilities.Remove(casted);
+            // }
+            if (ability is T casted && abilities.Contains(casted))
+            {
+                onRemoveContainer(casted);
+                abilities.Remove(casted);
+            }
+        }
 
         public bool Has(string abilityName) => abilities.Exists(ability => ability.AbilityName == abilityName);
 
