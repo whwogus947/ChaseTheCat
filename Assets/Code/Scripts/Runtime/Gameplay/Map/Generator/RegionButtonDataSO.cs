@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Com2usGameDev
 {
     [CreateAssetMenu(fileName = "Stage Data", menuName = "Cum2usGameDev/Map/Stage/Data")]
-    public class StageDataSO : ScriptableObject
+    public class RegionButtonDataSO : ScriptableObject
     {
         public Sprite unvisited;
         public Sprite visited;

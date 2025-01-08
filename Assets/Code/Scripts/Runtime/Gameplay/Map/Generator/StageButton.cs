@@ -5,7 +5,7 @@ namespace Com2usGameDev
 {
     public class StageButton : MonoBehaviour
     {
-        public StageDataSO data;
+        public RegionButtonDataSO data;
         public AdjacentRoute[] routes;
         public bool isStartStage = false;
         public bool isVisited = false;
