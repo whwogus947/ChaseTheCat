@@ -2,18 +2,9 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class StageTypeSO : MonoBehaviour
+    [CreateAssetMenu(fileName = "Stage Type", menuName = "Cum2usGameDev/Map/Stage/Type")]
+    public class StageTypeSO : ScriptableObject
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
         
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
     }
 }

@@ -2,18 +2,11 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class StageDataSO : MonoBehaviour
+    [CreateAssetMenu(fileName = "Stage Data", menuName = "Cum2usGameDev/Map/Stage/Data")]
+    public class StageDataSO : ScriptableObject
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        [SerializeField] private RegionDataSO regionData;
+        [SerializeField] private StageTypeSO stageType;
+        [SerializeField] private MapEnemyProvider sharedEnemies;
     }
 }

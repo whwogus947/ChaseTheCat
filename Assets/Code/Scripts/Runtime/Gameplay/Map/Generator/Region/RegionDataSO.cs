@@ -2,18 +2,14 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class RegionDataSO : MonoBehaviour
+    [CreateAssetMenu(fileName = "Region Data", menuName = "Cum2usGameDev/Map/Region/Data")]
+    public class RegionDataSO : ScriptableObject
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        [SerializeField] private RegionTypeSO regionType;
+        [SerializeField] private NPCTypeSO npc;
+        // [SerializeField] private story
+        [SerializeField] private SectionDataSO sectionData;
+        [SerializeField] private MapEnemyProvider specialEnemies;
+        [SerializeField] private RegionButtonDataSO buttonData;
     }
 }

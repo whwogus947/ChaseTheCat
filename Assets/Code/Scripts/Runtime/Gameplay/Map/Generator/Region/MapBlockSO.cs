@@ -1,19 +1,21 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Com2usGameDev
 {
-    public class MapBlockSO : MonoBehaviour
+    [CreateAssetMenu(fileName = "Region Block", menuName = "Cum2usGameDev/Map/Block/Data")]
+    public class MapBlockSO : ScriptableObject
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-        
-        }
+        public Tilemap tileMap;
+        [HideInInspector] public BlockLocation location;
+        [HideInInspector] public BlockMatchTypeSO upside;
+        [HideInInspector] public BlockMatchTypeSO downside;
+    }
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+    public enum BlockLocation
+    {
+        Bottom,
+        Middle,
+        Top,
     }
 }

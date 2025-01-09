@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040da5d623479b045bd93c33b6ee8272, type: 3}
+  m_Name: Region Data
+  m_EditorClassIdentifier: 
+  regionType: {fileID: 11400000, guid: d895ba647f8acfe4eaf45d677627ab3a, type: 2}
+  npc: {fileID: 11400000, guid: b65a257d01862af43a1c88a1f3c392be, type: 2}
+  sectionData: {fileID: 11400000, guid: 4c0edf9dd03f72847bf3f17103c559a5, type: 2}
+  specialEnemies:
+    monsters: []
+  buttonData: {fileID: 11400000, guid: b131ae16403bd6d4db6bfd67fb8340e2, type: 2}

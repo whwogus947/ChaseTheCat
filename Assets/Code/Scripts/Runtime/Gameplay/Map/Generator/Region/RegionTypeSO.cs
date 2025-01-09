@@ -2,18 +2,9 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class RegionTypeSO : MonoBehaviour
+    [CreateAssetMenu(fileName = "Region Type", menuName = "Cum2usGameDev/Map/Region/Type")]
+    public class RegionTypeSO : ScriptableObject
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
         
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
     }
 }

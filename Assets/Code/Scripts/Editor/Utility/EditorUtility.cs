@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace Com2usGameDev
 {
-    public static class EditorUtility
+    public static class EditorToolset
     {
         public static T FindSO<T>(string _name) where T : ScriptableObject
         {

@@ -11,9 +11,9 @@ namespace Com2usGameDev
         {
             offensiveWeapon = (OffensiveWeapon)target;
             if (offensiveWeapon.audioChannel == null)
-                offensiveWeapon.audioChannel =  EditorUtility.FindSO<AudioChannelSO>("SFX Channel");
+                offensiveWeapon.audioChannel =  EditorToolset.FindSO<AudioChannelSO>("SFX Channel");
             if (offensiveWeapon.fXPool == null)
-                offensiveWeapon.fXPool = EditorUtility.FindSO<VFXPool>("VFX Pool");
+                offensiveWeapon.fXPool = EditorToolset.FindSO<VFXPool>("VFX Pool");
         }
     }
 }
