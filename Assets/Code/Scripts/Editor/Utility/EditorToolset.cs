@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Com2usGameDev
 {
     public static class EditorToolset
     {
-        public static T FindSO<T>(string _name) where T : ScriptableObject
+        public static T Find<T>(string _name) where T : Object
         {
             string typeName = typeof(T).ToString();
             string[] guids = AssetDatabase.FindAssets($"{_name} t:{typeName}");
@@ -19,34 +20,56 @@ namespace Com2usGameDev
                     return asset;
                 }
             }
-            Debug.Log("Failed.");
+            Debug.LogWarning($"empty {_name}");
             return null;
         }
 
-        public static void CreatePrefab(GameObject target, string assetCreationPath, string prefabName)
+        public static T[] FindAll<T>() where T : Object
+        {
+            string[] guids = AssetDatabase.FindAssets("t:" + typeof(T).Name);
+            T[] assets = new T[guids.Length];
+
+            for (int i = 0; i < guids.Length; i++)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+                assets[i] = AssetDatabase.LoadAssetAtPath<T>(path);
+            }
+            return assets;
+        }
+
+        public static GameObject[] FindAllPrefab<T>(string folderPath) where T : Component
+        {
+            string[] guids = AssetDatabase.FindAssets("t:Prefab", new[] { folderPath });
+            List<GameObject> assets = new();
+
+            for (int i = 0; i < guids.Length; i++)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+                var asset = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (asset.GetComponent<T>() != null)
+                {
+                    assets.Add(asset );
+                }
+            }
+            return assets.ToArray();
+        }
+
+        public static GameObject CreatePrefab(GameObject target, string assetCreationPath, string prefabName)
         {
             if (!Directory.Exists(assetCreationPath))
             {
                 Directory.CreateDirectory(assetCreationPath);
             }
 
-            string prefabPath = Path.Combine(assetCreationPath, prefabName + ".prefab");
+            string finalPrefabName = prefabName;
+            string prefabPath = Path.Combine(assetCreationPath, finalPrefabName + ".prefab");
+            int index = 1;
 
-            bool overwrite;
-            if (File.Exists(prefabPath))
+            while (File.Exists(prefabPath))
             {
-                overwrite = EditorUtility.DisplayDialog(
-                    "Overwrite Prefab",
-                    $"Prefab '{prefabName}' already exists. Do you want to overwrite it?",
-                    "Yes",
-                    "No"
-                );
-
-                if (!overwrite)
-                {
-                    Debug.Log("Prefab creation cancelled.");
-                    return;
-                }
+                finalPrefabName = $"{prefabName} ({index})";
+                prefabPath = Path.Combine(assetCreationPath, finalPrefabName + ".prefab");
+                index++;
             }
 
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset(target, prefabPath);
@@ -60,6 +83,7 @@ namespace Com2usGameDev
             {
                 Debug.LogError("Failed to create prefab.");
             }
+            return prefab;
         }
     }
 }

@@ -5,30 +5,41 @@ namespace Com2usGameDev
 {
     public class RegionTerrainMaker : MonoBehaviour
     {
-        public string assetCreationPath;
-        public string prefabName;
-        public Tilemap sample;
+        [Header("Workshop")]
+        public Tilemap template;
+        [HideInInspector] public SectionSiteSO section;
+        public GameObject TemplateClone {get; private set;}
 
-        public GameObject SampleClone {get; private set;}
+        private const string SECTION_PALETTE = "Section Palette";
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
-
-        public void SaveTempClone(Tilemap clone) => SampleClone = clone.gameObject;
+        public void SaveTempClone(Tilemap clone) => TemplateClone = clone.gameObject;
 
         public void ResetClone()
         {
-            DestroyImmediate(SampleClone);
-            SampleClone = null;
+            DestroyImmediate(TemplateClone);
+            TemplateClone = null;
+        }
+
+        public void ClearAll()
+        {
+            var storage = FindSectionPalette();
+            for (int i = storage.childCount - 1; i >= 0; i--)
+            {
+                DestroyImmediate(storage.GetChild(i).gameObject);
+            }
+            TemplateClone = null;
+        }
+
+        public Transform FindSectionPalette()
+        {
+            var palette = transform.Find(SECTION_PALETTE);
+            if (palette == null)
+            {
+                var clone = new GameObject(SECTION_PALETTE);
+                clone.transform.SetParent(transform);
+                palette = clone.transform;
+            }
+            return palette;
         }
     }
 }
