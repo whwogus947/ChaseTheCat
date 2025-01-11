@@ -6,7 +6,6 @@ namespace Com2usGameDev
     public class RegionTerrainMaker : MonoBehaviour
     {
         [Header("Workshop")]
-        public Tilemap template;
         [HideInInspector] public SectionSiteSO section;
         public GameObject TemplateClone {get; private set;}
 

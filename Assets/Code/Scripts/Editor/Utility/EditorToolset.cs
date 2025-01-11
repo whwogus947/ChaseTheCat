@@ -24,9 +24,10 @@ namespace Com2usGameDev
             return null;
         }
 
-        public static T[] FindAll<T>() where T : Object
+        public static T[] FindAll<T>(string scope = "") where T : Object
         {
-            string[] guids = AssetDatabase.FindAssets("t:" + typeof(T).Name);
+            scope = string.IsNullOrEmpty(scope) ? "Assets/" : scope;
+            string[] guids = AssetDatabase.FindAssets("t:" + typeof(T).Name, new[] { scope });
             T[] assets = new T[guids.Length];
 
             for (int i = 0; i < guids.Length; i++)
@@ -77,7 +78,6 @@ namespace Com2usGameDev
             if (prefab != null)
             {
                 Debug.Log($"Prefab successfully created: {prefabPath}");
-                Selection.activeObject = prefab;
             }
             else
             {

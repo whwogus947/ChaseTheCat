@@ -7,15 +7,20 @@ namespace Com2usGameDev
     public class SectionSiteSOEditor : Editor
     {
         private SectionSiteSO site;
-        private DefaultAsset targetFolder;
+        private DefaultAsset tilemapFolder;
+        private DefaultAsset dataFolder;
 
         private void OnEnable()
         {
             site = (SectionSiteSO)target;
 
-            if (!string.IsNullOrEmpty(site.folderPath))
+            if (!string.IsNullOrEmpty(site.tilemapPath))
             {
-                targetFolder = AssetDatabase.LoadAssetAtPath<DefaultAsset>(site.folderPath);
+                tilemapFolder = AssetDatabase.LoadAssetAtPath<DefaultAsset>(site.tilemapPath);
+            }
+            if (!string.IsNullOrEmpty(site.dataPath))
+            {
+                dataFolder = AssetDatabase.LoadAssetAtPath<DefaultAsset>(site.dataPath);
             }
         }
 
@@ -24,12 +29,17 @@ namespace Com2usGameDev
             base.OnInspectorGUI();
             EditorGUI.BeginChangeCheck();
 
-            targetFolder = EditorGUILayout.ObjectField("Folder", targetFolder, typeof(DefaultAsset), false) as DefaultAsset;
+            EditorGUILayout.Space(10);
+            EditorGUILayout.LabelField("Storage", EditorStyles.boldLabel);
+            tilemapFolder = EditorGUILayout.ObjectField("Tilemap", tilemapFolder, typeof(DefaultAsset), false) as DefaultAsset;
+            dataFolder = EditorGUILayout.ObjectField("Data", dataFolder, typeof(DefaultAsset), false) as DefaultAsset;
 
             if (EditorGUI.EndChangeCheck())
             {
-                if (targetFolder != null)
-                    site.folderPath = AssetDatabase.GetAssetPath(targetFolder);
+                if (tilemapFolder != null)
+                    site.tilemapPath = AssetDatabase.GetAssetPath(tilemapFolder);
+                if (dataFolder != null)
+                    site.dataPath = AssetDatabase.GetAssetPath(dataFolder);
 
                 EditorUtility.SetDirty(target);
             }

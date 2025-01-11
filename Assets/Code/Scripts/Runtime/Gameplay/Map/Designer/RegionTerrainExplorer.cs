@@ -5,6 +5,7 @@ namespace Com2usGameDev
     public class RegionTerrainExplorer : MonoBehaviour
     {
         [HideInInspector] public SectionSiteSO section;
+        [HideInInspector] public SectionDataSO data;
         [HideInInspector] public int currentIndex = 0;
 
         private const string SECTION_SHOWCASE = "Section Showcase";

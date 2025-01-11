@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 986d7df1c521bc747b01facafaed510f, type: 3}
   m_Name: Bottom
   m_EditorClassIdentifier: 
-  folderPath: Assets/Level/Prefabs/Map/Sections/Bottom
+  tilemapPath: Assets/Level/Prefabs/Map/Sections/Bottom
+  dataPath: Assets/Level/ScriptableObjects/Map/Section/Data/Bottom
+  upside: {fileID: 11400000, guid: b06e0aee1e120a845aedc43049056345, type: 2}
+  downside: {fileID: 0}
+  template: {fileID: 8128268095208506800, guid: fdbafb2cb00dec04abe1ce7987d762d1, type: 3}

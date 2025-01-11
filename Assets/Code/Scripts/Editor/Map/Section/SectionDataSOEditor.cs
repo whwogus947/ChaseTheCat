@@ -7,10 +7,11 @@ namespace Com2usGameDev
     [CustomEditor(typeof(SectionDataSO))]
     public class SectionDataSOEditor : Editor
     {
-        private SectionDataSO block;
-        private bool[,] grid;
-        private Color trueColor = Color.black;
-        private Color falseColor = Color.white;
+        private SectionDataSO data;
+        private bool[,] bodyGrid;
+        private readonly Color fillColor = Color.black;
+        private readonly Color emptyColor = Color.white;
+        private readonly Color interlockColor = Color.red;
 
         private const float MIN_CELL_SIZE = 4;
         private const float MAX_CELL_SIZE = 50f;
@@ -18,49 +19,79 @@ namespace Com2usGameDev
 
         private void OnEnable()
         {
-            block = (SectionDataSO)target;
-            grid = ConvertTilemapToBoolArray(block.tileMap);
+            data = (SectionDataSO)target;
+            bodyGrid = ConvertTilemapToBoolArray(data.tileMap);
         }
 
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
             EditorGUI.BeginChangeCheck();
+
+            DrawDefaultInspector();
             EditorGUILayout.Space(5);
-            EditorGUILayout.LabelField("Block Settings", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Interlocks", EditorStyles.boldLabel);
 
-            block.location = (SectionLocation)EditorGUILayout.EnumPopup("Location", block.location);
-
-            switch (block.location)
+            if (data.site != null)
             {
-                case SectionLocation.Bottom:
-                    block.upside = EditorGUILayout.ObjectField("Upside Type", block.upside, typeof(SectionInterlock), false) as SectionInterlock;
-                    block.downside = null;
-                    break;
-
-                case SectionLocation.Middle:
-                    block.upside = EditorGUILayout.ObjectField("Upside Type", block.upside, typeof(SectionInterlock), false) as SectionInterlock;
-                    block.downside = EditorGUILayout.ObjectField("Downside Type", block.downside, typeof(SectionInterlock), false) as SectionInterlock;
-                    break;
-
-                case SectionLocation.Top:
-                    block.upside = null;
-                    block.downside = EditorGUILayout.ObjectField("Upside Type", block.downside, typeof(SectionInterlock), false) as SectionInterlock;
-                    break;
+                InterlockedSections();
             }
 
             EditorGUILayout.Space(25);
-            DrawTilemap();
 
             if (EditorGUI.EndChangeCheck())
             {
+                bodyGrid = ConvertTilemapToBoolArray(data.tileMap);
                 EditorUtility.SetDirty(target);
+            }
+            
+            DrawAllGridLayout();
+        }
+
+        private void DrawAllGridLayout()
+        {
+            if (data.upsideData != null)
+            {
+                var tiles = ConvertTilemapToBoolArray(data.upsideData.tileMap);
+                DrawTilemap(tiles, interlockColor);
+            }
+
+            EditorGUILayout.Space(10);
+
+            DrawTilemap(bodyGrid, fillColor);
+
+            EditorGUILayout.Space(10);
+
+            if (data.downsideData != null)
+            {
+                var tiles = ConvertTilemapToBoolArray(data.downsideData.tileMap);
+                DrawTilemap(tiles, interlockColor);
             }
         }
 
-        private void DrawTilemap()
+        private void InterlockedSections()
         {
-            if (block.tileMap == null)
+            switch ((data.site.upside, data.site.downside))
+            {
+                case (not null, null):
+                    data.upsideData = EditorGUILayout.ObjectField("Upside Data", data.upsideData, typeof(SectionDataSO), false) as SectionDataSO;
+                    data.downsideData = null;
+                    break;
+
+                case (not null, not null):
+                    data.upsideData = EditorGUILayout.ObjectField("Upside Data", data.upsideData, typeof(SectionDataSO), false) as SectionDataSO;
+                    data.downsideData = EditorGUILayout.ObjectField("Downside Data", data.downsideData, typeof(SectionDataSO), false) as SectionDataSO;
+                    break;
+
+                case (null, not null):
+                    data.upsideData = null;
+                    data.downsideData = EditorGUILayout.ObjectField("Upside Data", data.downsideData, typeof(SectionDataSO), false) as SectionDataSO;
+                    break;
+            }
+        }
+
+        private void DrawTilemap(bool[,] grid, Color cellColor)
+        {
+            if (data.tileMap == null)
                 return;
 
             int rows = grid.GetLength(0);
@@ -84,7 +115,7 @@ namespace Com2usGameDev
                                     cellSize,
                                     cellSize);
 
-                    EditorGUI.DrawRect(cellRect, grid[i, j] ? trueColor : falseColor);
+                    EditorGUI.DrawRect(cellRect, grid[i, j] ? cellColor : emptyColor);
 
                     Handles.color = Color.gray;
                     Handles.DrawLine(new Vector3(cellRect.x, cellRect.y), new Vector3(cellRect.x + cellSize, cellRect.y));

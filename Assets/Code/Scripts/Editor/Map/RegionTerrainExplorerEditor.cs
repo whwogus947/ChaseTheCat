@@ -12,7 +12,7 @@ namespace Com2usGameDev
         private SectionSiteSO[] sites;
         private string[] siteNames;
         private int selectedIndex = -1;
-        private GameObject[] tilemaps;
+        private SectionDataSO[] sectionDatas;
 
         private void OnEnable()
         {
@@ -33,7 +33,7 @@ namespace Com2usGameDev
             {
                 selectedIndex = System.Array.IndexOf(sites, explorer.section);
 
-                if (tilemaps == null)
+                if (sectionDatas == null)
                     GetTileMaps();
             }
 
@@ -57,21 +57,29 @@ namespace Com2usGameDev
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("◀ Previous"))
             {
-                if (tilemaps.Length > 0)
+                if (sectionDatas.Length > 0)
                 {
-                    explorer.currentIndex = (explorer.currentIndex - 1 + tilemaps.Length) % tilemaps.Length;
+                    explorer.currentIndex = (explorer.currentIndex - 1 + sectionDatas.Length) % sectionDatas.Length;
                     Exhibit(explorer.currentIndex);
                 }
             }
             if (GUILayout.Button(" [ Select ] "))
             {
-
+                if (sectionDatas.Length > 0)
+                {
+                    var target = sectionDatas[explorer.currentIndex];
+                    if (target != null)
+                    {
+                        EditorGUIUtility.PingObject(target);
+                        Selection.activeObject = target;
+                    }
+                }
             }
             if (GUILayout.Button("Next ▶"))
             {
-                if (tilemaps.Length > 0)
+                if (sectionDatas.Length > 0)
                 {
-                    explorer.currentIndex = (explorer.currentIndex + 1) % tilemaps.Length;
+                    explorer.currentIndex = (explorer.currentIndex + 1) % sectionDatas.Length;
                     Exhibit(explorer.currentIndex);
                 }
             }
@@ -85,7 +93,7 @@ namespace Com2usGameDev
 
         private void GetTileMaps()
         {
-            tilemaps = EditorToolset.FindAllPrefab<Tilemap>(explorer.section.folderPath);
+            sectionDatas = EditorToolset.FindAll<SectionDataSO>(explorer.section.dataPath);
         }
 
         private void Exhibit(int index)
@@ -99,8 +107,9 @@ namespace Com2usGameDev
             {
                 DestroyImmediate(showcase.GetChild(i).gameObject);
             }
-            var tileMap = Instantiate(tilemaps[index], showcase);
-            tileMap.SetActive(true);
+            var tileMap = Instantiate(sectionDatas[index].tileMap, showcase);
+            explorer.data = sectionDatas[index];
+            tileMap.gameObject.SetActive(true);
         }
     }
 }

@@ -7,15 +7,8 @@ namespace Com2usGameDev
     public class SectionDataSO : ScriptableObject
     {
         public Tilemap tileMap;
-        [HideInInspector] public SectionLocation location;
-        [HideInInspector] public SectionInterlock upside;
-        [HideInInspector] public SectionInterlock downside;
-    }
-
-    public enum SectionLocation
-    {
-        Top,
-        Middle,
-        Bottom,
+        public SectionSiteSO site;
+        [HideInInspector] public SectionDataSO upsideData;
+        [HideInInspector] public SectionDataSO downsideData;
     }
 }

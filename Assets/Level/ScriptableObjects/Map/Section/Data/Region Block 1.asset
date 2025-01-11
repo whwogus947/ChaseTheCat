@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f1dff4c0f38624495803b2de333a30, type: 3}
   m_Name: Region Block 1
   m_EditorClassIdentifier: 
-  tileMap: {fileID: 117095342105272065, guid: b62d2ef3a00e5d94abe23ca1096ad69a, type: 3}
-  location: 1
-  upside: {fileID: 11400000, guid: 10fe1f4c53c223e4da3b2ac372732d5f, type: 2}
-  downside: {fileID: 11400000, guid: e7683ebccdf32ca449fd427490b2b355, type: 2}
+  tileMap: {fileID: 4075126297098993812, guid: 23531285180815f41bc21a3ee68fd1a3, type: 3}
+  site: {fileID: 11400000, guid: af27eb10209d204478b8d53bf522181c, type: 2}
+  upsideData: {fileID: 0}
+  downsideData: {fileID: 0}
