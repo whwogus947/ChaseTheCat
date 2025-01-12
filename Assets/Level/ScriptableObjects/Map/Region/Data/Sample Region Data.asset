@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040da5d623479b045bd93c33b6ee8272, type: 3}
+  m_Name: Sample Region Data
+  m_EditorClassIdentifier: 
+  regionType: {fileID: 11400000, guid: d895ba647f8acfe4eaf45d677627ab3a, type: 2}
+  npc: {fileID: 11400000, guid: b65a257d01862af43a1c88a1f3c392be, type: 2}
+  sectionBundles:
+  - name: Top
+    site: {fileID: 11400000, guid: 2f0d983f0907faf48ab4249943cca009, type: 2}
+    sections:
+    - {fileID: 11400000, guid: 258122777f54c024dba9d9fd1507f793, type: 2}
+    - {fileID: 11400000, guid: a368fd9d6639447469f5b2205b8def31, type: 2}
+  - name: Top-Middle
+    site: {fileID: 11400000, guid: 2532bc544c3033d4694c688227427a5b, type: 2}
+    sections:
+    - {fileID: 11400000, guid: ef9bd4e6dd6e43c4cb1aa855f9d379f2, type: 2}
+    - {fileID: 11400000, guid: 9d96467eea3432045b308f023ad3d86a, type: 2}
+  - name: Middle
+    site: {fileID: 11400000, guid: 25b0de53afb6bc7489bfb69b25b86e46, type: 2}
+    sections:
+    - {fileID: 11400000, guid: 8db738fec0e8ac843b1feefaf9c4edc8, type: 2}
+    - {fileID: 11400000, guid: 36650f270c8c5f441acf27fc413d8315, type: 2}
+    - {fileID: 11400000, guid: 92ecb1c166eb74340ae37add90782483, type: 2}
+    - {fileID: 11400000, guid: 6f784749383081343a101277dbd2c3fb, type: 2}
+    - {fileID: 11400000, guid: a7cc92242feabdc449a019e495d0b034, type: 2}
+    - {fileID: 11400000, guid: c2eac1e26ae3b2141b566eefd4eb815e, type: 2}
+    - {fileID: 11400000, guid: 8173fff38af425c4c9f6326d5c2c9dad, type: 2}
+    - {fileID: 11400000, guid: 9b62571c414cdda409f276f04e30fa46, type: 2}
+    - {fileID: 11400000, guid: 35451c3d9daba0d4a94d7fca056e445b, type: 2}
+    - {fileID: 11400000, guid: 11937c86660d67c45b229e1d4534f7c0, type: 2}
+    - {fileID: 11400000, guid: 1a52c845528edf44a84d6ad3f3a187ae, type: 2}
+    - {fileID: 11400000, guid: f598b8b9d6b10e1429d62e7e9b24bd76, type: 2}
+  - name: Bottom-Middle
+    site: {fileID: 11400000, guid: b06e0aee1e120a845aedc43049056345, type: 2}
+    sections:
+    - {fileID: 11400000, guid: 7e9ea0fbbd1cac942a139ec66da5795d, type: 2}
+    - {fileID: 11400000, guid: b7ab3fa84706d1b489f62722b9a33eab, type: 2}
+    - {fileID: 11400000, guid: 78d6af5364d57f6468ca256a588e3155, type: 2}
+  - name: Bottom
+    site: {fileID: 11400000, guid: af27eb10209d204478b8d53bf522181c, type: 2}
+    sections:
+    - {fileID: 11400000, guid: 0d8188ef3e733e94d8a168fbaa6049be, type: 2}
+    - {fileID: 11400000, guid: b9c27a4ce8f951c42b2e91783e0da0cb, type: 2}
+    - {fileID: 11400000, guid: 2cd6d505163fcb94faabfc5ffbd9ab66, type: 2}
+    - {fileID: 11400000, guid: a86099ac35574ee468ec1a5526397828, type: 2}
+  specialEnemies:
+    monsters: []

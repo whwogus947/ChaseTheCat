@@ -8,6 +8,7 @@ namespace Com2usGameDev
     {
         [HideInInspector] public string tilemapPath;
         [HideInInspector] public string dataPath;
+        public bool contact;
 
         [Header("Interlock")]
         public SectionSiteSO upside;

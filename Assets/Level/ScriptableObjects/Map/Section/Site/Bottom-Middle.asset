@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemapPath: Assets/Level/Prefabs/Map/Sections/Bottom-Middle
   dataPath: Assets/Level/ScriptableObjects/Map/Section/Data/Bottom-Middle
+  contact: 1
   upside: {fileID: 11400000, guid: 25b0de53afb6bc7489bfb69b25b86e46, type: 2}
   downside: {fileID: 11400000, guid: af27eb10209d204478b8d53bf522181c, type: 2}
   template: {fileID: 1540645902967098841, guid: 268663418fd4c6c47ba6e859ef6bb54c, type: 3}
