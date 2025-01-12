@@ -1,1 +1,1 @@
-﻿Assets/Level/Scenes/Prototype 4(no Player).unity
+﻿Assets/Level/Scenes/5.Stage2.unity
