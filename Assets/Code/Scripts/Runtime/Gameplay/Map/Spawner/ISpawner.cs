@@ -2,13 +2,13 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class MapSpawner : MonoBehaviour
+    public abstract class MapSpawner : MonoBehaviour
     {
-        public Vector2 Location => transform.position;
+        public abstract void Spawn(GameObject spawnable);
     }
 
     public interface ISpawnable
     {
-        void Spawn(MapSpawner spawner);
+        GameObject Spawnable { get; }
     }
 }

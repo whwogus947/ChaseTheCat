@@ -13,6 +13,8 @@ namespace Com2usGameDev
         public EnemyStatSO enemyStat;
         public override UnitStatSO Stat => enemyStat;
 
+        public GameObject Spawnable => gameObject;
+
         private MaterialPropertyBlock propertyBlock;
         private Renderer[] renderers;
         private bool isDissolveOn = false;
@@ -39,7 +41,7 @@ namespace Com2usGameDev
 
         protected override void CheckPerFrame()
         {
-            
+
         }
 
         public void OnFindPlayer()
@@ -151,13 +153,8 @@ namespace Com2usGameDev
             await UniTask.WaitForSeconds(weapon.delay);
             if (this == null)
                 return;
-            
-            isAttacking = false;
-        }
 
-        public void Spawn(MapSpawner spawner)
-        {
-            Instantiate(gameObject, spawner.transform.position, Quaternion.identity);
+            isAttacking = false;
         }
     }
 }

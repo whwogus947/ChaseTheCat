@@ -11,6 +11,8 @@ namespace Com2usGameDev
         private UnityAction onInteract;
         private SinewaveTranslator questionMark;
 
+        public GameObject Spawnable => gameObject;
+
         void Start()
         {
             social = Instantiate(social, transform);
@@ -32,11 +34,6 @@ namespace Com2usGameDev
         public void Interact()
         {
             OpenDialogue();
-        }
-
-        public void Spawn(MapSpawner spawner)
-        {
-            Instantiate(gameObject, spawner.transform.position, Quaternion.identity);
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Com2usGameDev
         // [SerializeField] private story
         [SerializeField] private List<SectionBundle> sectionBundles;
         [SerializeField] private MapEnemyProvider specialEnemies;
-        PlayerBehaviour player;
 
         public Dictionary<SectionSiteSO, SectionDataSO> CreateCompleteSections()
         {
@@ -65,19 +64,19 @@ namespace Com2usGameDev
             {
                 var spawner = spawners.GetRandom();
                 spawners.Remove(spawner);
-                targets.GetRandom().Spawn(spawner);
+                spawner.Spawn(targets.GetRandom().Spawnable);
             }
         }
 
-        private void Spawn<T1, T2>(Dictionary<SectionSiteSO, SectionDataSO> sections, T2 target, int capacity = 1) where T1 : MapSpawner where T2 : ISpawnable
+        private void Spawn<T1, T2>(Dictionary<SectionSiteSO, SectionDataSO> sections, T2 target, int capacity = 1, bool isSole = true) where T1 : MapSpawner where T2 : ISpawnable
         {
             var spawners = SpawnPoints<T1>(sections, capacity);
 
             var spawner = spawners.GetRandom();
-            target.Spawn(spawner);
+            spawner.Spawn(target.Spawnable);
         }
 
-        private List<T> SpawnPoints<T>(Dictionary<SectionSiteSO, SectionDataSO> sections, int capacity) where T : MapSpawner 
+        private List<T> SpawnPoints<T>(Dictionary<SectionSiteSO, SectionDataSO> sections, int capacity) where T : MapSpawner
         {
             List<T> spawners = new(capacity);
             foreach (var section in sections)
@@ -100,7 +99,12 @@ namespace Com2usGameDev
 
         private void SpawnPlayer(Dictionary<SectionSiteSO, SectionDataSO> sections)
         {
-            Spawn<PlayerSpawner, PlayerBehaviour>(sections, player);
+            Spawn<PlayerSpawner, PlayerBehaviour>(sections, null, isSole: true);
+        }
+
+        private void SpawnCatBall(Dictionary<SectionSiteSO, SectionDataSO> sections)
+        {
+            Spawn<CatHairBallSpawner, PlayerBehaviour>(sections, null, isSole: true);
         }
     }
 

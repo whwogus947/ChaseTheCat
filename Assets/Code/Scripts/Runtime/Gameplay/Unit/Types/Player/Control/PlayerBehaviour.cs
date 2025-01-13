@@ -229,6 +229,8 @@ namespace Com2usGameDev
             layerData,
             0);
 
+        public GameObject Spawnable => gameObject;
+
         protected override void OnLowHP()
         {
             base.OnLowHP();
@@ -245,11 +247,6 @@ namespace Com2usGameDev
         public void Jump() => rb.AddForceY(playerStat.jumpPower.y * Mathf.Clamp(ChargePower, 0.4f, 1));
 
         public void Jump(float power) => rb.AddForceY(playerStat.jumpPower.y * power);
-
-        public void Spawn(MapSpawner spawner)
-        {
-            
-        }
     }
 
     [System.Serializable]

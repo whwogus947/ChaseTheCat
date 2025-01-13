@@ -6,7 +6,7 @@ namespace Com2usGameDev
     {
         public TransformChannelSO playerTransformChannel;
 
-        private void Start()
+        public override void Spawn(GameObject spawnable)
         {
             playerTransformChannel.Invoke(transform);
         }

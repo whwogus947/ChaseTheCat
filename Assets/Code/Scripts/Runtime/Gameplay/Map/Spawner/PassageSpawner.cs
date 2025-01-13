@@ -2,18 +2,12 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class PassageSpawner : MonoBehaviour
+    public class PassageSpawner : MapSpawner
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        public override void Spawn(GameObject spawnable)
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            var clone = Instantiate(spawnable);
+            clone.transform.position = transform.position;
         }
     }
 }
