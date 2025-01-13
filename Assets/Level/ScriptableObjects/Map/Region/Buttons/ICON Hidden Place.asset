@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 068a4b5948ab2a5489a21c6b487a8ced, type: 3}
-  m_Name: Challenge Stage
+  m_Name: ICON Hidden Place
   m_EditorClassIdentifier: 
-  unvisited: {fileID: 21300000, guid: 90942b03800f8eb42987da4eec079333, type: 3}
-  visited: {fileID: 21300000, guid: c8e656e0baabe92489beb1941abdb494, type: 3}
-  visitable: {fileID: 21300000, guid: 86950a908edbeb94c930fa943daa8422, type: 3}
+  unvisited: {fileID: 21300000, guid: e5ffa716ddf593e4e8675dbc3346179c, type: 3}
+  visited: {fileID: 21300000, guid: 2ffd2db5aff4fc14a86c993469f023e7, type: 3}
+  visitable: {fileID: 21300000, guid: 5ec508c6ff1e775429822431c4bf704b, type: 3}
   scene: {fileID: 11400000, guid: 1788aa4e3575e284ab650d0719a12159, type: 2}

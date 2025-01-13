@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 068a4b5948ab2a5489a21c6b487a8ced, type: 3}
-  m_Name: Domain Of Riches
+  m_Name: ICON Monster Habitat
   m_EditorClassIdentifier: 
-  unvisited: {fileID: 21300000, guid: 3238b92072208b44685099114078c232, type: 3}
-  visited: {fileID: 21300000, guid: 13c9eb6af2938094d8f5e8e5dd5f39ef, type: 3}
-  visitable: {fileID: 21300000, guid: 7d03401a8a80c6a49a2e42cbaf760182, type: 3}
+  unvisited: {fileID: 21300000, guid: 04470c9bee212cc46b4e7476170e9ee2, type: 3}
+  visited: {fileID: 21300000, guid: 59d58d959a6989e4ba4300850afedb0c, type: 3}
+  visitable: {fileID: 21300000, guid: c443432397d9ad44b8559ca5332fc9d5, type: 3}
   scene: {fileID: 11400000, guid: 1788aa4e3575e284ab650d0719a12159, type: 2}

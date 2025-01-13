@@ -6,6 +6,7 @@ namespace Com2usGameDev
     [System.Serializable]
     public class MapEnemyProvider
     {
+        public int maxCount = 5;
         public List<MonsterBehaviour> monsters;
     }
 }

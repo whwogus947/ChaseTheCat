@@ -5,7 +5,13 @@ namespace Com2usGameDev
 {
     public class RegionTerrainMaker : MonoBehaviour
     {
-        [Header("Workshop")]
+        [Header("Spawners")]
+        public PlayerSpawner player;
+        public EnemySpawner enemy;
+        public NPCSpawner npc;
+        public CatHairBallSpawner catball;
+        public PassageSpawner passage;
+
         [HideInInspector] public SectionSiteSO section;
         public GameObject TemplateClone {get; private set;}
 

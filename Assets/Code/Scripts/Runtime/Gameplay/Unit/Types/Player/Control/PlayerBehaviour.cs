@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class PlayerBehaviour : UnitBehaviour, IAbilityBundle<SkillAbilitySO>, IAbilityBundle<WeaponAbilitySO>
+    public class PlayerBehaviour : UnitBehaviour, IAbilityBundle<SkillAbilitySO>, IAbilityBundle<WeaponAbilitySO>, ISpawnable
     {
         public TransformChannelSO playerLocator;
         public AbilityController abilityController;
@@ -245,6 +245,11 @@ namespace Com2usGameDev
         public void Jump() => rb.AddForceY(playerStat.jumpPower.y * Mathf.Clamp(ChargePower, 0.4f, 1));
 
         public void Jump(float power) => rb.AddForceY(playerStat.jumpPower.y * power);
+
+        public void Spawn(MapSpawner spawner)
+        {
+            
+        }
     }
 
     [System.Serializable]

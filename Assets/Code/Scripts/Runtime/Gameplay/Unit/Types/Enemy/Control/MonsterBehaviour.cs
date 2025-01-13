@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class MonsterBehaviour : UnitBehaviour
+    public class MonsterBehaviour : UnitBehaviour, ISpawnable
     {
         public LayerMask playerLayer;
         public OffensiveWeapon weapon;
@@ -153,6 +153,11 @@ namespace Com2usGameDev
                 return;
             
             isAttacking = false;
+        }
+
+        public void Spawn(MapSpawner spawner)
+        {
+            Instantiate(gameObject, spawner.transform.position, Quaternion.identity);
         }
     }
 }

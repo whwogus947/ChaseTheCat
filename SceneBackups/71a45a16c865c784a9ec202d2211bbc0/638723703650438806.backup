@@ -119,6 +119,98 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &250481464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 250481465}
+  - component: {fileID: 250481466}
+  m_Layer: 0
+  m_Name: SPAWN Cat Ball
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 0840c9a6e8e6a7e4e832fd59aef3552c, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &250481465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250481464}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &250481466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250481464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a001c8210fa2a4ab9fd8e14f45b058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAwake: 1
+  atPoint: 1
+  abilityBundle: {fileID: 0}
+  collections: {fileID: 0}
+--- !u!1 &253999505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 253999506}
+  - component: {fileID: 253999507}
+  m_Layer: 0
+  m_Name: SPAWN Passage
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 77854ea0c1fe4a7439280092fba6db29, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &253999506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253999505}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &253999507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253999505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caaa2530ea449b8489178150ae3dfe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &452171996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1143,6 +1235,50 @@ Transform:
   - {fileID: 452171997}
   m_Father: {fileID: 840346714}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &555281068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 555281069}
+  - component: {fileID: 555281070}
+  m_Layer: 0
+  m_Name: SPAWN Enemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 7ec4c0ec322360f499eea5d3813829a8, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &555281069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555281068}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &555281070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555281068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73f5bbfe2cf2d0499e6f8361844d790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &840346713
 GameObject:
   m_ObjectHideFlags: 0
@@ -2140,6 +2276,50 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1443460206
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1443460207}
+  - component: {fileID: 1443460208}
+  m_Layer: 0
+  m_Name: SPAWN NPC
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 8a30d1edb6d683843b8758c2a5be78f4, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1443460207
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443460206}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1443460208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443460206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53bebadea66a63d468d2700f6cacbfab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1758922185
 GameObject:
   m_ObjectHideFlags: 1
@@ -2518,11 +2698,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad1d1244d6788841b59780dc56e103a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8975590348179024778, guid: 4a34d4b324438da4e90a4cb3fb7723d4, type: 3}
-  enemy: {fileID: 3205710030951712562, guid: 04121ff0ffdd0b445b50fa9c1f689b33, type: 3}
-  npc: {fileID: 7873287377420553895, guid: 095831d2d42596c48a6a3e3c74b68775, type: 3}
-  catball: {fileID: 7568147089799221504, guid: f6e9d37f0f705c34fbd76e8c044a52fd, type: 3}
-  passage: {fileID: 1613215476396412368, guid: 5067c8fb76fa4de46b7408e2b7c1b086, type: 3}
+  player: {fileID: 0}
+  enemy: {fileID: 0}
+  npc: {fileID: 0}
+  catball: {fileID: 0}
+  passage: {fileID: 0}
   section: {fileID: 11400000, guid: 25b0de53afb6bc7489bfb69b25b86e46, type: 2}
 --- !u!114 &5172851673094324974
 MonoBehaviour:
@@ -2954,3 +3134,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 3040309947356637750}
   - {fileID: 1758922187}
+  - {fileID: 253999506}
+  - {fileID: 555281069}
+  - {fileID: 1443460207}
+  - {fileID: 250481465}

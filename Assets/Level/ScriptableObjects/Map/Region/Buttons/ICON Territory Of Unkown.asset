@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 068a4b5948ab2a5489a21c6b487a8ced, type: 3}
-  m_Name: Hidden Place
+  m_Name: ICON Territory Of Unkown
   m_EditorClassIdentifier: 
-  unvisited: {fileID: 21300000, guid: e5ffa716ddf593e4e8675dbc3346179c, type: 3}
-  visited: {fileID: 21300000, guid: 2ffd2db5aff4fc14a86c993469f023e7, type: 3}
-  visitable: {fileID: 21300000, guid: 5ec508c6ff1e775429822431c4bf704b, type: 3}
+  unvisited: {fileID: 21300000, guid: e352ad08fb52fef48bad2bd60f1c60ed, type: 3}
+  visited: {fileID: 21300000, guid: 637d6e1923d2c574586b51b922b3769b, type: 3}
+  visitable: {fileID: 21300000, guid: 2981cee755f11bb4db01c91c1a42df54, type: 3}
   scene: {fileID: 11400000, guid: 1788aa4e3575e284ab650d0719a12159, type: 2}

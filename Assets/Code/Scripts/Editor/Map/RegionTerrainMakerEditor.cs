@@ -31,6 +31,7 @@ namespace Com2usGameDev
             }
 
             EditorGUI.BeginChangeCheck();
+            EditorGUILayout.Space(10);
             var popupIndex = EditorGUILayout.Popup("Section", selectedIndex, siteNames);
             if (selectedIndex != popupIndex)
             {
@@ -74,6 +75,37 @@ namespace Com2usGameDev
                 maker.ClearAll();
             }
 
+            EditorGUILayout.Space(10);
+            EditorGUILayout.LabelField("Spawner", EditorStyles.boldLabel);
+
+            GUI.enabled = maker.TemplateClone != null;
+            if (GUILayout.Button("Player"))
+            {
+                GameObject spawner = Instantiate(maker.player.gameObject, GetSceneViewPivot(), Quaternion.identity, maker.TemplateClone.transform);
+                Selection.activeObject = spawner;
+            }
+            if (GUILayout.Button("Enemy"))
+            {
+                GameObject spawner = Instantiate(maker.enemy.gameObject, GetSceneViewPivot(), Quaternion.identity, maker.TemplateClone.transform);
+                Selection.activeObject = spawner;
+            }
+            if (GUILayout.Button("NPC"))
+            {
+                GameObject spawner = Instantiate(maker.npc.gameObject, GetSceneViewPivot(), Quaternion.identity, maker.TemplateClone.transform);
+                Selection.activeObject = spawner;
+            }
+            if (GUILayout.Button("Cat Ball"))
+            {
+                GameObject spawner = Instantiate(maker.catball.gameObject, GetSceneViewPivot(), Quaternion.identity, maker.TemplateClone.transform);
+                Selection.activeObject = spawner;
+            }
+            if (GUILayout.Button("Passage"))
+            {
+                GameObject spawner = Instantiate(maker.passage.gameObject, GetSceneViewPivot(), Quaternion.identity, maker.TemplateClone.transform);
+                Selection.activeObject = spawner;
+            }
+            GUI.enabled = true;
+
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(target, "Explorer section changed");
@@ -102,6 +134,15 @@ namespace Com2usGameDev
                 }
                 worktable.gameObject.SetActive(false);
             }
+        }
+
+        private Vector3 GetSceneViewPivot()
+        {
+            if (SceneView.lastActiveSceneView != null)
+            {
+                return SceneView.lastActiveSceneView.pivot;
+            }
+            return Vector3.zero;
         }
 
         private void CreateSectionDataSO(Tilemap tilemap)
