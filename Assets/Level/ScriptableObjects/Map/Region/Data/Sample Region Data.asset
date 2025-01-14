@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Sample Region Data
   m_EditorClassIdentifier: 
   regionType: {fileID: 11400000, guid: d895ba647f8acfe4eaf45d677627ab3a, type: 2}
-  npc: {fileID: 11400000, guid: b65a257d01862af43a1c88a1f3c392be, type: 2}
   sectionBundles:
   - name: Top
     site: {fileID: 11400000, guid: 2f0d983f0907faf48ab4249943cca009, type: 2}
@@ -53,5 +52,13 @@ MonoBehaviour:
     - {fileID: 11400000, guid: b9c27a4ce8f951c42b2e91783e0da0cb, type: 2}
     - {fileID: 11400000, guid: 2cd6d505163fcb94faabfc5ffbd9ab66, type: 2}
     - {fileID: 11400000, guid: a86099ac35574ee468ec1a5526397828, type: 2}
+  npc: {fileID: 0}
   specialEnemies:
+    maxCount: 5
     monsters: []
+  gradeData: {fileID: 11400000, guid: 95730bc34fa7db14aa8681fb05fd3685, type: 2}
+  catballs:
+  - abilityBundle: {fileID: 11400000, guid: 9c97ad87f9d134a4686c0ee33ef8f83c, type: 2}
+  - abilityBundle: {fileID: 11400000, guid: 9c97ad87f9d134a4686c0ee33ef8f83c, type: 2}
+  - abilityBundle: {fileID: 11400000, guid: 9c97ad87f9d134a4686c0ee33ef8f83c, type: 2}
+  passage: {fileID: 96212618044380375, guid: dbcc873d7ac33974683f6726ac4a8e73, type: 3}

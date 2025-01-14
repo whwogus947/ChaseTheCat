@@ -7,10 +7,32 @@ namespace Com2usGameDev
     public class RegionDataSO : ScriptableObject
     {
         [SerializeField] private RegionTypeSO regionType;
-        [SerializeField] private NPCBehaviour npc;
         // [SerializeField] private story
         [SerializeField] private List<SectionBundle> sectionBundles;
+
+        [Header("NPC")]
+        [SerializeField] private NPCBehaviour npc;
+
+        [Header("MONSTERS")]
         [SerializeField] private MapEnemyProvider specialEnemies;
+
+        [Header("CAT BALL")]
+        [SerializeField] private GachaGradeCollectionsSO gradeData;
+        [SerializeField] private List<CatBallLink> catballs;
+
+        [Header("PASSAGE")][SerializeField] private MapPassage passage;
+
+        public void GenerateRegion(Transform storage)
+        {
+            var sections = CreateCompleteSections();
+            TerrainCreation(sections, storage);
+
+            SpawnPlayer(sections);
+            SpawnEnemy(sections);
+            SpawnNPC(sections);
+            SpawnCatBall(sections);
+            SpawnPassage(sections);
+        }
 
         public Dictionary<SectionSiteSO, SectionDataSO> CreateCompleteSections()
         {
@@ -46,7 +68,6 @@ namespace Com2usGameDev
             {
                 if (site.contact)
                     continue;
-                Debug.Log(site);
 
                 var selectedSection = siteSections[site].GetRandom();
                 result[site] = selectedSection;
@@ -55,25 +76,28 @@ namespace Com2usGameDev
             return result;
         }
 
-        private void Spawn<T1, T2>(Dictionary<SectionSiteSO, SectionDataSO> sections, List<T2> targets, int capacity = 1) where T1 : MapSpawner where T2 : ISpawnable
+        private List<GameObject> Spawn<T1, T2>(Dictionary<SectionSiteSO, SectionDataSO> sections, List<T2> targets, int capacity = 1) where T1 : MapSpawner where T2 : ISpawnable
         {
             var spawners = SpawnPoints<T1>(sections, capacity);
 
             int spawnCount = Mathf.Min(capacity, spawners.Count);
+            List<GameObject> spawned = new();
             for (int i = 0; i < spawnCount; i++)
             {
                 var spawner = spawners.GetRandom();
                 spawners.Remove(spawner);
-                spawner.Spawn(targets.GetRandom().Spawnable);
+                var temp = spawner.Spawn(targets.GetRandom().Spawnable);
+                spawned.Add(temp);
             }
+            return spawned;
         }
 
-        private void Spawn<T1, T2>(Dictionary<SectionSiteSO, SectionDataSO> sections, T2 target, int capacity = 1, bool isSole = true) where T1 : MapSpawner where T2 : ISpawnable
+        private GameObject Spawn<T1, T2>(Dictionary<SectionSiteSO, SectionDataSO> sections, T2 target, int capacity = 1, bool isSole = true) where T1 : MapSpawner where T2 : ISpawnable
         {
             var spawners = SpawnPoints<T1>(sections, capacity);
 
             var spawner = spawners.GetRandom();
-            spawner.Spawn(target.Spawnable);
+            return spawner.Spawn(target.Spawnable);
         }
 
         private List<T> SpawnPoints<T>(Dictionary<SectionSiteSO, SectionDataSO> sections, int capacity) where T : MapSpawner
@@ -85,6 +109,14 @@ namespace Com2usGameDev
                 spawners.AddRange(temp);
             }
             return spawners;
+        }
+
+        private void TerrainCreation(Dictionary<SectionSiteSO, SectionDataSO> sections, Transform storage)
+        {
+            foreach (var section in sections.Values)
+            {
+                Instantiate(section.tileMap, storage);
+            }
         }
 
         private void SpawnEnemy(Dictionary<SectionSiteSO, SectionDataSO> sections)
@@ -104,7 +136,13 @@ namespace Com2usGameDev
 
         private void SpawnCatBall(Dictionary<SectionSiteSO, SectionDataSO> sections)
         {
-            Spawn<CatHairBallSpawner, PlayerBehaviour>(sections, null, isSole: true);
+            catballs.ForEach(catball => catball.SetInfo(gradeData));
+            var ball = Spawn<CatHairBallSpawner, CatBallLink>(sections, catballs);
+        }
+
+        private void SpawnPassage(Dictionary<SectionSiteSO, SectionDataSO> sections)
+        {
+            Spawn<PassageSpawner, MapPassage>(sections, passage);
         }
     }
 

@@ -7,17 +7,43 @@ namespace Com2usGameDev
         [SerializeField] private AbilityBundleSO abilityBundle;
         [SerializeField] private GachaGradeCollectionsSO collections;
 
-        public override void Spawn(GameObject spawnable)
+        public override GameObject Spawn(GameObject spawnable)
         {
-            foreach (var grade in collections.grades)
-                if (grade.TryInstantiateByGrade(abilityBundle.grade, out CatHairBall hairBall))
-                    Initialize(hairBall);
+            var ball = spawnable.GetComponent<CatHairBall>();
+            ball.transform.position = transform.position;
+            return ball.gameObject;
+        }
+    }
+
+    [System.Serializable]
+    public class CatBallLink : ISpawnable
+    {
+        [SerializeField] private AbilityBundleSO abilityBundle;
+        private GachaGradeCollectionsSO gradeData;
+
+        public GameObject Spawnable
+        {
+            get
+            {
+                foreach (var grade in gradeData.grades)
+                    if (grade.TryInstantiateByGrade(abilityBundle.grade, out CatHairBall hairBall))
+                    {
+                        Initialize(hairBall);
+                        return hairBall.gameObject;
+                    }
+
+                return null;
+            }
+        }
+
+        public void SetInfo(GachaGradeCollectionsSO gradeData)
+        {
+            this.gradeData = gradeData;
         }
 
         private void Initialize(CatHairBall hairBall)
         {
             hairBall.SetAbility(abilityBundle);
-            hairBall.transform.position = transform.position;
         }
     }
 }

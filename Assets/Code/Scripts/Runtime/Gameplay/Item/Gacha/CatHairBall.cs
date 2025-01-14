@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public class CatHairBall : Sonorous, IInteractable, ISpawnable
+    public class CatHairBall : Sonorous, IInteractable
     {
 
         [Header("SFX")]
@@ -24,8 +24,6 @@ namespace Com2usGameDev
         private MaterialPropertyBlock propertyBlock;
         private Renderer render;
         private Animator animator;
-
-        public GameObject Spawnable => gameObject;
 
         void Start()
         {

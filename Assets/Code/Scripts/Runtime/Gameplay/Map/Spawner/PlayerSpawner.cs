@@ -6,9 +6,10 @@ namespace Com2usGameDev
     {
         public TransformChannelSO playerTransformChannel;
 
-        public override void Spawn(GameObject spawnable)
+        public override GameObject Spawn(GameObject spawnable)
         {
             playerTransformChannel.Invoke(transform);
+            return spawnable;
         }
     }
 }
