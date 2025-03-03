@@ -7,6 +7,7 @@ namespace Com2usGameDev
     {
         [ReadOnly] public AudioChannelSO audioChannel;
         [ReadOnly] public VFXPool fXPool;
+        [ReadOnly] public DamageTextSO damageText;
         [Header("Basic Stats")]
         public int damage;
         public float delay = 0.3f;

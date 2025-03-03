@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: 4e576fb5a16b793479d873946315a6be
-AssetOrigin:
-  serializedVersion: 1
-  productId: 212495
-  packageName: All In 1 Vfx Textures
-  packageVersion: 1.0
-  assetPath: Assets/AllIn1VfxToolkit/Demo & Assets/Textures/Shapes/Flower1.png
-  uploadId: 477891
+guid: 073ef4f39a3aa114dbac80bb0a64690d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -58,7 +51,7 @@ TextureImporter:
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
-  alphaUsage: 2
+  alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 0
@@ -70,9 +63,9 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
-  applyGammaDecoding: 1
+  applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
