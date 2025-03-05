@@ -12,3 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1740c009f36dfd439e7a2da0af7a2bc, type: 3}
   m_Name: Ability Controller
   m_EditorClassIdentifier: 
+  database:
+    bundles:
+    - typeName: SkillAbilitySO
+      abilities:
+      - {fileID: 11400000, guid: af8d7c72e13243c489372d7da1219f01, type: 2}
+      - {fileID: 11400000, guid: 9c337de9539992443a6826debc168dda, type: 2}
+      - {fileID: 11400000, guid: efc7d613d635b4e42a26060fa1518e93, type: 2}
+      - {fileID: 11400000, guid: a94799bab57543a4e9693b7db6daa70f, type: 2}
+      - {fileID: 11400000, guid: 0181ecc05370fb84da1debf8372fb723, type: 2}
+      - {fileID: 11400000, guid: 5f1fa1a6825fac34d8043676db0b9c95, type: 2}
+      - {fileID: 11400000, guid: a2cead69c4552494d88ef45b102cdc52, type: 2}
+      - {fileID: 11400000, guid: afc44d0041df7f84685f1ffa2b75b53b, type: 2}
+      - {fileID: 11400000, guid: 3d90c550cdab9a340b556f0ba2155e49, type: 2}
+      - {fileID: 11400000, guid: ed87706ffe287844da9eefbdf1ff46e1, type: 2}
+      - {fileID: 11400000, guid: 5ba90d97e96f5b54782bcb017e8c3617, type: 2}
+    - typeName: WeaponAbilitySO
+      abilities:
+      - {fileID: 11400000, guid: f98dbf1a83a59d549832baeb8eca0134, type: 2}
+      - {fileID: 11400000, guid: 9ed9977305866d44699584a60f26eb24, type: 2}
+      - {fileID: 11400000, guid: 8346e7f72b7952c42a36fe3d53c393a7, type: 2}
+      - {fileID: 11400000, guid: 7edcadfd83fad084ca33b4a5b38061c9, type: 2}
+      - {fileID: 11400000, guid: a60a7df0c97d3bb4dbc2a9d60e4f8986, type: 2}

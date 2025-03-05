@@ -4,6 +4,6 @@ namespace Com2usGameDev
 {
     public interface IGuid
     {
-        SerializableGuid Guid { get; }
+        // SerializableGuid Guid { get; }
     }
 }

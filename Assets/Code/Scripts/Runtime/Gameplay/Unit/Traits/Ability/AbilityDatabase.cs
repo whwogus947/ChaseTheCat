@@ -16,7 +16,19 @@ namespace Com2usGameDev
                 bundle = new DataBundle(ability.AbilityType);
                 bundles.Add(bundle);
             }
-            bundle.Add(ability);
+            if (ability.ID == -1)
+                bundle.Add(ability);
+        }
+
+        public void RegenerateID()
+        {
+            foreach (var bundle in bundles)
+            {
+                for (int i = 0; i < bundle.abilities.Count; i++)
+                {
+                    bundle.abilities[i].ID = i;
+                }
+            }
         }
     }
 

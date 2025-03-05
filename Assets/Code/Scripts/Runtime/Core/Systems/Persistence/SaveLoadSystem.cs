@@ -8,12 +8,12 @@ namespace Com2usGameDev
 {
     public interface ISaveable
     {
-        SerializableGuid Id { get; set; }
+        // SerializableGuid Id { get; set; }
     }
 
     public interface IBind<TData> where TData : ISaveable
     {
-        SerializableGuid Id { get; set; }
+        // SerializableGuid Id { get; set; }
         void Bind(TData data);
     }
 
@@ -48,7 +48,7 @@ namespace Com2usGameDev
             {
                 if (data == null)
                 {
-                    data = new TData { Id = entity.Id };
+                    // data = new TData { Id = entity.Id };
                 }
                 entity.Bind(data);
             }
@@ -60,13 +60,13 @@ namespace Com2usGameDev
 
             foreach (var entity in entities)
             {
-                var data = datas.FirstOrDefault(d => d.Id == entity.Id);
-                if (data == null)
-                {
-                    data = new TData { Id = entity.Id };
-                    datas.Add(data);
-                }
-                entity.Bind(data);
+                // var data = datas.FirstOrDefault(d => d.Id == entity.Id);
+                // if (data == null)
+                // {
+                //     data = new TData { Id = entity.Id };
+                //     datas.Add(data);
+                // }
+                // entity.Bind(data);
             }
         }
 

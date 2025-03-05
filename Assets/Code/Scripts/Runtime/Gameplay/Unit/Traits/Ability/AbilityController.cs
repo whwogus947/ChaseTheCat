@@ -50,6 +50,12 @@ namespace Com2usGameDev
                 containers[abilityType] = new AbilityContainer<T>();
             return containers[abilityType] as AbilityContainer<T>;
         }
+
+        [ContextMenu("Regenerate ID")]
+        private void RegenerateDatabaseAll()
+        {
+            database.RegenerateID();
+        }
     }
 
     public interface IAbilityContainer
