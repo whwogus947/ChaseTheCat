@@ -7,6 +7,8 @@ namespace Com2usGameDev
     [CreateAssetMenu(fileName = "Ability Controller", menuName = "Cum2usGameDev/Ability/Controller")]
     public class AbilityController : ResettableSO
     {
+        public AbilityDatabase database;
+
         private Dictionary<string, IAbilityContainer> containers = new();
 
         public void AddAbility<T>(T ability) where T : AbilitySO
