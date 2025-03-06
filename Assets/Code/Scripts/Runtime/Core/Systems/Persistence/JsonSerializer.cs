@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Com2usGameDev
@@ -6,12 +7,12 @@ namespace Com2usGameDev
     {
         public T Deserialize<T>(string json)
         {
-            return JsonUtility.FromJson<T>(json);
+            return JsonConvert.DeserializeObject<T>(json);
         }
 
         public string Serialize<T>(T obj)
         {
-            return JsonUtility.ToJson(obj, true);
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
         }
     }
 

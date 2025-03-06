@@ -4,9 +4,10 @@ using UnityEngine;
 namespace Com2usGameDev
 {
     [System.Serializable]
-    public class AbilityDatabase
+    public class AbilityDatabase : IBind<BookData>
     {
         public List<DataBundle> bundles = new();
+        public BookData book;
 
         public void Add(AbilitySO ability)
         {
@@ -20,6 +21,24 @@ namespace Com2usGameDev
                 bundle.Add(ability);
         }
 
+        public void Bind(BookData data)
+        {
+            book = data;
+        }
+
+        public void EnrollBook(AbilitySO ability)
+        {
+            var type = ability.AbilityType;
+            var id = ability.ID;
+            if (!book.abilities.ContainsKey(type))
+            {
+                book.abilities[type] = new() { id };
+                return;
+            }
+            if (!book.abilities[type].Contains(id))
+                book.abilities[type].Add(id);
+        }
+
         public void RegenerateID()
         {
             foreach (var bundle in bundles)
@@ -27,6 +46,10 @@ namespace Com2usGameDev
                 for (int i = 0; i < bundle.abilities.Count; i++)
                 {
                     bundle.abilities[i].ID = i;
+#if UNITY_EDITOR
+                    UnityEditor.EditorUtility.SetDirty(bundle.abilities[i]);
+                    UnityEditor.AssetDatabase.SaveAssetIfDirty(bundle.abilities[i]);
+#endif
                 }
             }
         }

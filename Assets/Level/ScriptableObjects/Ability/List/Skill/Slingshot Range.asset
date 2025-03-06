@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2076ef91786bda54b8ce87c31bd7b585, type: 3}
   m_Name: Slingshot Range
   m_EditorClassIdentifier: 
+  ID: 7
   grade: {fileID: 0}
   colorIcon: {fileID: 0}
   grayIcon: {fileID: 0}
@@ -20,3 +21,4 @@ MonoBehaviour:
   maxLevel: 0
   epConsumption: 0
   maxCoolTime: 0
+  originPower: 0

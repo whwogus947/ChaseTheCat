@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f36e0046ca2a1c40b10ceca624b542f, type: 3}
   m_Name: Poison Damage Skill
   m_EditorClassIdentifier: 
+  ID: 2
   grade: {fileID: 11400000, guid: 36257959b91d6ca41ba4ec41cb55eea1, type: 2}
   colorIcon: {fileID: 21300000, guid: 87cadde792f2ddc4d8e890cef117c127, type: 3}
   grayIcon: {fileID: 21300000, guid: 4f26a30182ac53a4eb50627e5462faf6, type: 3}
@@ -20,3 +21,4 @@ MonoBehaviour:
   maxLevel: 5
   epConsumption: 5
   maxCoolTime: 2
+  originPower: 0

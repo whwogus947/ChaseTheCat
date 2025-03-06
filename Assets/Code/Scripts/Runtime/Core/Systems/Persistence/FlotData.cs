@@ -7,5 +7,6 @@ namespace Com2usGameDev
     public class FlotData
     {
         public string Name;
+        public BookData book;
     }
 }

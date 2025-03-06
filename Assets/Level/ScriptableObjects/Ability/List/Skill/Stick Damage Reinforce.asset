@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f70539393352794783c3189e3328b48, type: 3}
   m_Name: Stick Damage Reinforce
   m_EditorClassIdentifier: 
+  ID: 9
   grade: {fileID: 0}
   colorIcon: {fileID: 0}
   grayIcon: {fileID: 0}
@@ -20,3 +21,4 @@ MonoBehaviour:
   maxLevel: 0
   epConsumption: 0
   maxCoolTime: 0
+  originPower: 0

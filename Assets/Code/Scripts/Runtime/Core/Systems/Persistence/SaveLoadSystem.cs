@@ -8,27 +8,33 @@ namespace Com2usGameDev
 {
     public interface ISaveable
     {
-        // SerializableGuid Id { get; set; }
+        
     }
 
     public interface IBind<TData> where TData : ISaveable
     {
-        // SerializableGuid Id { get; set; }
         void Bind(TData data);
     }
 
     public class SaveLoadSystem : MonoBehaviour
     {
         [SerializeField] public FlotData gameData;
+        public AbilityController controller;
 
         IDataService dataService;
 
         void Awake()
         {
             dataService = new FileDataService(new JsonSerializer());
+
+            controller.database.Bind(gameData.book);
+            Debug.Log("Bind!");
         }
 
-        void Start() => NewGame();
+        void Start()
+        {
+            
+        }
 
         void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
         void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -80,11 +86,16 @@ namespace Com2usGameDev
             // SceneManager.LoadScene(gameData.CurrentLevelName);
         }
 
-        public void SaveGame() => dataService.Save(gameData);
+        public void SaveGame()
+        {
+            dataService.Save(gameData);
+            Debug.Log(gameData.book.abilities.Count);
+        }
 
         public void LoadGame(string gameName)
         {
             gameData = dataService.Load(gameName);
+            controller.database.Bind(gameData.book);
 
             // if (String.IsNullOrWhiteSpace(gameData.CurrentLevelName))
             // {

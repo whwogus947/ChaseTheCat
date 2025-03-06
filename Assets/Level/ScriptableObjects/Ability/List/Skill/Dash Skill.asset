@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abbfccc5ecd43144ba70cd481a0416f7, type: 3}
   m_Name: Dash Skill
   m_EditorClassIdentifier: 
+  ID: 0
   grade: {fileID: 11400000, guid: 3232cc1d559b7874fad86185334869a8, type: 2}
   colorIcon: {fileID: 21300000, guid: 813b3db077d1b5f4198e566ffc59be65, type: 3}
   grayIcon: {fileID: 21300000, guid: 808e6adb51cacaa4a9897d0fd3f7acb3, type: 3}

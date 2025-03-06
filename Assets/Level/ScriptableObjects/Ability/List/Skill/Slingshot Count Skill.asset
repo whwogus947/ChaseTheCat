@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac4cb08e6c5ef6439c3d638b176651d, type: 3}
   m_Name: Slingshot Count Skill
   m_EditorClassIdentifier: 
+  ID: 5
   grade: {fileID: 11400000, guid: 36257959b91d6ca41ba4ec41cb55eea1, type: 2}
   colorIcon: {fileID: 21300000, guid: 7d467e652fac2da4d858fdfc139b8c46, type: 3}
   grayIcon: {fileID: 21300000, guid: ae2536b4911c49d4b8b62ce4f52cfd68, type: 3}
@@ -20,3 +21,4 @@ MonoBehaviour:
   maxLevel: 3
   epConsumption: 0
   maxCoolTime: 0
+  originPower: 0

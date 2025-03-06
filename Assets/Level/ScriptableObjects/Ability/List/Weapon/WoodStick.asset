@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50894cd79ab38544f970273e93eba8d4, type: 3}
   m_Name: WoodStick
   m_EditorClassIdentifier: 
+  ID: 4
   grade: {fileID: 11400000, guid: 3232cc1d559b7874fad86185334869a8, type: 2}
   colorIcon: {fileID: 21300000, guid: 261481477fceca9479542739d232a47e, type: 3}
   isRightHanded: 0
   frame: {fileID: 21300000, guid: 76e986388305ae54f9ea6ea8d94423d8, type: 3}
-  isLimited: 0
   weaponPrefab: {fileID: -3076921817119968684, guid: f59affa5aa795a84ab39e73a44b9fe7f, type: 3}

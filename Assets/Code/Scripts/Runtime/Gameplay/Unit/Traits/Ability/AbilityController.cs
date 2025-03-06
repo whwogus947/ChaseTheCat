@@ -16,6 +16,8 @@ namespace Com2usGameDev
             if (!containers.ContainsKey(ability.AbilityType))
                 containers[ability.AbilityType] = new AbilityContainer<AbilitySO>();
             containers[ability.AbilityType].Add(ability);
+            Debug.Log("Enroll " + ability.AbilityName);
+            database.EnrollBook(ability);
         }
 
         public void RemoveAbility<T>(T ability) where T : AbilitySO
