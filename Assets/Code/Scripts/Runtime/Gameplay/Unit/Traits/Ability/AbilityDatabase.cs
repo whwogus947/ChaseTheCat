@@ -26,17 +26,28 @@ namespace Com2usGameDev
             book = data;
         }
 
+        public void FromSavedData()
+        {
+            foreach (var dataByType in book.savedAbilities.Values)
+            {
+                for (int i = 0; i < dataByType.Count; i++)
+                {
+                    int id = dataByType[i].id;
+                    DataBundle bundle = bundles.Find(x => x.typeName == dataByType[i].typeName);
+                    bundle.abilities[id].FromSavedData(dataByType[i]);
+                }
+            }
+        }
+
+        public AbilitySO FromDB(string typeName, int id)
+        {
+            DataBundle bundle = bundles.Find(x => x.typeName == typeName);
+            return bundle.abilities[id];
+        }
+
         public void EnrollBook(AbilitySO ability)
         {
-            var type = ability.AbilityType;
-            var id = ability.ID;
-            if (!book.abilities.ContainsKey(type))
-            {
-                book.abilities[type] = new() { id };
-                return;
-            }
-            if (!book.abilities[type].Contains(id))
-                book.abilities[type].Add(id);
+            ability.ToSaveData(book);
         }
 
         public void RegenerateID()

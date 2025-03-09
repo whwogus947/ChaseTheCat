@@ -10,30 +10,33 @@ namespace Com2usGameDev
         public bool isRightHanded;
         public Sprite frame;
         public OffensiveWeapon Entity => weaponOnHand;
-        public bool IsLimited => _count.HasValue;
+        public bool IsLimited => this is ICountable;
         public UnityAction<int> onCountChanged;
         public int Count
         {
-            get => _count ?? 0;
+            get => savableData.count.HasValue ? (int)savableData.count : 1;
             set
             {
-                _count = value;
-                if (_count.HasValue)
+                savableData.count = value;
+                if (savableData.count.HasValue)
                 {
-                    Debug.Log(_count);
-                    onCountChanged((int)_count);
+                    Debug.Log(savableData.count);
+                    onCountChanged((int)savableData.count);
                 }
             }
         }
 
-        [SerializeField] private OffensiveWeapon weaponPrefab;
         protected OffensiveWeapon weaponOnHand;
 
-        private int? _count = null;
+        [SerializeField] private OffensiveWeapon weaponPrefab;
+        private SavableWeaponData savableData;
+
+        // private int? _count = null;
 
         public void Obtain(Transform _hand)
         {
-            _count = null;
+            // _count = null;
+            savableData = new(AbilityType, ID, null);
             onCountChanged = delegate { };
             weaponOnHand = Instantiate(weaponPrefab);
             weaponOnHand.transform.SetParent(_hand, false);
@@ -41,7 +44,8 @@ namespace Com2usGameDev
 
             if (this is ICountable countable)
             {
-                _count = countable.InitialCount;
+                // _count = countable.InitialCount;
+                savableData.count = countable.InitialCount;
             }
             OnAquire();
         }
@@ -53,7 +57,8 @@ namespace Com2usGameDev
 
         protected void TakeOne()
         {
-            if (_count.HasValue)
+            // if (_count.HasValue)
+            if (savableData.count.HasValue)
                 Count -= 1;
         }
 
@@ -70,8 +75,23 @@ namespace Com2usGameDev
             OnUseWeapon();
         }
 
-        private bool IsWeaponReadyToUse() => Entity.IsReady;
-
         public abstract void OnUseWeapon();
+
+        public override void ToSaveData(BookData book)
+        {
+            book.EnrollBook(savableData);
+        }
+
+        public override void FromSavedData(SavableProperty data)
+        {
+            Debug.Log("Test2");
+            if (this is ICountable)
+            {
+                savableData = data as SavableWeaponData;
+                Debug.Log(Count);
+            }
+        }
+
+        private bool IsWeaponReadyToUse() => Entity.IsReady;
     }
 }

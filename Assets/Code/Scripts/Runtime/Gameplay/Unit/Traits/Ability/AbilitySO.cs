@@ -17,5 +17,9 @@ namespace Com2usGameDev
         {
             IsObtainable = true;
         }
+
+        public abstract void ToSaveData(BookData book);
+
+        public abstract void FromSavedData(SavableProperty data);
     }
 }

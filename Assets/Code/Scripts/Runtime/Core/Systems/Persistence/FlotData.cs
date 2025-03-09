@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com2usGameDev
@@ -8,5 +9,10 @@ namespace Com2usGameDev
     {
         public string Name;
         public BookData book;
+    }
+
+    public class SavableStageData
+    {
+
     }
 }

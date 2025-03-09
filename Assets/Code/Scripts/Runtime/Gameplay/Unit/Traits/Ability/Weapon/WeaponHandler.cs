@@ -71,7 +71,6 @@ namespace Com2usGameDev
 
         private void OnGetEvent(WeaponAbilitySO weapon)
         {
-            viewGroup.AddAbility(weapon);
             WeaponToInventory(weapon);
             if (weapon.IsLimited)
             {
@@ -81,6 +80,7 @@ namespace Com2usGameDev
                         RemoveWeaponFromAbility(currentAbility);
                 };
             }
+            viewGroup.AddAbility(weapon);
         }
 
         private void OnRemoveEvent(WeaponAbilitySO weapon)

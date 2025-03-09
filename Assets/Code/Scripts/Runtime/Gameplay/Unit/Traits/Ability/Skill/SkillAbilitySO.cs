@@ -58,5 +58,16 @@ namespace Com2usGameDev
         {
             coolTime = maxCoolTime;
         }
+
+        public override void ToSaveData(BookData book)
+        {
+            var data = new SavableSkillData(AbilityType, ID);
+            book.EnrollBook(data);
+        }
+
+        public override void FromSavedData(SavableProperty data)
+        {
+            
+        }
     }
 }

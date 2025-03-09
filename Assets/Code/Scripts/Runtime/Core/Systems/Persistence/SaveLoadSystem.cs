@@ -16,6 +16,7 @@ namespace Com2usGameDev
         void Bind(TData data);
     }
 
+    [DefaultExecutionOrder(-500)]
     public class SaveLoadSystem : MonoBehaviour
     {
         [SerializeField] public FlotData gameData;
@@ -28,7 +29,7 @@ namespace Com2usGameDev
             dataService = new FileDataService(new JsonSerializer());
 
             controller.database.Bind(gameData.book);
-            Debug.Log("Bind!");
+            // Debug.Log("Bind!");
         }
 
         void Start()
@@ -89,13 +90,21 @@ namespace Com2usGameDev
         public void SaveGame()
         {
             dataService.Save(gameData);
-            Debug.Log(gameData.book.abilities.Count);
         }
 
         public void LoadGame(string gameName)
         {
             gameData = dataService.Load(gameName);
             controller.database.Bind(gameData.book);
+            foreach (var (typeName, abilities) in gameData.book.savedAbilities)
+            {
+                foreach (var ability in abilities)
+                {
+                    var target = controller.database.FromDB(ability.typeName, ability.id);
+                    controller.AddAbility(target);
+                }
+            }
+            controller.database.FromSavedData();
 
             // if (String.IsNullOrWhiteSpace(gameData.CurrentLevelName))
             // {

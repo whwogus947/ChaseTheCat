@@ -388,18 +388,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 232941848158431627, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: m_fontColor.b
-      value: 0.8915094
-      objectReference: {fileID: 0}
-    - target: {fileID: 232941848158431627, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: m_fontColor.g
-      value: 0.99143493
-      objectReference: {fileID: 0}
-    - target: {fileID: 232941848158431627, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: m_fontColor.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1947366121031003488, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
       propertyPath: m_Name
       value: Player
@@ -460,38 +448,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4669289242407614321, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: m_fontColor.b
-      value: 0.8915094
-      objectReference: {fileID: 0}
-    - target: {fileID: 4669289242407614321, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: m_fontColor.g
-      value: 0.99143493
-      objectReference: {fileID: 0}
-    - target: {fileID: 4669289242407614321, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: m_fontColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6077202094092215552, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: m_fontColor.b
-      value: 0.8915094
-      objectReference: {fileID: 0}
-    - target: {fileID: 6077202094092215552, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: m_fontColor.g
-      value: 0.99143493
-      objectReference: {fileID: 0}
-    - target: {fileID: 6077202094092215552, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: m_fontColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8281822911289538482, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: initialItems.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8281822911289538482, guid: c43082df9c64b6c4792b77216d791d20, type: 3}
-      propertyPath: 'initialItems.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 7edcadfd83fad084ca33b4a5b38061c9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -744,7 +700,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Test2
+          m_StringArgument: Test
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &269840876
@@ -872,8 +828,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData:
-    Name: Test2
+    Name: Test
+    testweapon: {fileID: 0}
   controller: {fileID: 11400000, guid: ef9e67b76261c6b45b131587b360c7a2, type: 2}
+  test: {fileID: 11400000, guid: f98dbf1a83a59d549832baeb8eca0134, type: 2}
 --- !u!1001 &445719908
 PrefabInstance:
   m_ObjectHideFlags: 0
