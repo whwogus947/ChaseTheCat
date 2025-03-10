@@ -28,7 +28,7 @@ namespace Com2usGameDev
         {
             dataService = new FileDataService(new JsonSerializer());
 
-            controller.database.Bind(gameData.book);
+            controller.Bind(gameData.Book);
             // Debug.Log("Bind!");
         }
 
@@ -89,37 +89,43 @@ namespace Com2usGameDev
 
         public void SaveGame()
         {
+            // controller.database.ToBook();
             dataService.Save(gameData);
         }
 
         public void LoadGame(string gameName)
         {
             gameData = dataService.Load(gameName);
-            Dictionary<string, List<SavableProperty>> copy = new(gameData.book.savedAbilities);
-            Debug.Log((gameData.book.savedAbilities[nameof(WeaponAbilitySO)][2] as SavableWeaponData).count);
-            // Debug.Log((gameData.book.savedAbilities[nameof(WeaponAbilitySO)][1] as SavableWeaponData).id);
-            // Debug.Log((gameData.book.savedAbilities[nameof(WeaponAbilitySO)][2] as SavableWeaponData).id);
-            gameData.book.savedAbilities.Clear();
-            controller.database.Bind(gameData.book);
-            foreach (var (typeName, abilities) in copy)
+            foreach (var (type, savableData) in gameData.Book.savedAbilities)
             {
-                List<SavableProperty> abilityClone = new(abilities);
-                foreach (var ability in abilityClone)
+                for (int i = 0; i < savableData.Count; i++)
                 {
-                    var target = controller.database.FromDB(ability.typeName, ability.id);
-                    controller.AddAbility(target);
+                    var savedData = savableData[i];
+                    int id = savedData.id;
+                    Debug.Log("fucking id: " + id);
                 }
             }
-            controller.database.FromSavedData(copy);
-
-            // if (String.IsNullOrWhiteSpace(gameData.CurrentLevelName))
-            // {
-            //     gameData.CurrentLevelName = "Demo";
-            // }
-
-            // Bind<PlayerCube, CubeData>(gameData.cubeData);
-
-            // SceneManager.LoadScene(gameData.CurrentLevelName);
+            controller.Bind(gameData.Book);
+            foreach (var (type, savableData) in gameData.Book.savedAbilities)
+            {
+                for (int i = 0; i < savableData.Count; i++)
+                {
+                    var savedData = savableData[i];
+                    int id = savedData.id;
+                    Debug.Log("fucking Bind id: " + id);
+                }
+            }
+            Dictionary<Type, List<SavableProperty>> clone = new(gameData.Book.savedAbilities);
+            controller.FromSavedData(clone);
+            foreach (var (type, savableData) in gameData.Book.savedAbilities)
+            {
+                for (int i = 0; i < savableData.Count; i++)
+                {
+                    var savedData = savableData[i];
+                    int id = savedData.id;
+                    Debug.Log("fucking new id: " + id);
+                }
+            }
         }
 
         public void ReloadGame() => LoadGame(gameData.Name);

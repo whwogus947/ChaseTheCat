@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,7 +7,8 @@ namespace Com2usGameDev
 {
     public abstract class WeaponAbilitySO : AbilitySO, IWeapon
     {
-        public override string AbilityType => nameof(WeaponAbilitySO);
+        public override string AbilityTypeName => nameof(WeaponAbilitySO);
+        public override Type AbilityType => typeof(WeaponAbilitySO);
         public bool isRightHanded;
         public Sprite frame;
         public OffensiveWeapon Entity => weaponOnHand;
@@ -18,10 +20,8 @@ namespace Com2usGameDev
             set
             {
                 savableData.count = value;
-                Debug.Log("set!");
                 if (savableData.count.HasValue)
                 {
-                    Debug.Log((int)savableData.count);
                     // Debug.Log(savableData.count);
                     onCountChanged((int)savableData.count);
                 }
@@ -38,7 +38,7 @@ namespace Com2usGameDev
         public void Obtain(Transform _hand)
         {
             // _count = null;
-            // Debug.Log("Obtained!");
+            Debug.Log("Obtained!");
             savableData = new(AbilityType, ID, null);
             onCountChanged = delegate { };
             weaponOnHand = Instantiate(weaponPrefab);
@@ -82,17 +82,14 @@ namespace Com2usGameDev
 
         public override void ToSaveData(BookData book)
         {
-            book.EnrollBook(savableData);
+            book.ToSaveData(savableData);
         }
 
-        public override void FromSavedData(SavableProperty data)
+        public override void ConvertDataToInstance(SavableProperty data)
         {
-            Debug.Log(AbilityName);
             if (this is ICountable)
             {
-                savableData = data as SavableWeaponData;
-                Count = (int)savableData.count;
-                Debug.Log((data as SavableWeaponData).count);
+                Count = (int)(data as SavableWeaponData).count;
             }
         }
 

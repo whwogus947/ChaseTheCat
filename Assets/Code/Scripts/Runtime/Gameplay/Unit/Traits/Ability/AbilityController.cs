@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -5,29 +6,29 @@ using UnityEngine.Events;
 namespace Com2usGameDev
 {
     [CreateAssetMenu(fileName = "Ability Controller", menuName = "Cum2usGameDev/Ability/Controller")]
-    public class AbilityController : ResettableSO
+    public class AbilityController : ResettableSO, IBind<BookData>
     {
         public AbilityDatabase database;
 
         private Dictionary<string, IAbilityContainer> containers = new();
+        private BookData book;
 
         public void AddAbility<T>(T ability) where T : AbilitySO
         {
-            if (!containers.ContainsKey(ability.AbilityType))
-                containers[ability.AbilityType] = new AbilityContainer<AbilitySO>();
-            containers[ability.AbilityType].Add(ability);
-            // Debug.Log("AddAbility: " + ability.AbilityType);
-            database.EnrollBook(ability);
+            if (!containers.ContainsKey(ability.AbilityTypeName))
+                containers[ability.AbilityTypeName] = new AbilityContainer<T>();
+            containers[ability.AbilityTypeName].Add(ability);
+            ability.ToSaveData(book);
         }
 
         public void RemoveAbility<T>(T ability) where T : AbilitySO
         {
-            if (containers.ContainsKey(ability.AbilityType))
-                containers[ability.AbilityType].Remove(ability);
+            if (containers.ContainsKey(ability.AbilityTypeName))
+                containers[ability.AbilityTypeName].Remove(ability);
         }
 
         public bool HasAbility<T>(T ability) where T : AbilitySO
-            => containers.ContainsKey(ability.AbilityType) && containers[ability.AbilityType].Has(ability);
+            => containers.ContainsKey(ability.AbilityTypeName) && containers[ability.AbilityTypeName].Has(ability);
 
         public bool HasAbility(string abilityType, string abilityName)
             => containers.ContainsKey(abilityType) && containers[abilityType].Has(abilityName);
@@ -58,6 +59,62 @@ namespace Com2usGameDev
         {
             database.RegenerateID();
         }
+
+        public void Bind(BookData data)
+        {
+            book = data;
+        }
+
+        public void FromSavedData(Dictionary<Type, List<SavableProperty>> clone)
+        {
+            Clear();
+            foreach (var (type, savableData) in book.savedAbilities)
+            {
+                for (int i = 0; i < savableData.Count; i++)
+                {
+                    var savedData = savableData[i];
+                    int id = savedData.id;
+                    Debug.Log("fucking book id: " + id);
+                }
+            }
+            book.savedAbilities.Clear();
+            foreach (var (type, savableData) in clone)
+            {
+                for (int i = 0; i < savableData.Count; i++)
+                {
+                    var savedData = savableData[i];
+                    int id = savedData.id;
+                    Debug.Log(id);
+                    DataBundle bundle = database.bundles.Find(x => x.typeName == type.ToString());
+                    var target = bundle.abilities.Find(x => x.ID == id);
+                    Debug.Log(target.AbilityName);
+                    
+                    if (target.AbilityTypeName == nameof(WeaponAbilitySO))
+                    {
+                        WeaponAbilitySO weapon = target as WeaponAbilitySO;
+                        AddAbility<WeaponAbilitySO>(weapon);
+                    }
+                    else if (target.AbilityTypeName == nameof(StatAbility))
+                    {
+                        AddAbility(target as StatAbility);
+                    }
+                    else if (target.AbilityTypeName == nameof(SkillAbilitySO))
+                    {
+                        AddAbility(target as SkillAbilitySO);
+                    }
+                    
+                    target.ConvertDataToInstance(savedData);
+                }
+            }
+        }
+
+        private void Clear()
+        {
+            foreach (var (typeName, container) in containers)
+            {
+                container.Clear();
+            }
+        }
     }
 
     public interface IAbilityContainer
@@ -67,6 +124,7 @@ namespace Com2usGameDev
         bool Has(AbilitySO ability);
         bool Has(string abilityName);
         AbilitySO Find(string abilityName);
+        void Clear();
     }
 
     public class AbilityContainer<T> : IAbilityContainer where T : AbilitySO
@@ -84,15 +142,18 @@ namespace Com2usGameDev
 
         public void Add(AbilitySO ability)
         {
-            // T casted = ability as T;
-            if (ability is T casted &&!abilities.Contains(casted))
+            if (ability is T casted && !abilities.Contains(casted))
             {
+                Debug.Log("<color=red>new!!</color> " + ability.AbilityName);
+                // if (casted is WeaponAbilitySO)
+                //     Debug.Log("<color=yellow>new!!</color>" + typeof(T));
                 onAddContainer(casted);
                 abilities.Add(casted);
                 ability.OnDiscover();
             }
             else
             {
+                Debug.Log("<color=red>already!!</color> " + ability.AbilityName);
                 ability.OnAquire();
             }
         }
@@ -105,12 +166,7 @@ namespace Com2usGameDev
 
         public void Remove(AbilitySO ability)
         {
-            // T casted = ability as T;
-            // if (!abilities.Contains(casted))
-            // {
-            //     onRemoveContainer(casted);
-            //     abilities.Remove(casted);
-            // }
+            Debug.Log("Try remove " + ability);
             if (ability is T casted && abilities.Contains(casted))
             {
                 onRemoveContainer(casted);
@@ -118,14 +174,16 @@ namespace Com2usGameDev
             }
         }
 
+        public void Clear() => Foreach(Remove);
+
         public bool Has(string abilityName) => abilities.Exists(ability => ability.AbilityName == abilityName);
 
         public AbilitySO Find(string abilityName) => abilities.Find(ability => ability.AbilityName == abilityName);
 
         public void Foreach(UnityAction<T> action)
         {
-            foreach (var ability in abilities)
-                action(ability);
+            for (int i = abilities.Count - 1; i >= 0; i--)
+                action(abilities[i]);
         }
     }
 }

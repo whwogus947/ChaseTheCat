@@ -1,18 +1,20 @@
+using System;
 using UnityEngine;
 
 namespace Com2usGameDev
 {
     public abstract class StatAbility : AbilitySO, ISkill
     {
-        public override string AbilityType => nameof(StatAbility);
+        public override string AbilityTypeName => nameof(StatAbility);
+        public override Type AbilityType => typeof(StatAbility);
 
         public override void ToSaveData(BookData book)
         {
             var data = new SavableSkillData(AbilityType, ID);
-            book.EnrollBook(data);
+            book.ToSaveData(data);
         }
 
-        public override void FromSavedData(SavableProperty data)
+        public override void ConvertDataToInstance(SavableProperty data)
         {
             
         }

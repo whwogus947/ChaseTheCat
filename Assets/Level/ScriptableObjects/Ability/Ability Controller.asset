@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   database:
     bundles:
-    - typeName: SkillAbilitySO
+    - typeName: Com2usGameDev.SkillAbilitySO
       abilities:
       - {fileID: 11400000, guid: af8d7c72e13243c489372d7da1219f01, type: 2}
       - {fileID: 11400000, guid: 9c337de9539992443a6826debc168dda, type: 2}
@@ -27,7 +27,7 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 3d90c550cdab9a340b556f0ba2155e49, type: 2}
       - {fileID: 11400000, guid: ed87706ffe287844da9eefbdf1ff46e1, type: 2}
       - {fileID: 11400000, guid: 5ba90d97e96f5b54782bcb017e8c3617, type: 2}
-    - typeName: WeaponAbilitySO
+    - typeName: Com2usGameDev.WeaponAbilitySO
       abilities:
       - {fileID: 11400000, guid: f98dbf1a83a59d549832baeb8eca0134, type: 2}
       - {fileID: 11400000, guid: 9ed9977305866d44699584a60f26eb24, type: 2}

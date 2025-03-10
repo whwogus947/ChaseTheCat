@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
 
 namespace Com2usGameDev
 {
     public abstract class SkillAbilitySO : AbilitySO, ISkill
     {
-        public override string AbilityType { get => nameof(SkillAbilitySO); }
+        public override string AbilityTypeName { get => nameof(SkillAbilitySO); }
+        public override Type AbilityType => typeof(SkillAbilitySO);
         public Sprite grayIcon;
         public PoolItem fx;
 
@@ -62,10 +64,10 @@ namespace Com2usGameDev
         public override void ToSaveData(BookData book)
         {
             var data = new SavableSkillData(AbilityType, ID);
-            book.EnrollBook(data);
+            book.ToSaveData(data);
         }
 
-        public override void FromSavedData(SavableProperty data)
+        public override void ConvertDataToInstance(SavableProperty data)
         {
             
         }

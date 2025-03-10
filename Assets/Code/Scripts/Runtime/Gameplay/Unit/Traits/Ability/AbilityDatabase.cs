@@ -1,21 +1,24 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com2usGameDev
 {
     [System.Serializable]
-    public class AbilityDatabase : IBind<BookData>
+    public class AbilityDatabase
     {
         public List<DataBundle> bundles = new();
-        public BookData book;
 
         public void Add(AbilitySO ability)
         {
-            var bundle = bundles.Find(x => x.typeName == ability.AbilityType);
+            var bundle = bundles.Find(x => x.typeName == ability.AbilityType.ToString());
             if (bundle == null)
             {
-                bundle = new DataBundle(ability.AbilityType);
+                bundle = new DataBundle(ability.AbilityType.ToString(), ability.AbilityType);
                 bundles.Add(bundle);
+                Debug.Log(ability.AbilityTypeName);
+                Debug.Log(ability.AbilityType);
             }
             if (ability.ID == -1)
                 bundle.Add(ability);
@@ -25,36 +28,7 @@ namespace Com2usGameDev
                     bundle.Add(ability);
             }
         }
-
-        public void Bind(BookData data)
-        {
-            book = data;
-        }
-
-        public void FromSavedData(Dictionary<string, List<SavableProperty>> copy)
-        {
-            foreach (var (typeName, dataByType) in copy)
-            {
-                for (int i = 0; i < dataByType.Count; i++)
-                {
-                    int id = dataByType[i].id;
-                    DataBundle bundle = bundles.Find(x => x.typeName == typeName);
-                    bundle.abilities[id].FromSavedData(dataByType[i]);
-                }
-            }
-        }
-
-        public AbilitySO FromDB(string typeName, int id)
-        {
-            DataBundle bundle = bundles.Find(x => x.typeName == typeName);
-            return bundle.abilities[id];
-        }
-
-        public void EnrollBook(AbilitySO ability)
-        {
-            ability.ToSaveData(book);
-        }
-
+        
         public void RegenerateID()
         {
             foreach (var bundle in bundles)
@@ -75,14 +49,19 @@ namespace Com2usGameDev
     public class DataBundle
     {
         [ReadOnly] public string typeName;
+        public Type type;
         public List<AbilitySO> abilities;
 
-        public DataBundle(string _typeName)
+        public DataBundle(string _typeName, Type _type)
         {
             typeName = _typeName;
+            type = _type;
             abilities = new();
         }
 
-        public void Add(AbilitySO ability) => abilities.Add(ability);
+        public void Add(AbilitySO ability)
+        {
+            abilities.Add(ability);
+        }
     }
 }

@@ -16,9 +16,9 @@ namespace Com2usGameDev
 
         protected override void OnStart()
         {
-            controller.AddAbility(ammoCountPassive);
-            controller.AddAbility(damagePassive);
-            controller.AddAbility(rangePassive);
+            // controller.AddAbility(ammoCountPassive);
+            // controller.AddAbility(damagePassive);
+            // controller.AddAbility(rangePassive);
 
             // for (int i = 0; i < poolSize; i++)
             // {

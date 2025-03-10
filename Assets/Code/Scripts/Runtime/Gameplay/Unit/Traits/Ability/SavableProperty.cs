@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Com2usGameDev
@@ -5,16 +6,16 @@ namespace Com2usGameDev
     [System.Serializable]
     public class SavableProperty
     {
-        public string typeName;
+        public Type type;
         public int id;
     }
 
     [System.Serializable]
     public class SavableSkillData : SavableProperty
     {
-        public SavableSkillData(string _typeName, int _id)
+        public SavableSkillData(Type _type, int _id)
         {
-            typeName = _typeName;
+            type = _type;
             id = _id;
         }
     }
@@ -22,9 +23,9 @@ namespace Com2usGameDev
     [System.Serializable]
     public class SavableStatData : SavableProperty
     {
-        public SavableStatData(string _typeName, int _id)
+        public SavableStatData(Type _type, int _id)
         {
-            typeName = _typeName;
+            type = _type;
             id = _id;
         }
     }
@@ -34,17 +35,11 @@ namespace Com2usGameDev
     {
         public int? count;
 
-        public SavableWeaponData(string _typeName, int _id, int? _count)
+        public SavableWeaponData(Type _type, int _id, int? _count)
         {
-            typeName = _typeName;
+            type = _type;
             id = _id;
             count = _count;
         }
-    }
-
-    public interface ISavableProperty<T> where T : IAbility
-    {
-        void Save(T data);
-        T Load();
     }
 }

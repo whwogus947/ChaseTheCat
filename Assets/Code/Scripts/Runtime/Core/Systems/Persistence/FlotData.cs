@@ -8,11 +8,42 @@ namespace Com2usGameDev
     public class FlotData
     {
         public string Name;
-        public BookData book;
+        public BookData Book;
     }
 
     public class SavableStageData
     {
 
+    }
+
+    [System.Serializable]
+    public class BookData : ISaveable
+    {
+        public readonly Dictionary<Type, List<SavableProperty>> savedAbilities = new();
+
+        public void Clear() => savedAbilities.Clear();
+
+        public void ToSaveData(SavableProperty savableProperty)
+        {
+            // Debug.Log(savedAbilities);
+            // Debug.Log(savableProperty.type);
+            if (!savedAbilities.ContainsKey(savableProperty.type))
+            {
+                savedAbilities[savableProperty.type] = new();
+                // Debug.Log(savedAbilities[savableProperty.type]);
+            }
+
+            var abilityList = savedAbilities[savableProperty.type];
+            SavableProperty saved = abilityList.Find(x => x.id == savableProperty.id);
+            if (saved == null)
+            {
+                abilityList.Add(savableProperty);
+            }
+            else
+            {
+                abilityList.Remove(saved);
+                abilityList.Add(savableProperty);
+            }
+        }
     }
 }

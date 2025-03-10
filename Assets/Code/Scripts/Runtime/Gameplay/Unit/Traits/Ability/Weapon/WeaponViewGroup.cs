@@ -35,6 +35,7 @@ namespace Com2usGameDev
 
         public override void RemoveAbility(WeaponAbilitySO ability)
         {
+            Debug.Log("Remove! " + ability);
             for (int i = 0; i < storage.childCount; i++)
             {
                 var targetSlot = storage.GetChild(i);

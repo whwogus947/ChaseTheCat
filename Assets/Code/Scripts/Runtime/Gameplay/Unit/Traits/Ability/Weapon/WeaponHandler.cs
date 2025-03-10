@@ -43,7 +43,6 @@ namespace Com2usGameDev
 
         private void WeaponToAbility(WeaponAbilitySO weapon)
         {
-            // Debug.Log("add" + " " + weapon.AbilityName);
             controller.AddAbility(weapon);
         }
 
