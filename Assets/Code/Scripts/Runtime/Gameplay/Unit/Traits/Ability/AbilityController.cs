@@ -16,7 +16,7 @@ namespace Com2usGameDev
             if (!containers.ContainsKey(ability.AbilityType))
                 containers[ability.AbilityType] = new AbilityContainer<AbilitySO>();
             containers[ability.AbilityType].Add(ability);
-            Debug.Log("Enroll!");
+            // Debug.Log("AddAbility: " + ability.AbilityType);
             database.EnrollBook(ability);
         }
 

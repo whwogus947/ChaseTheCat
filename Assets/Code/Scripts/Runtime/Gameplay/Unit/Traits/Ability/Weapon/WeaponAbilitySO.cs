@@ -18,9 +18,11 @@ namespace Com2usGameDev
             set
             {
                 savableData.count = value;
+                Debug.Log("set!");
                 if (savableData.count.HasValue)
                 {
-                    Debug.Log(savableData.count);
+                    Debug.Log((int)savableData.count);
+                    // Debug.Log(savableData.count);
                     onCountChanged((int)savableData.count);
                 }
             }
@@ -36,6 +38,7 @@ namespace Com2usGameDev
         public void Obtain(Transform _hand)
         {
             // _count = null;
+            // Debug.Log("Obtained!");
             savableData = new(AbilityType, ID, null);
             onCountChanged = delegate { };
             weaponOnHand = Instantiate(weaponPrefab);
@@ -84,11 +87,12 @@ namespace Com2usGameDev
 
         public override void FromSavedData(SavableProperty data)
         {
-            Debug.Log("Test2");
+            Debug.Log(AbilityName);
             if (this is ICountable)
             {
                 savableData = data as SavableWeaponData;
-                Debug.Log(Count);
+                Count = (int)savableData.count;
+                Debug.Log((data as SavableWeaponData).count);
             }
         }
 

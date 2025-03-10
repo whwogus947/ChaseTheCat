@@ -95,16 +95,22 @@ namespace Com2usGameDev
         public void LoadGame(string gameName)
         {
             gameData = dataService.Load(gameName);
+            Dictionary<string, List<SavableProperty>> copy = new(gameData.book.savedAbilities);
+            Debug.Log((gameData.book.savedAbilities[nameof(WeaponAbilitySO)][2] as SavableWeaponData).count);
+            // Debug.Log((gameData.book.savedAbilities[nameof(WeaponAbilitySO)][1] as SavableWeaponData).id);
+            // Debug.Log((gameData.book.savedAbilities[nameof(WeaponAbilitySO)][2] as SavableWeaponData).id);
+            gameData.book.savedAbilities.Clear();
             controller.database.Bind(gameData.book);
-            foreach (var (typeName, abilities) in gameData.book.savedAbilities)
+            foreach (var (typeName, abilities) in copy)
             {
-                foreach (var ability in abilities)
+                List<SavableProperty> abilityClone = new(abilities);
+                foreach (var ability in abilityClone)
                 {
                     var target = controller.database.FromDB(ability.typeName, ability.id);
                     controller.AddAbility(target);
                 }
             }
-            controller.database.FromSavedData();
+            controller.database.FromSavedData(copy);
 
             // if (String.IsNullOrWhiteSpace(gameData.CurrentLevelName))
             // {

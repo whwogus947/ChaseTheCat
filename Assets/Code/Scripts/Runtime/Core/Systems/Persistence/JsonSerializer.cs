@@ -7,12 +7,23 @@ namespace Com2usGameDev
     {
         public T Deserialize<T>(string json)
         {
-            return JsonConvert.DeserializeObject<T>(json);
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            };
+
+            return JsonConvert.DeserializeObject<T>(json, settings);
         }
 
         public string Serialize<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj, Formatting.Indented);
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                Formatting = Formatting.Indented
+            };
+
+            return JsonConvert.SerializeObject(obj, settings);
         }
     }
 

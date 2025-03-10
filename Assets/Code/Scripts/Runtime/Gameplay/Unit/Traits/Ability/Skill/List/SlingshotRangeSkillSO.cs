@@ -9,7 +9,7 @@ namespace Com2usGameDev
 
         protected override void PowerUp()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

@@ -28,7 +28,8 @@ namespace Com2usGameDev
 
         protected override void AddInitialAbilities(List<SkillAbilitySO> initialItems)
         {
-            initialItems.ForEach(x => Ability.Add(x));
+            initialItems.ForEach(x => controller.AddAbility(x));
+            
         }
     }
 }

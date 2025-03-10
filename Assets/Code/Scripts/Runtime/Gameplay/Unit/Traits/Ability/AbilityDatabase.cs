@@ -19,6 +19,11 @@ namespace Com2usGameDev
             }
             if (ability.ID == -1)
                 bundle.Add(ability);
+            else
+            {
+                if (!bundle.abilities.Contains(ability))
+                    bundle.Add(ability);
+            }
         }
 
         public void Bind(BookData data)
@@ -26,14 +31,14 @@ namespace Com2usGameDev
             book = data;
         }
 
-        public void FromSavedData()
+        public void FromSavedData(Dictionary<string, List<SavableProperty>> copy)
         {
-            foreach (var dataByType in book.savedAbilities.Values)
+            foreach (var (typeName, dataByType) in copy)
             {
                 for (int i = 0; i < dataByType.Count; i++)
                 {
                     int id = dataByType[i].id;
-                    DataBundle bundle = bundles.Find(x => x.typeName == dataByType[i].typeName);
+                    DataBundle bundle = bundles.Find(x => x.typeName == typeName);
                     bundle.abilities[id].FromSavedData(dataByType[i]);
                 }
             }
