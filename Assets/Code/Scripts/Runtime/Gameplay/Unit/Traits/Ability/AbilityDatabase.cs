@@ -28,7 +28,15 @@ namespace Com2usGameDev
                     bundle.Add(ability);
             }
         }
-        
+
+        public AbilitySO FindItem(SavableProperty savable)
+        {
+            int id = savable.id;
+            DataBundle bundle = bundles.Find(x => x.typeName == savable.type.ToString());
+            var target = bundle.abilities.Find(x => x.ID == id);
+            return target;
+        }
+
         public void RegenerateID()
         {
             foreach (var bundle in bundles)

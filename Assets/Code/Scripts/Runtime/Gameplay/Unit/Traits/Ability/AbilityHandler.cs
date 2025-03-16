@@ -8,8 +8,7 @@ namespace Com2usGameDev
         protected AbilityController controller;
         protected readonly List<T> abilities = new();
         protected T currentAbility;
-        protected readonly string abilityType = typeof(T).Name;
-        protected AbilityContainer<T> Ability => controller.GetContainer<T>(abilityType);
+        protected AbilityContainer<T> Ability => controller.GetContainer<T>();
         protected AbilityViewGroup<T> viewGroup;
 
         protected abstract void AddInitialAbilities(List<T> initialItems);

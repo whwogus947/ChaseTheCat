@@ -4,6 +4,7 @@ namespace Com2usGameDev
 {
     public class InformationViewer : MonoBehaviour
     {
+        public LayerMask InfoUILayer;
         public RectTransform target;
         private readonly Vector2 screenSize = new(1920, 1080);
         [SerializeField] private float spacing = 50;
@@ -16,7 +17,7 @@ namespace Com2usGameDev
         void Update()
         {
             var pos = Input.mousePosition;
-            bool hasUI = UIRaycast.HasAnyInPoint(pos);
+            bool hasUI = UIRaycast.HasAnyInPoint(pos, InfoUILayer);
             target.gameObject.SetActive(hasUI);
             Deploy(pos, new(target.rect.width / 2f, target.rect.height / 2f));
         }

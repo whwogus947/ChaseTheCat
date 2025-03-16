@@ -47,8 +47,9 @@ namespace Com2usGameDev
             Debug.Log("Ability Controller Has Initialized");
         }
 
-        public AbilityContainer<T> GetContainer<T>(string abilityType) where T : AbilitySO
+        public AbilityContainer<T> GetContainer<T>() where T : AbilitySO
         {
+            string abilityType = typeof(T).Name;
             if (!containers.ContainsKey(abilityType))
                 containers[abilityType] = new AbilityContainer<T>();
             return containers[abilityType] as AbilityContainer<T>;
@@ -84,10 +85,10 @@ namespace Com2usGameDev
                 {
                     var savedData = savableData[i];
                     int id = savedData.id;
-                    Debug.Log(id);
+                    // Debug.Log(id);
                     DataBundle bundle = database.bundles.Find(x => x.typeName == type.ToString());
                     var target = bundle.abilities.Find(x => x.ID == id);
-                    Debug.Log(target.AbilityName);
+                    // Debug.Log(target.AbilityName);
                     
                     if (target.AbilityTypeName == nameof(WeaponAbilitySO))
                     {
@@ -125,6 +126,7 @@ namespace Com2usGameDev
         bool Has(string abilityName);
         AbilitySO Find(string abilityName);
         void Clear();
+        int Count { get; }
     }
 
     public class AbilityContainer<T> : IAbilityContainer where T : AbilitySO
@@ -132,6 +134,8 @@ namespace Com2usGameDev
         private readonly List<T> abilities;
         private UnityAction<T> onAddContainer;
         private UnityAction<T> onRemoveContainer;
+
+        public int Count => abilities.Count;
 
         public AbilityContainer()
         {
