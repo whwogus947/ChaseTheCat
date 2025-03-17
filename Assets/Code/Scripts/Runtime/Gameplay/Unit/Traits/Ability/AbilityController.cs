@@ -83,28 +83,8 @@ namespace Com2usGameDev
             {
                 for (int i = 0; i < savableData.Count; i++)
                 {
-                    var savedData = savableData[i];
-                    int id = savedData.id;
-                    // Debug.Log(id);
-                    DataBundle bundle = database.bundles.Find(x => x.typeName == type.ToString());
-                    var target = bundle.abilities.Find(x => x.ID == id);
-                    // Debug.Log(target.AbilityName);
-                    
-                    if (target.AbilityTypeName == nameof(WeaponAbilitySO))
-                    {
-                        WeaponAbilitySO weapon = target as WeaponAbilitySO;
-                        AddAbility<WeaponAbilitySO>(weapon);
-                    }
-                    else if (target.AbilityTypeName == nameof(StatAbility))
-                    {
-                        AddAbility(target as StatAbility);
-                    }
-                    else if (target.AbilityTypeName == nameof(SkillAbilitySO))
-                    {
-                        AddAbility(target as SkillAbilitySO);
-                    }
-                    
-                    target.ConvertDataToInstance(savedData);
+                    var target = savableData[i].AsAbility(this);
+                    target.ConvertDataToInstance(savableData[i]);
                 }
             }
         }

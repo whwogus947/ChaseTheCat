@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public abstract class SkillAbilitySO : AbilitySO, ISkill
+    public abstract class SkillAbilitySO : AbilitySO
     {
         public override string AbilityTypeName { get => nameof(SkillAbilitySO); }
         public override Type AbilityType => typeof(SkillAbilitySO);

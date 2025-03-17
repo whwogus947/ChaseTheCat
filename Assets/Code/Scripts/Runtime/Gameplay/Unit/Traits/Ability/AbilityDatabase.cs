@@ -29,12 +29,12 @@ namespace Com2usGameDev
             }
         }
 
-        public AbilitySO FindItem(SavableProperty savable)
+        public T FindItem<T>(SavableProperty savable) where T : AbilitySO
         {
             int id = savable.id;
             DataBundle bundle = bundles.Find(x => x.typeName == savable.type.ToString());
             var target = bundle.abilities.Find(x => x.ID == id);
-            return target;
+            return target as T;
         }
 
         public void RegenerateID()

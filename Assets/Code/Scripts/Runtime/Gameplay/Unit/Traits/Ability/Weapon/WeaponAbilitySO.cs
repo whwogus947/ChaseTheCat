@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace Com2usGameDev
 {
-    public abstract class WeaponAbilitySO : AbilitySO, IWeapon
+    public abstract class WeaponAbilitySO : AbilitySO
     {
         public override string AbilityTypeName => nameof(WeaponAbilitySO);
         public override Type AbilityType => typeof(WeaponAbilitySO);

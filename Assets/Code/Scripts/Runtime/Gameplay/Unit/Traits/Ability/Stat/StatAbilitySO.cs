@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public abstract class StatAbility : AbilitySO, ISkill
+    public abstract class StatAbilitySO : AbilitySO
     {
-        public override string AbilityTypeName => nameof(StatAbility);
-        public override Type AbilityType => typeof(StatAbility);
+        public override string AbilityTypeName => nameof(StatAbilitySO);
+        public override Type AbilityType => typeof(StatAbilitySO);
 
         public override void ToSaveData(BookData book)
         {

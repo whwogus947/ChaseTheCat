@@ -34,3 +34,8 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 8346e7f72b7952c42a36fe3d53c393a7, type: 2}
       - {fileID: 11400000, guid: 7edcadfd83fad084ca33b4a5b38061c9, type: 2}
       - {fileID: 11400000, guid: a60a7df0c97d3bb4dbc2a9d60e4f8986, type: 2}
+    - typeName: Com2usGameDev.NPCAbilitySO
+      abilities:
+      - {fileID: 11400000, guid: 9d0f49190bef5ec4f9da740882c93a25, type: 2}
+      - {fileID: 11400000, guid: a19dc0ebedff42b41b438062391ea112, type: 2}
+      - {fileID: 11400000, guid: 4526a6d8c7fc42a498d47f9b7f7f17dd, type: 2}

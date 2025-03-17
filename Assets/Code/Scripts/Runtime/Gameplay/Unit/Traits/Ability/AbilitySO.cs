@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public abstract class AbilitySO : ScriptableObject, IAbility
+    public abstract class AbilitySO : ScriptableObject
     {
         [ReadOnly] public int ID = -1;
         public abstract string AbilityTypeName { get; }

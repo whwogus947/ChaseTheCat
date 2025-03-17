@@ -78,8 +78,8 @@ namespace Com2usGameDev
 
         private void FillIn(AbilitySO data)
         {
-            tempIndex++;
             slots[tempIndex].Icon.sprite = data.colorIcon;
+            tempIndex++;
         }
     }
 }

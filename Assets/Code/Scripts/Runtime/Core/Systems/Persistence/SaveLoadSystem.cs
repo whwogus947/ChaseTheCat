@@ -102,7 +102,6 @@ namespace Com2usGameDev
                 {
                     var savedData = savableData[i];
                     int id = savedData.id;
-                    Debug.Log("fucking id: " + id);
                 }
             }
             controller.Bind(gameData.Book);
@@ -112,7 +111,6 @@ namespace Com2usGameDev
                 {
                     var savedData = savableData[i];
                     int id = savedData.id;
-                    Debug.Log("fucking Bind id: " + id);
                 }
             }
             Dictionary<Type, List<SavableProperty>> clone = new(gameData.Book.savedAbilities);
@@ -123,7 +121,6 @@ namespace Com2usGameDev
                 {
                     var savedData = savableData[i];
                     int id = savedData.id;
-                    Debug.Log("fucking new id: " + id);
                 }
             }
         }
