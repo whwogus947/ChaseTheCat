@@ -14,6 +14,7 @@ namespace Com2usGameDev
         void Start()
         {
             controller.GetContainer<NPCAbilitySO>().AddAquireListener(OnAddNPC);
+            controller.GetContainer<NPCAbilitySO>().AddRemovalListener(OnRemoveNPC);
 
             foreach (var npc in npcs)
             {
@@ -23,12 +24,20 @@ namespace Com2usGameDev
 
         void OnDestroy()
         {
-            controller.GetContainer<NPCAbilitySO>().AddRemovalListener(OnAddNPC);
+            // controller.GetContainer<NPCAbilitySO>().AddRemovalListener(OnAddNPC);
+            // controller.GetContainer<NPCAbilitySO>().AddRemovalListener(OnRemoveNPC);
         }
 
         private void OnAddNPC(NPCAbilitySO arg0)
         {
+            Debug.Log(arg0);
             test.Add(arg0);
+        }
+
+         private void OnRemoveNPC(NPCAbilitySO arg0)
+        {
+            Debug.Log(arg0);
+            test.Remove(arg0);
         }
 
         // Update is called once per frame

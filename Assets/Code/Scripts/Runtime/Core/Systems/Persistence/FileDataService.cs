@@ -35,6 +35,26 @@ namespace Com2usGameDev
         File.WriteAllText(fileLocation, serializer.Serialize(data));
     }
 
+    public List<string> GetFileNames()
+    {
+        List<string> jsonFiles = new();
+        
+        if (Directory.Exists(dataPath))
+        {
+            string[] files = Directory.GetFiles(dataPath, "*.json");
+            foreach (string file in files)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(file);
+                jsonFiles.Add(fileName);
+            }
+        }
+        else
+        {
+            Debug.LogError("Directory does not exist: " + dataPath);
+        }
+        return jsonFiles;
+    }
+
     public FlotData Load(string name)
     {
         string fileLocation = GetPathToFile(name);

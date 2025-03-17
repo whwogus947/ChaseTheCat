@@ -10,5 +10,6 @@ namespace Com2usGameDev
         void Delete(string name);
         void DeleteAll();
         IEnumerable<string> ListSaves();
+        List<string> GetFileNames();
     }
 }

@@ -150,9 +150,9 @@ namespace Com2usGameDev
 
         public void Remove(AbilitySO ability)
         {
-            Debug.Log("Try remove " + ability);
             if (ability is T casted && abilities.Contains(casted))
             {
+                Debug.Log("Try remove " + ability);
                 onRemoveContainer(casted);
                 abilities.Remove(casted);
             }

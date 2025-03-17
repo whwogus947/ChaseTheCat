@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
@@ -21,8 +22,10 @@ namespace Com2usGameDev
     {
         [SerializeField] public FlotData gameData;
         public AbilityController controller;
+        public SaveLoadPopup popup;
 
-        IDataService dataService;
+        private const int MAX_SAVE_COUNT = 3;
+        private IDataService dataService;
 
         void Awake()
         {
@@ -34,11 +37,27 @@ namespace Com2usGameDev
 
         void Start()
         {
-            
+            popup.Initialize();
+            SetLoadFiles();
         }
 
         void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
         void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        private void SetLoadFiles()
+        {
+            var fileNames = dataService.GetFileNames();
+            int count = Mathf.Min(fileNames.Count, MAX_SAVE_COUNT);
+
+            var loadHandlers = popup.load.GetComponentsInChildren<FlotLoadHandler>(true);
+
+            int index = 0;
+            for (int i = 0; i < count; i++)
+            {   
+                index = i;
+                loadHandlers[index].SetData(fileNames[index], "TEST", () => LoadGame(fileNames[index]));
+            }
+        }
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
@@ -128,5 +147,26 @@ namespace Com2usGameDev
         public void ReloadGame() => LoadGame(gameData.Name);
 
         public void DeleteGame(string gameName) => dataService.Delete(gameName);
+
+        [Serializable]
+        public class SaveLoadPopup
+        {
+            [Header("Save Data")]
+            public GameObject save;
+            public Button openSaveButton;
+            public Button closeSaveButton;
+            [Header("Load Data")]
+            public GameObject load;
+            public Button openLoadButton;
+            public Button closeLoadButton;
+
+            public void Initialize()
+            {
+                openSaveButton.onClick.AddListener(() => save.SetActive(true));
+                closeSaveButton.onClick.AddListener(() => save.SetActive(false));
+                openLoadButton.onClick.AddListener(() => load.SetActive(true));
+                closeLoadButton.onClick.AddListener(() => load.SetActive(false));
+            }
+        }
     }
 }

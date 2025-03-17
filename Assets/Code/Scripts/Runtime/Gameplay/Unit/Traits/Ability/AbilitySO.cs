@@ -12,6 +12,7 @@ namespace Com2usGameDev
         public GradeTypeSO grade;
         public Sprite colorIcon;
         public bool IsObtainable { get; set; } = true;
+        [SerializeField] private string description;
 
         public abstract void OnAquire();
 
