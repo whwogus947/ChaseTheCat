@@ -69,15 +69,6 @@ namespace Com2usGameDev
         public void FromSavedData(Dictionary<Type, List<SavableProperty>> clone)
         {
             Clear();
-            foreach (var (type, savableData) in book.savedAbilities)
-            {
-                for (int i = 0; i < savableData.Count; i++)
-                {
-                    var savedData = savableData[i];
-                    int id = savedData.id;
-                    Debug.Log("fucking book id: " + id);
-                }
-            }
             book.savedAbilities.Clear();
             foreach (var (type, savableData) in clone)
             {

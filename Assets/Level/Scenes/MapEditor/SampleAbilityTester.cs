@@ -30,13 +30,11 @@ namespace Com2usGameDev
 
         private void OnAddNPC(NPCAbilitySO arg0)
         {
-            Debug.Log(arg0);
             test.Add(arg0);
         }
 
          private void OnRemoveNPC(NPCAbilitySO arg0)
         {
-            Debug.Log(arg0);
             test.Remove(arg0);
         }
 

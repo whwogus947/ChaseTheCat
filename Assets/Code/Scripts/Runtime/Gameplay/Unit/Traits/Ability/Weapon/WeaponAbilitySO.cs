@@ -23,7 +23,7 @@ namespace Com2usGameDev
                 if (savableData.count.HasValue)
                 {
                     // Debug.Log(savableData.count);
-                    onCountChanged((int)savableData.count);
+                    onCountChanged?.Invoke((int)savableData.count);
                 }
             }
         }

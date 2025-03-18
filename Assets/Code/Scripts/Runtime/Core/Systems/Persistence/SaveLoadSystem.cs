@@ -51,10 +51,9 @@ namespace Com2usGameDev
 
             var loadHandlers = popup.load.GetComponentsInChildren<FlotLoadHandler>(true);
 
-            int index = 0;
             for (int i = 0; i < count; i++)
             {   
-                index = i;
+                int index = i;
                 loadHandlers[index].SetData(fileNames[index], "TEST", () => LoadGame(fileNames[index]));
             }
         }
@@ -114,34 +113,11 @@ namespace Com2usGameDev
 
         public void LoadGame(string gameName)
         {
+            Debug.Log(gameName);
             gameData = dataService.Load(gameName);
-            foreach (var (type, savableData) in gameData.Book.savedAbilities)
-            {
-                for (int i = 0; i < savableData.Count; i++)
-                {
-                    var savedData = savableData[i];
-                    int id = savedData.id;
-                }
-            }
             controller.Bind(gameData.Book);
-            foreach (var (type, savableData) in gameData.Book.savedAbilities)
-            {
-                for (int i = 0; i < savableData.Count; i++)
-                {
-                    var savedData = savableData[i];
-                    int id = savedData.id;
-                }
-            }
             Dictionary<Type, List<SavableProperty>> clone = new(gameData.Book.savedAbilities);
             controller.FromSavedData(clone);
-            foreach (var (type, savableData) in gameData.Book.savedAbilities)
-            {
-                for (int i = 0; i < savableData.Count; i++)
-                {
-                    var savedData = savableData[i];
-                    int id = savedData.id;
-                }
-            }
         }
 
         public void ReloadGame() => LoadGame(gameData.Name);

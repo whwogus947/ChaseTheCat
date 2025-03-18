@@ -25,13 +25,11 @@ namespace Com2usGameDev
 
         public void ToSaveData(SavableProperty savableProperty)
         {
-            // Debug.Log(savedAbilities);
-            // Debug.Log(savableProperty.type);
+            if (savableProperty.type == null)
+                return;
+
             if (!savedAbilities.ContainsKey(savableProperty.type))
-            {
                 savedAbilities[savableProperty.type] = new();
-                // Debug.Log(savedAbilities[savableProperty.type]);
-            }
 
             var abilityList = savedAbilities[savableProperty.type];
             SavableProperty saved = abilityList.Find(x => x.id == savableProperty.id);
