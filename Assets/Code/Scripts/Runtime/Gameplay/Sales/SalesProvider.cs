@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using KBCore.Refs;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Com2usGameDev
 {
@@ -9,10 +10,15 @@ namespace Com2usGameDev
     {
         [SerializeField] private InterfaceReference<ISalesItem>[] items;
         [SerializeField, Self] private SalesViewer viewer;
+        [SerializeField] private Button openButton;
+
+        void Awake()
+        {
+            openButton.onClick.AddListener(Provide);
+        }
 
         void Start()
         {
-            
         }
 
         public void Provide()

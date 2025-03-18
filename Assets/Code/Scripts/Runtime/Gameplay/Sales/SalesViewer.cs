@@ -41,7 +41,7 @@ namespace Com2usGameDev
             for (int i = 0; i < items.Length; i++)
             {
                 var item = items[i];
-                slots[i].SetItem(item.Profile, item.SalesName, item.Price);
+                slots[i].SetItem(item.Profile, item.SalesName, item.Price, items[i]);
             }
         }
     }

@@ -7831,10 +7831,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vending Machine
       objectReference: {fileID: 0}
-    - target: {fileID: 7691434161220643028, guid: 6d1038c23b4e5d04d93693f604354034, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7948,10 +7944,6 @@ PrefabInstance:
     - target: {fileID: 5278895655166210429, guid: 1fd743294e964a9489f3307360a9ec0c, type: 3}
       propertyPath: m_Name
       value: Information Viewer
-      objectReference: {fileID: 0}
-    - target: {fileID: 5278895655166210429, guid: 1fd743294e964a9489f3307360a9ec0c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

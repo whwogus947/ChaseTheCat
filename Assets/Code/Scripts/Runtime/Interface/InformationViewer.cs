@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace Com2usGameDev
@@ -6,20 +7,26 @@ namespace Com2usGameDev
     {
         public LayerMask InfoUILayer;
         public RectTransform target;
-        private readonly Vector2 screenSize = new(1920, 1080);
+        [SerializeField] private TMP_Text descriptionText;
         [SerializeField] private float spacing = 50;
+
+        private readonly Vector2 screenSize = new(1920, 1080);
 
         void Start()
         {
-        
+
         }
 
         void Update()
         {
             var pos = Input.mousePosition;
-            bool hasUI = UIRaycast.HasAnyInPoint(pos, InfoUILayer);
-            target.gameObject.SetActive(hasUI);
-            Deploy(pos, new(target.rect.width / 2f, target.rect.height / 2f));
+            var result = UIRaycast.HasAnyInPoint(pos, InfoUILayer);
+            target.gameObject.SetActive(result.hasValue);
+            if (result.hasValue)
+            {
+                Deploy(pos, new(target.rect.width / 2f, target.rect.height / 2f));
+                descriptionText.SetText(result.image.descriptionItem.GetDescription());
+            }
         }
 
         public void Deploy(Vector2 pos, Vector2 size)

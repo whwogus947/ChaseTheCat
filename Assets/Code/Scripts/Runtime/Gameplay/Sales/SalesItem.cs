@@ -6,8 +6,7 @@ namespace Com2usGameDev
 {
     public class SalesItem : MonoBehaviour
     {
-        public ISalesItem item;
-        public Image profile;
+        public InformationImage info;
         public TMP_Text nameText;
         public TMP_Text priceText;
         
@@ -16,11 +15,12 @@ namespace Com2usGameDev
         
         }
 
-        public void SetItem(Sprite _profile, string _nameText, int _price)
+        public void SetItem(Sprite _profile, string _nameText, int _price, IDescription _description)
         {
-            profile.sprite = _profile;
+            info.GetImage().sprite = _profile;
             nameText.SetText(_nameText);
             priceText.SetText("{0}", _price);
+            info.descriptionItem = _description;
         }
     }
 }

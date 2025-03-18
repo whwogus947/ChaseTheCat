@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Com2usGameDev
 {
-    public abstract class AbilitySO : ScriptableObject
+    public abstract class AbilitySO : ScriptableObject, IDescription
     {
         [ReadOnly] public int ID = -1;
         public abstract string AbilityTypeName { get; }
@@ -12,7 +12,7 @@ namespace Com2usGameDev
         public GradeTypeSO grade;
         public Sprite colorIcon;
         public bool IsObtainable { get; set; } = true;
-        [SerializeField] private string description;
+        [SerializeField, TextArea] private string description;
 
         public abstract void OnAquire();
 
@@ -24,5 +24,7 @@ namespace Com2usGameDev
         public abstract void ToSaveData(BookData book);
 
         public abstract void ConvertDataToInstance(SavableProperty data);
+
+        public string GetDescription() => description;
     }
 }

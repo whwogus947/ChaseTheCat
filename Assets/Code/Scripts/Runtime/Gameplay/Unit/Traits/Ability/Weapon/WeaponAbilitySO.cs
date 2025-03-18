@@ -9,6 +9,7 @@ namespace Com2usGameDev
     {
         public override string AbilityTypeName => nameof(WeaponAbilitySO);
         public override Type AbilityType => typeof(WeaponAbilitySO);
+        [Header("Options")]
         public bool isRightHanded;
 
         [Header("Icon")]
