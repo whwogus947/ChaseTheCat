@@ -15,7 +15,10 @@ MonoBehaviour:
   ID: 3
   grade: {fileID: 11400000, guid: 3232cc1d559b7874fad86185334869a8, type: 2}
   colorIcon: {fileID: 21300000, guid: 53342e70acf39ab4b924b6a503e1827e, type: 3}
+  description: 
   isRightHanded: 0
   frame: {fileID: 21300000, guid: 89f52c2e8c1c522418ec36e965ca1382, type: 3}
+  <Price>k__BackingField: 80
+  <SalesName>k__BackingField: "\uC7A5\uB09C\uAC10 \uC950"
   weaponPrefab: {fileID: -2083609366948749041, guid: c098726cbf65f6f44964bbaf00f57747, type: 3}
   initialCount: 8

@@ -5,11 +5,13 @@ using UnityEngine.Events;
 
 namespace Com2usGameDev
 {
-    public abstract class WeaponAbilitySO : AbilitySO
+    public abstract class WeaponAbilitySO : AbilitySO, ISalesItem
     {
         public override string AbilityTypeName => nameof(WeaponAbilitySO);
         public override Type AbilityType => typeof(WeaponAbilitySO);
         public bool isRightHanded;
+
+        [Header("Icon")]
         public Sprite frame;
         public OffensiveWeapon Entity => weaponOnHand;
         public bool IsLimited => this is ICountable;
@@ -22,11 +24,14 @@ namespace Com2usGameDev
                 savableData.count = value;
                 if (savableData.count.HasValue)
                 {
-                    // Debug.Log(savableData.count);
                     onCountChanged?.Invoke((int)savableData.count);
                 }
             }
         }
+
+        [field: SerializeField] public int Price { get; set; }
+        [field: SerializeField] public string SalesName { get; set; }
+        public Sprite Profile => colorIcon;
 
         protected OffensiveWeapon weaponOnHand;
 
@@ -37,7 +42,6 @@ namespace Com2usGameDev
 
         public void Obtain(Transform _hand)
         {
-            // _count = null;
             Debug.Log("Obtained!");
             savableData = new(AbilityType, ID, null);
             onCountChanged = delegate { };
@@ -46,10 +50,7 @@ namespace Com2usGameDev
             weaponOnHand.gameObject.SetActive(false);
 
             if (this is ICountable countable)
-            {
-                // _count = countable.InitialCount;
                 savableData.count = countable.InitialCount;
-            }
             OnAquire();
         }
 
@@ -60,7 +61,6 @@ namespace Com2usGameDev
 
         protected void TakeOne()
         {
-            // if (_count.HasValue)
             if (savableData.count.HasValue)
                 Count -= 1;
         }

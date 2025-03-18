@@ -49,7 +49,7 @@ namespace Com2usGameDev
             var fileNames = dataService.GetFileNames();
             int count = Mathf.Min(fileNames.Count, MAX_SAVE_COUNT);
 
-            var loadHandlers = popup.load.GetComponentsInChildren<FlotLoadHandler>(true);
+            var loadHandlers = popup.load.GetComponentsInChildren<FlotLoadSlot>(true);
 
             for (int i = 0; i < count; i++)
             {   
